@@ -14,7 +14,7 @@ Please name your PR according to task in Trello
 
 Description of your Pull Request with 🔗[link](link-to-trello-board-card) to task in Trello
 
-## [situationally] 🌠 If your change has a visual impact, please provide a screenshot of the work.
+## [situationally] 🌠 If your change has a visual impact, please provide a screenshot of the work
 
 ## 🪛 Added/updated tests?
 
