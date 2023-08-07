@@ -36,16 +36,17 @@ const baseConfig = {
         ],
       },
       {
-        test: /\.ts$/i,
-        use: ['ts-loader'],
+        test: /\.(ts|js)x?$/,
+        exclude: /node_modules/,
+        loader: 'babel-loader',
       },
     ],
   },
   resolve: {
-    extensions: ['.js', '.ts'],
-  },
+    extensions: ['.ts', '.tsx', '.js', '.json']
+},
   output: {
-    filename: 'index.js',
+    filename: 'bundle.js',
     path: path.resolve(__dirname, 'dist'),
   },
   plugins: [
