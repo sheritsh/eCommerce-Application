@@ -25,5 +25,5 @@
       "@typescript-eslint/explicit-function-return-type": "error",
       "no-console": ["error", { "allow": ["warn", "error"] }]
     },
-    "ignorePatterns": ["webpack.*.js"]
+    "ignorePatterns": ["*.config.js"]
 }
