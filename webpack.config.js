@@ -24,7 +24,6 @@ const baseConfig = {
         use: [
           mode === 'development' ? 'style-loader' : MiniCssExtractPlugin.loader,
           'css-loader',
-          'css-modules-typescript-loader',
           {
             loader: 'postcss-loader',
             options: {

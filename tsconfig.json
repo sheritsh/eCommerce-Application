@@ -9,5 +9,6 @@
     "skipLibCheck": true,
     "jsx": "react-jsx",
   },
-  "include": ["./src/**/*"],
+  "plugins": [{ "name": "typescript-plugin-css-modules" }],
+  "include": ["./src/**/*"]
 }
