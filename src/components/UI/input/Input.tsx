@@ -8,7 +8,7 @@ interface InputProps {
 }
 
 const Input: React.FC<InputProps> = ({ name, type, placeholder }) => {
-  return <input name={name} type={type} placeholder={placeholder} className={classes.button} />;
+  return <input name={name} type={type} placeholder={placeholder} className={classes.input} />;
 };
 
 export default Input;

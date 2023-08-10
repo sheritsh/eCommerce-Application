@@ -1,17 +1,17 @@
 import React from 'react';
 import Button from './components/UI/button/Button';
 import Input from './components/UI/input/Input';
+import H1 from './components/UI/titles/h1/H1';
+import Container from './components/UI/container/Container';
 
 const App: React.FC = () => {
   return (
-    <>
+    <Container flexDirection="column" width="30%">
+      <H1 text="Registration" />
       <Input name="email" type="text" placeholder="Enter your email" />
       <Input name="password" type="password" placeholder="Enter your password" />
-      <Button
-        onClick={() => {console.log('Click')}}
-        text="Register"
-      />
-    </>
+      <Button text="Register" />
+    </Container>
   );
 };
 

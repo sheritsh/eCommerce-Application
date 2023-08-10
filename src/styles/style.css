@@ -1,0 +1,10 @@
+body {
+  width: 100vw;
+}
+
+#root {
+  display: flex;
+  justify-content: center;
+  width: 1000px;
+  margin: 0 auto;
+}
