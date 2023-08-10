@@ -9,10 +9,10 @@ const App: React.FC = () => {
   return (
     <Container width="30%">
       <Form id="registrationForm">
-        <H1 text="Registration" />
+        <H1 text="Login page" />
         <Input name="email" type="text" placeholder="Enter your email" />
         <Input name="password" type="password" placeholder="Enter your password" />
-        <Button text="Register" />
+        <Button text="Login" />
       </Form>
     </Container>
   );
