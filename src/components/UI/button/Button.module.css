@@ -11,4 +11,9 @@
     opacity: 0.8;
     transition: all linear 0.5s;
   }
+  &:disabled,
+  &[disabled]{
+    background-color: #cccccc;
+    cursor: not-allowed;
+}
 }
