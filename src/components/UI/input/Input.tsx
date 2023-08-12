@@ -4,7 +4,7 @@ import classes from './Input.module.css';
 interface InputProps {
   value?: string;
   name: string;
-  type: 'text' | 'password';
+  type: 'text' | 'password' | 'date';
   placeholder?: string;
   onBlur?: (event: React.FocusEvent<HTMLInputElement>) => void;
   onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
