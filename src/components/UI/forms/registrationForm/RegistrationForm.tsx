@@ -13,23 +13,29 @@ export const RegistrationForm: React.FC = () => {
   const [password, setPassword] = useState('');
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
+  const [birthDay, setBirthDay] = useState('');
+
   const [emailVisited, setEmailVisited] = useState(false);
   const [passwordVisited, setPasswordVisited] = useState(false);
   const [firstNameVisited, setFirstNameVisited] = useState(false);
   const [lastNameVisited, setLastNameVisited] = useState(false);
+  const [birthDayVisited, setBirthDayVisited] = useState(false);
+
   const [emailError, setEmailError] = useState(ErrorMessages.EmptyEmail);
   const [passwordError, setPasswordError] = useState(ErrorMessages.EmptyPassword);
   const [firstNameError, setFirstNameError] = useState(ErrorMessages.EmptyFirstName);
   const [lastNameError, setLastNameError] = useState(ErrorMessages.EmptyLastName);
+  const [birthDayError, setBirthDayError] = useState(ErrorMessages.EmptyBirthDay);
+
   const [formValid, setFormValid] = useState(false);
 
   useEffect(() => {
-    if (emailError || passwordError || firstName || lastName) {
+    if (emailError || passwordError || firstNameError || lastNameError || birthDayError) {
       setFormValid(false);
     } else {
       setFormValid(true);
     }
-  }, [emailError, passwordError, firstName, lastName]);
+  }, [emailError, passwordError, firstNameError, lastNameError, birthDayError]);
 
   const emailHandler = (e: React.ChangeEvent): void => {
     const target = e.target as HTMLInputElement;
@@ -77,6 +83,20 @@ export const RegistrationForm: React.FC = () => {
     }
   };
 
+  const birthDayHandler = (e: React.ChangeEvent): void => {
+    const target = e.target as HTMLInputElement;
+    const today = new Date();
+    const birthDate = new Date(target.value);
+    const msInYear = 31536000000;
+    const age = Math.trunc((+today - +birthDate) / msInYear);
+    setBirthDay(target.value);
+    if (age < 13) {
+      setBirthDayError(ErrorMessages.NotValidBirthDay);
+    } else {
+      setBirthDayError(ErrorMessages.NoErrors);
+    }
+  };
+
   const blurHandler = (e: React.FocusEvent): void => {
     switch ((e.target as HTMLInputElement).name) {
       case 'email':
@@ -90,6 +110,9 @@ export const RegistrationForm: React.FC = () => {
         break;
       case 'last-name':
         setLastNameVisited(true);
+        break;
+      case 'birth-day':
+        setBirthDayVisited(true);
         break;
       default:
         break;
@@ -136,8 +159,16 @@ export const RegistrationForm: React.FC = () => {
           type="text"
           placeholder="Last name"
         />
-        <Input name="birth-date" type="date" placeholder="Date of birth" />
-        <H3 text="address:" />
+        <H3 text="Date of birth:" />
+        {birthDayVisited && birthDayError && <ErrorMessage>{birthDayError}</ErrorMessage>}
+        <Input
+          value={birthDay}
+          onBlur={(e): void => blurHandler(e)}
+          onChange={(e): void => birthDayHandler(e)}
+          name="birth-day"
+          type="date"
+        />
+        <H3 text="Address:" />
         <Input name="country" type="text" placeholder="Country" />
         <Input name="city" type="text" placeholder="City" />
         <Input name="street" type="text" placeholder="Street" />
