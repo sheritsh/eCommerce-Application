@@ -14,28 +14,46 @@ export const RegistrationForm: React.FC = () => {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [birthDay, setBirthDay] = useState('');
+  const [city, setCity] = useState('');
+  const [street, setStreet] = useState('');
+  const [postCode, setPostCode] = useState('');
 
   const [emailVisited, setEmailVisited] = useState(false);
   const [passwordVisited, setPasswordVisited] = useState(false);
   const [firstNameVisited, setFirstNameVisited] = useState(false);
   const [lastNameVisited, setLastNameVisited] = useState(false);
   const [birthDayVisited, setBirthDayVisited] = useState(false);
+  const [cityVisited, setCityVisited] = useState(false);
+  const [streetVisited, setStreetVisited] = useState(false);
+  const [postCodeVisited, setPostCodeVisited] = useState(false);
 
   const [emailError, setEmailError] = useState(ErrorMessages.EmptyEmail);
   const [passwordError, setPasswordError] = useState(ErrorMessages.EmptyPassword);
   const [firstNameError, setFirstNameError] = useState(ErrorMessages.EmptyFirstName);
   const [lastNameError, setLastNameError] = useState(ErrorMessages.EmptyLastName);
   const [birthDayError, setBirthDayError] = useState(ErrorMessages.EmptyBirthDay);
+  const [cityError, setCityError] = useState(ErrorMessages.EmptyCity);
+  const [streetError, setStreetError] = useState(ErrorMessages.EmptyStreet);
+  const [postCodeError, setPostCodeError] = useState(ErrorMessages.EmptyPostCode);
 
   const [formValid, setFormValid] = useState(false);
 
   useEffect(() => {
-    if (emailError || passwordError || firstNameError || lastNameError || birthDayError) {
+    if (
+      emailError ||
+      passwordError ||
+      firstNameError ||
+      lastNameError ||
+      birthDayError ||
+      cityError ||
+      streetError ||
+      postCodeError
+    ) {
       setFormValid(false);
     } else {
       setFormValid(true);
     }
-  }, [emailError, passwordError, firstNameError, lastNameError, birthDayError]);
+  }, [emailError, passwordError, firstNameError, lastNameError, birthDayError, cityError, streetError, postCodeError]);
 
   const emailHandler = (e: React.ChangeEvent): void => {
     const target = e.target as HTMLInputElement;
@@ -97,6 +115,39 @@ export const RegistrationForm: React.FC = () => {
     }
   };
 
+  const cityHandler = (e: React.ChangeEvent): void => {
+    const target = e.target as HTMLInputElement;
+    setCity(target.value);
+    const criterion = /^[a-zA-Z]{1,}$/;
+    if (!criterion.test(String(target.value))) {
+      setCityError(ErrorMessages.NotValidCity);
+    } else {
+      setCityError(ErrorMessages.NoErrors);
+    }
+  };
+
+  const streetHandler = (e: React.ChangeEvent): void => {
+    const target = e.target as HTMLInputElement;
+    setStreet(target.value);
+    const criterion = /^[a-zA-Z0-9!@#$%^&*]{1,}$/;
+    if (!criterion.test(String(target.value))) {
+      setStreetError(ErrorMessages.NotValidStreet);
+    } else {
+      setStreetError(ErrorMessages.NoErrors);
+    }
+  };
+
+  const postCodeHandler = (e: React.ChangeEvent): void => {
+    const target = e.target as HTMLInputElement;
+    setPostCode(target.value);
+    const criterion = /^[0-9]{5}$/;
+    if (!criterion.test(String(target.value))) {
+      setPostCodeError(ErrorMessages.NotValidPostCode);
+    } else {
+      setPostCodeError(ErrorMessages.NoErrors);
+    }
+  };
+
   const blurHandler = (e: React.FocusEvent): void => {
     switch ((e.target as HTMLInputElement).name) {
       case 'email':
@@ -114,6 +165,15 @@ export const RegistrationForm: React.FC = () => {
       case 'birth-day':
         setBirthDayVisited(true);
         break;
+      case 'city':
+        setCityVisited(true);
+        break;
+      case 'street':
+        setStreetVisited(true);
+        break;
+      case 'post-code':
+        setPostCodeVisited(true);
+        break;
       default:
         break;
     }
@@ -121,7 +181,7 @@ export const RegistrationForm: React.FC = () => {
 
   return (
     <Container width="30%">
-      <Form>
+      <Form id="registrationForm">
         <H1 text="Registration" />
         {emailVisited && emailError && <ErrorMessage>{emailError}</ErrorMessage>}
         <Input
@@ -169,10 +229,37 @@ export const RegistrationForm: React.FC = () => {
           type="date"
         />
         <H3 text="Address:" />
-        <Input name="country" type="text" placeholder="Country" />
-        <Input name="city" type="text" placeholder="City" />
-        <Input name="street" type="text" placeholder="Street" />
-        <Input name="post-code" type="text" placeholder="Post code" />
+        <select name="country">
+          <option value="US">United States</option>
+          <option value="DE">Germany</option>
+        </select>
+        {cityVisited && cityError && <ErrorMessage>{cityError}</ErrorMessage>}
+        <Input
+          value={city}
+          onBlur={(e): void => blurHandler(e)}
+          onChange={(e): void => cityHandler(e)}
+          name="city"
+          type="text"
+          placeholder="City"
+        />
+        {streetVisited && streetError && <ErrorMessage>{streetError}</ErrorMessage>}
+        <Input
+          value={street}
+          onBlur={(e): void => blurHandler(e)}
+          onChange={(e): void => streetHandler(e)}
+          name="street"
+          type="text"
+          placeholder="Street"
+        />
+        {postCodeVisited && postCodeError && <ErrorMessage>{postCodeError}</ErrorMessage>}
+        <Input
+          value={postCode}
+          onBlur={(e): void => blurHandler(e)}
+          onChange={(e): void => postCodeHandler(e)}
+          name="post-code"
+          type="text"
+          placeholder="Post code"
+        />
         <Button disabled={!formValid} text="Register" />
       </Form>
     </Container>
