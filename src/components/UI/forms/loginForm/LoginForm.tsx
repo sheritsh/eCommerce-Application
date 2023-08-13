@@ -6,12 +6,16 @@ import Container from '../../container/Container';
 import Button from '../../button/Button';
 import ErrorMessage from '../../error-message/ErrorMessage';
 
-enum ErrorMessages {
+export const enum ErrorMessages {
   NoErrors = '',
   EmptyEmail = 'Please enter email',
   EmptyPassword = 'Please enter password',
+  EmptyFirstName = 'Please enter first name',
+  EmptyLastName = 'Please enter last name',
   NotValidEmail = 'Email is not valid',
-  NotValidPassword = 'Password must contain 5-10 characters.',
+  NotValidPassword = 'Password must contain more than 8 characters, at least 1 uppercase letter, 1 lowercase letter and 1 digit.',
+  NotValidFirstName = 'First name: must contain at least one character and not contain special characters or numbers',
+  NotValidLastName = 'Last name: must contain at least one character and not contain special characters or numbers.',
 }
 
 const LoginForm: React.FC = () => {
@@ -47,7 +51,7 @@ const LoginForm: React.FC = () => {
   const passwordHandler = (e: React.ChangeEvent): void => {
     const target = e.target as HTMLInputElement;
     setPassword(target.value);
-    if (target.value.length < 5 || target.value.length > 10) {
+    if (target.value.length < 8) {
       setPasswordError(ErrorMessages.NotValidPassword);
     } else {
       setPasswordError(ErrorMessages.NoErrors);
