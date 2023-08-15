@@ -5,6 +5,8 @@ import Input from '../../input/Input';
 import Container from '../../container/Container';
 import Button from '../../button/Button';
 import ErrorMessage from '../../error-message/ErrorMessage';
+import { useAppDispatch } from '../../../../store';
+import { loginUser } from '../../../../store/auth/actions';
 
 export const enum ErrorMessages {
   NoErrors = '',
@@ -27,13 +29,15 @@ export const enum ErrorMessages {
 }
 
 const LoginForm: React.FC = () => {
-  const [email, setEmail] = useState('');
+  const [username, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [emailVisited, setEmailVisited] = useState(false);
   const [passwordVisited, setPasswordVisited] = useState(false);
   const [emailError, setEmailError] = useState(ErrorMessages.EmptyEmail);
   const [passwordError, setPasswordError] = useState(ErrorMessages.EmptyPassword);
   const [buttonDisabled, setButtonDisabled] = useState(true);
+
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     if (!emailError && !passwordError) {
@@ -66,6 +70,11 @@ const LoginForm: React.FC = () => {
     }
   };
 
+  const sendData = (e: React.FormEvent): void => {
+    e.preventDefault();
+    dispatch(loginUser({ username, password }));
+  };
+
   const blurHandler = (e: React.FocusEvent): void => {
     const target = e.target as HTMLInputElement;
     const { name } = target;
@@ -87,7 +96,7 @@ const LoginForm: React.FC = () => {
         <H1 text="Login page" />
         {emailVisited && emailError && <ErrorMessage>{emailError}</ErrorMessage>}
         <Input
-          value={email}
+          value={username}
           onBlur={(e): void => blurHandler(e)}
           onChange={(e): void => emailHandler(e)}
           name="email"
@@ -103,7 +112,7 @@ const LoginForm: React.FC = () => {
           type="password"
           placeholder="Enter your password"
         />
-        <Button disabled={buttonDisabled} text="Login" />
+        <Button onClick={(e): void => sendData(e)} disabled={buttonDisabled} text="Login" />
       </Form>
     </Container>
   );

@@ -47,7 +47,7 @@ const baseConfig = {
     ],
   },
   resolve: {
-    extensions: ["*", ".js", ".jsx", ".ts", ".tsx"],    
+    extensions: [".*", ".js", ".jsx", ".ts", ".tsx"],    
   },
   output: {
     filename: 'bundle.js',
