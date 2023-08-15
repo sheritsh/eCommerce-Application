@@ -44,9 +44,16 @@ export const authReducer = createSlice({
         error: action.payload,
       },
     }),
+    removeLoginError: (state): AuthState => ({
+      ...state,
+      authData: {
+        ...state.authData,
+        error: null,
+      },
+    }),
   },
 });
 
-export const { loginStart, loginSucess, loginFailure } = authReducer.actions;
+export const { loginStart, loginSucess, loginFailure, removeLoginError } = authReducer.actions;
 
 export default authReducer.reducer;

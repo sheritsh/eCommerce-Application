@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
+import { AuthState, removeLoginError } from '../../../../store/auth/reducer';
 import Form from '../form/Form';
 import H1 from '../../titles/h1/H1';
 import Input from '../../input/Input';
@@ -28,6 +30,10 @@ export const enum ErrorMessages {
   NotValidPostCode = 'The index of your country must contain 5 digits',
 }
 
+interface RootState {
+  auth: AuthState;
+}
+
 const LoginForm: React.FC = () => {
   const [username, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -39,6 +45,8 @@ const LoginForm: React.FC = () => {
 
   const dispatch = useAppDispatch();
 
+  const errorLogin = useSelector((state: RootState) => state.auth.authData.error);
+
   useEffect(() => {
     if (!emailError && !passwordError) {
       setButtonDisabled(false);
@@ -49,6 +57,7 @@ const LoginForm: React.FC = () => {
 
   const emailHandler = (e: React.ChangeEvent): void => {
     const target = e.target as HTMLInputElement;
+    dispatch(removeLoginError());
     setEmail(target.value);
     const re =
       // eslint-disable-next-line no-useless-escape
@@ -62,6 +71,7 @@ const LoginForm: React.FC = () => {
 
   const passwordHandler = (e: React.ChangeEvent): void => {
     const target = e.target as HTMLInputElement;
+    dispatch(removeLoginError());
     setPassword(target.value);
     if (target.value.length < 5 || target.value.length > 10) {
       setPasswordError(ErrorMessages.NotValidPassword);
@@ -94,6 +104,7 @@ const LoginForm: React.FC = () => {
     <Container width="30%">
       <Form id="loginForm">
         <H1 text="Login page" />
+        {errorLogin && <ErrorMessage>{errorLogin}</ErrorMessage>}
         {emailVisited && emailError && <ErrorMessage>{emailError}</ErrorMessage>}
         <Input
           value={username}
