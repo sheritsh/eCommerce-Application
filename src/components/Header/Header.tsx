@@ -1,5 +1,5 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, Link } from 'react-router-dom';
 import classes from './Header.module.css';
 import Container from '../UI/container/Container';
 
@@ -8,7 +8,9 @@ const Header: React.FC = () => {
     <header>
       <Container>
         <div className={classes.header}>
-          <div>Tourist Tracks Store</div>
+          <div className={classes.header__title} id="title">
+            <Link to="/dist">Tourist Tracks Store</Link>
+          </div>
           <nav>
             <ul className={classes.nav}>
               <li>

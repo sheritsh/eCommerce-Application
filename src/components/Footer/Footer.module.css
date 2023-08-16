@@ -19,12 +19,20 @@ footer {
   filter: invert(1);
 }
 
+.rs_school img:active {
+  scale: 0.85;
+}
+
 .page_up {
   position: absolute;
   width: min(5vw, 50px);
   height: min(5vw, 50px);
   right: 1vw;
   top: 1vw;
+}
+
+.page_up:active {
+  scale: 0.85;
 }
 
 .authors {
@@ -40,6 +48,10 @@ footer {
   text-decoration: none;
 }
 
+.authors ul li:active {
+  scale: 0.85;
+}
+
 .authors ul li a::before {
   content: ' ';
   background: url('../../assets/svg/gh.svg');
@@ -53,5 +65,13 @@ footer {
 @media (min-width: 768px) {
   .authors ul li a:hover {
     color: #fff;
+  }
+
+  .rs_school img:hover {
+    opacity: 0.8;
+  }
+
+  .page_up:hover {
+    filter: brightness(150%);
   }
 }

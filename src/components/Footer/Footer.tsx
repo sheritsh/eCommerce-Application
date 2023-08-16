@@ -1,7 +1,6 @@
 import React from 'react';
 import classes from './Footer.module.css';
 import Container from '../UI/container/Container';
-import rs_logo from '';
 
 const Footer: React.FC = () => {
   const authorText = 'created by:';
