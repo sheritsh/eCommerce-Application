@@ -5,8 +5,6 @@ import MainPage from './pages/MainPage';
 import LoginPage from './pages/LoginPage';
 import RegistrationPage from './pages/RegistrationPage';
 import Footer from './components/Footer/Footer';
-// import LoginForm from './components/UI/forms/loginForm/LoginForm';
-// import { RegistrationForm } from './components/UI/forms/registrationForm/RegistrationForm';
 
 const App: React.FC = () => {
   return (
@@ -14,9 +12,9 @@ const App: React.FC = () => {
       <Header />
 
       <Routes>
+        <Route path="/dist" element={<MainPage />} />
         <Route path="/registration" element={<RegistrationPage />} />
         <Route path="/login" element={<LoginPage />} />
-        <Route path="/" element={<MainPage />} />
       </Routes>
 
       <Footer />

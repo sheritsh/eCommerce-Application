@@ -5,13 +5,13 @@ import Container from '../UI/container/Container';
 
 const Header: React.FC = () => {
   return (
-    <header>
-      <Container>
+    <Container>
+      <header>
         <div>Tourist Tracks Store</div>
         <nav>
-          <ul>
+          <ul className="header__nav nav">
             <li>
-              <NavLink to="/">Main Page</NavLink>
+              <NavLink to="/dist">Main Page</NavLink>
             </li>
             <li>
               <NavLink to="/login">Login</NavLink>
@@ -21,8 +21,8 @@ const Header: React.FC = () => {
             </li>
           </ul>
         </nav>
-      </Container>
-    </header>
+      </header>
+    </Container>
   );
 };
 
