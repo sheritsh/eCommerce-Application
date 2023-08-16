@@ -3,15 +3,17 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin: 2rem 0;
   padding: 2rem;
   border: 1px solid #ccc;
   border-radius: 0.5rem;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-  & > * + * {
-    margin-top: 1em;
-  }
-  & > .error-message {
-    color: red;
-  }
 }
+
+.form > * + * {
+  margin-top: 1em;
+}
+
+.form > .error-message {
+  color: red;
+}
+

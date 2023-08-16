@@ -1,14 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import Container from '../../container/Container';
+import { removeLoginError } from '../../../../store/auth/reducer';
 import Form from '../form/Form';
 import H1 from '../../titles/h1/H1';
 import Input from '../../input/Input';
 import Button from '../../button/Button';
 import H3 from '../../titles/h3/H3';
-import { ErrorMessages } from '../loginForm/LoginForm';
+import { useAppDispatch } from '../../../../store';
+import { ErrorMessages } from '../form/type';
 import ErrorMessage from '../../error-message/ErrorMessage';
+import validatePassword from '../../../../utils/validation/PasswordValidation';
 
-export const RegistrationForm: React.FC = () => {
+const RegistrationForm: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [firstName, setFirstName] = useState('');
@@ -26,7 +29,6 @@ export const RegistrationForm: React.FC = () => {
   const [cityVisited, setCityVisited] = useState(false);
   const [streetVisited, setStreetVisited] = useState(false);
   const [postCodeVisited, setPostCodeVisited] = useState(false);
-
   const [emailError, setEmailError] = useState(ErrorMessages.EmptyEmail);
   const [passwordError, setPasswordError] = useState(ErrorMessages.EmptyPassword);
   const [firstNameError, setFirstNameError] = useState(ErrorMessages.EmptyFirstName);
@@ -35,8 +37,9 @@ export const RegistrationForm: React.FC = () => {
   const [cityError, setCityError] = useState(ErrorMessages.EmptyCity);
   const [streetError, setStreetError] = useState(ErrorMessages.EmptyStreet);
   const [postCodeError, setPostCodeError] = useState(ErrorMessages.EmptyPostCode);
-
   const [formValid, setFormValid] = useState(false);
+
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     if (
@@ -70,10 +73,12 @@ export const RegistrationForm: React.FC = () => {
 
   const passwordHandler = (e: React.ChangeEvent): void => {
     const target = e.target as HTMLInputElement;
+    dispatch(removeLoginError());
     setPassword(target.value);
-    const criterion = /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])[a-zA-Z0-9!@#$%^&*]{8,}$/;
-    if (!criterion.test(String(target.value))) {
-      setPasswordError(ErrorMessages.NotValidPassword);
+
+    const passwordStatus = validatePassword(e);
+    if (passwordStatus !== 'valid') {
+      setPasswordError(passwordStatus as React.SetStateAction<ErrorMessages>);
     } else {
       setPasswordError(ErrorMessages.NoErrors);
     }
@@ -180,7 +185,7 @@ export const RegistrationForm: React.FC = () => {
   };
 
   return (
-    <Container width="30%">
+    <Container>
       <Form id="registrationForm">
         <H1 text="Registration" />
         {emailVisited && emailError && <ErrorMessage>{emailError}</ErrorMessage>}
@@ -265,3 +270,5 @@ export const RegistrationForm: React.FC = () => {
     </Container>
   );
 };
+
+export default RegistrationForm;
