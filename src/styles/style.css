@@ -1,4 +1,4 @@
-body {
+/* body {
   width: 100vw;
 }
 
@@ -7,4 +7,10 @@ body {
   justify-content: center;
   width: 1000px;
   margin: 0 auto;
+} */
+
+.main {
+  background-color: gray;
+  text-align: center;
+  height: 50vh;
 }

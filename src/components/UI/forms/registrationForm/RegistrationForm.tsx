@@ -5,10 +5,10 @@ import H1 from '../../titles/h1/H1';
 import Input from '../../input/Input';
 import Button from '../../button/Button';
 import H3 from '../../titles/h3/H3';
-import { ErrorMessages } from '../loginForm/LoginForm';
+import { ErrorMessages } from '../form/type';
 import ErrorMessage from '../../error-message/ErrorMessage';
 
-export const RegistrationForm: React.FC = () => {
+const RegistrationForm: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [firstName, setFirstName] = useState('');
@@ -265,3 +265,5 @@ export const RegistrationForm: React.FC = () => {
     </Container>
   );
 };
+
+export default RegistrationForm;
