@@ -11,6 +11,7 @@ import ErrorMessage from '../../error-message/ErrorMessage';
 import { useAppDispatch } from '../../../../store';
 import { loginUser } from '../../../../store/auth/actions';
 import { ErrorMessages, IRootState } from '../form/type';
+import validatePassword from '../../../../utils/validation/PasswordValidation';
 
 const LoginForm: React.FC = () => {
   const [username, setEmail] = useState('');
@@ -52,8 +53,10 @@ const LoginForm: React.FC = () => {
     const target = e.target as HTMLInputElement;
     dispatch(removeLoginError());
     setPassword(target.value);
-    if (target.value.length < 5 || target.value.length > 10) {
-      setPasswordError(ErrorMessages.NotValidPassword);
+
+    const passwordStatus = validatePassword(e);
+    if (passwordStatus !== 'valid') {
+      setPasswordError(passwordStatus as React.SetStateAction<ErrorMessages>);
     } else {
       setPasswordError(ErrorMessages.NoErrors);
     }
