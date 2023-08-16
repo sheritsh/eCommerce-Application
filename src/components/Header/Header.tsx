@@ -1,12 +1,18 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { NavLink, Link } from 'react-router-dom';
 import classes from './Header.module.css';
 import Container from '../UI/container/Container';
 import { IRootState } from '../../store';
+import { logout } from '../../store/auth/reducer';
 
 const Header: React.FC = () => {
+  const dispatch = useDispatch();
   const isAuthenticated = useSelector((state: IRootState) => state.auth.authData.accessToken !== null);
+
+  const handleLogout = (): void => {
+    dispatch(logout());
+  };
 
   return (
     <header>
@@ -23,19 +29,24 @@ const Header: React.FC = () => {
               {isAuthenticated ? (
                 <>
                   <li>
-                    <NavLink to="/personal-cabinet">Personal Cabinet</NavLink>
+                    <NavLink to="/profile">Profile</NavLink>
                   </li>
                   <li>
-                    <NavLink to="/shopping-cart">Shopping Cart</NavLink>
+                    <NavLink to="/shopping-cart">Cart</NavLink>
+                  </li>
+                  <li>
+                    <Link to="/dist" onClick={handleLogout}>
+                      Logout
+                    </Link>
                   </li>
                 </>
               ) : (
                 <>
                   <li>
-                    <NavLink to="/login">Login</NavLink>
+                    <NavLink to="/login">Sign In</NavLink>
                   </li>
                   <li>
-                    <NavLink to="/registration">Register</NavLink>
+                    <NavLink to="/registration">Sign Up</NavLink>
                   </li>
                 </>
               )}

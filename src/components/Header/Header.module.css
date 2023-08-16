@@ -16,7 +16,7 @@ header {
 }
 
 .nav li {
-  margin-right: 5px;
+  margin-right: max(1.5vw, 5px);
 }
 
 nav li:active {

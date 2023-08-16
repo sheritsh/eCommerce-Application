@@ -51,9 +51,16 @@ export const authReducer = createSlice({
         error: null,
       },
     }),
+    logout: (state): AuthState => ({
+      ...state,
+      authData: {
+        ...state.authData,
+        accessToken: null,
+      },
+    }),
   },
 });
 
-export const { loginStart, loginSuccess, loginFailure, removeLoginError } = authReducer.actions;
+export const { loginStart, loginSuccess, loginFailure, removeLoginError, logout } = authReducer.actions;
 
 export default authReducer.reducer;
