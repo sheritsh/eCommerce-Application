@@ -1,5 +1,57 @@
 footer {
-  height: 10vh;
+  position: relative;
   color: white;
   background-color: #1F2827;
+  padding: 1em;
+}
+
+.footer {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.rs_school {
+  width: min(10vw, 125px);
+}
+
+.rs_school img {
+  filter: invert(1);
+}
+
+.page_up {
+  position: absolute;
+  width: min(5vw, 50px);
+  height: min(5vw, 50px);
+  right: 1vw;
+  top: 1vw;
+}
+
+.authors {
+  font-weight: bold;
+}
+
+.authors ul {
+  margin-top: 1vh;
+}
+
+.authors ul li a {
+  color: #b1b1b1;
+  text-decoration: none;
+}
+
+.authors ul li a::before {
+  content: ' ';
+  background: url('../../assets/svg/gh.svg');
+  background-size: contain;
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  margin-right: 3px;
+}
+
+@media (min-width: 768px) {
+  .authors ul li a:hover {
+    color: #fff;
+  }
 }
