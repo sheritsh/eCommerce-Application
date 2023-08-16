@@ -1,7 +1,7 @@
 // import { useState } from 'react';
 import createClient from './client';
-import { ILoginRequest } from './types';
+import { ILoginRequest, ILoginResponse } from './types';
 
-export const login = (params: ILoginRequest): Promise<Response> => {
+export const login = (params: ILoginRequest): Promise<ILoginResponse> => {
   return createClient.customerPasswordFlow(params);
 };

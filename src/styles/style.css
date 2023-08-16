@@ -57,6 +57,7 @@ body {
 }
 
 .content {
+  min-height: 70vh;
   padding: 2rem;
   background-color: #E5E5E5;
 }

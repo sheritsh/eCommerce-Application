@@ -2,14 +2,15 @@ import React from 'react';
 import classes from './Button.module.css';
 
 interface ButtonProps {
+  type?: 'button' | 'submit';
   text?: string;
-  onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
+  onClick?: (event: React.MouseEvent<HTMLButtonElement>) => Promise<void>;
   disabled?: boolean;
 }
 
-const Button: React.FC<ButtonProps> = ({ text, onClick, disabled }) => {
+const Button: React.FC<ButtonProps> = ({ text, onClick, disabled, type = 'button' }) => {
   return (
-    <button onClick={onClick} disabled={disabled} className={classes.button}>
+    <button type={type} onClick={onClick} disabled={disabled} className={classes.button}>
       {text}
     </button>
   );

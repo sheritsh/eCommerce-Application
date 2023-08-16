@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, FormEvent } from 'react';
 import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import { removeLoginError } from '../../../../store/auth/reducer';
 import Form from '../form/Form';
 import H1 from '../../titles/h1/H1';
@@ -21,6 +22,7 @@ const LoginForm: React.FC = () => {
   const [buttonDisabled, setButtonDisabled] = useState(true);
 
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   const errorLogin = useSelector((state: IRootState) => state.auth.authData.error);
 
@@ -57,9 +59,14 @@ const LoginForm: React.FC = () => {
     }
   };
 
-  const sendData = (e: React.FormEvent): void => {
+  const sendData = async (e: React.FormEvent): Promise<void> => {
     e.preventDefault();
-    dispatch(loginUser({ username, password }));
+    try {
+      await dispatch(loginUser({ username, password }));
+      navigate('/dist');
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const blurHandler = (e: React.FocusEvent): void => {
@@ -78,7 +85,7 @@ const LoginForm: React.FC = () => {
   };
 
   return (
-    <Container width="30%">
+    <Container>
       <Form id="loginForm">
         <H1 text="Login page" />
         {errorLogin && <ErrorMessage>{errorLogin}</ErrorMessage>}
@@ -100,7 +107,12 @@ const LoginForm: React.FC = () => {
           type="password"
           placeholder="Enter your password"
         />
-        <Button onClick={(e): void => sendData(e)} disabled={buttonDisabled} text="Login" />
+        <Button
+          type="button"
+          onClick={(e: FormEvent): Promise<void> => sendData(e)}
+          disabled={buttonDisabled}
+          text="Login"
+        />
       </Form>
     </Container>
   );

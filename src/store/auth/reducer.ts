@@ -27,7 +27,7 @@ export const authReducer = createSlice({
         isLoading: true,
       },
     }),
-    loginSucess: (state, action: PayloadAction<string>): AuthState => ({
+    loginSuccess: (state, action: PayloadAction<string>): AuthState => ({
       ...state,
       authData: {
         ...state.authData,
@@ -54,6 +54,6 @@ export const authReducer = createSlice({
   },
 });
 
-export const { loginStart, loginSucess, loginFailure, removeLoginError } = authReducer.actions;
+export const { loginStart, loginSuccess, loginFailure, removeLoginError } = authReducer.actions;
 
 export default authReducer.reducer;

@@ -180,7 +180,7 @@ const RegistrationForm: React.FC = () => {
   };
 
   return (
-    <Container width="30%">
+    <Container>
       <Form id="registrationForm">
         <H1 text="Registration" />
         {emailVisited && emailError && <ErrorMessage>{emailError}</ErrorMessage>}

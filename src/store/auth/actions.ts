@@ -1,6 +1,6 @@
 import { Dispatch } from '@reduxjs/toolkit';
 import { ILoginRequest } from '../../api/types';
-import { loginStart, loginSucess, loginFailure } from './reducer';
+import { loginStart, loginSuccess, loginFailure } from './reducer';
 import { login } from '../../api/auth';
 
 export const loginUser =
@@ -9,7 +9,7 @@ export const loginUser =
     try {
       dispatch(loginStart());
       const response = await login(data);
-      dispatch(loginSucess(response.access_token));
+      dispatch(loginSuccess(response.access_token));
     } catch (e: unknown) {
       console.error(e);
       if (e instanceof Error) dispatch(loginFailure(e.message));
