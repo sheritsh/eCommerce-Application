@@ -4,9 +4,11 @@ import Container from '../components/UI/container/Container';
 
 const RegistrationPage: React.FC = () => {
   return (
-    <Container>
-      <RegistrationForm />
-    </Container>
+    <div className="content">
+      <Container>
+        <RegistrationForm />
+      </Container>
+    </div>
   );
 };
 

@@ -1,12 +1,14 @@
 import React from 'react';
-import './Footer.module.css';
+import classes from './Footer.module.css';
 import Container from '../UI/container/Container';
 
 const Footer: React.FC = () => {
   const footerContext = '<footer></footer>';
   return (
     <footer>
-      <Container>{footerContext}</Container>
+      <Container>
+        <div className={classes.footer}>{footerContext}</div>
+      </Container>
     </footer>
   );
 };
