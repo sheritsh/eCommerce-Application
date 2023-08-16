@@ -87,7 +87,7 @@ const LoginForm: React.FC = () => {
   return (
     <Container>
       <Form id="loginForm">
-        <H1 text="Login page" />
+        <H1 text="Login" />
         {errorLogin && <ErrorMessage>{errorLogin}</ErrorMessage>}
         {emailVisited && emailError && <ErrorMessage>{emailError}</ErrorMessage>}
         <Input
