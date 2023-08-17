@@ -13,5 +13,6 @@ export const loginUser =
     } catch (e: unknown) {
       console.error(e);
       if (e instanceof Error) dispatch(loginFailure(e.message));
+      throw new Error('Customer account with the given credentials not found');
     }
   };
