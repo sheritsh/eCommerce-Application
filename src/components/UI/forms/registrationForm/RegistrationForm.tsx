@@ -13,6 +13,7 @@ import validatePassword from '../../../../utils/validation/PasswordValidation';
 import { IRegisterRequest } from '../../../../api/types';
 import ENV from '../../../../api/env';
 import { register } from '../../../../api/auth';
+import Popup from '../../popup/popup';
 
 const RegistrationForm: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -23,7 +24,7 @@ const RegistrationForm: React.FC = () => {
   const [city, setCity] = useState('');
   const [street, setStreet] = useState('');
   const [postCode, setPostCode] = useState('');
-
+  const [popupActive, setPopupActive] = useState(false);
   const [emailVisited, setEmailVisited] = useState(false);
   const [passwordVisited, setPasswordVisited] = useState(false);
   const [firstNameVisited, setFirstNameVisited] = useState(false);
@@ -47,7 +48,7 @@ const RegistrationForm: React.FC = () => {
   const handleRegister = async (data: IRegisterRequest): Promise<void> => {
     const token = await register();
 
-    const response = await fetch(`${ENV.Host}/${ENV.ProjectKey}/customers`, {
+    await fetch(`${ENV.Host}/${ENV.ProjectKey}/customers`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -55,9 +56,9 @@ const RegistrationForm: React.FC = () => {
       },
       body: JSON.stringify(data),
     });
-    const user = await response.json();
-    // eslint-disable-next-line no-console
-    console.log(user);
+
+    setPopupActive(true);
+    setTimeout(() => setPopupActive(false), 2000);
   };
 
   useEffect(() => {
@@ -180,13 +181,13 @@ const RegistrationForm: React.FC = () => {
       case 'password':
         setPasswordVisited(true);
         break;
-      case 'first-name':
+      case 'firstName':
         setFirstNameVisited(true);
         break;
-      case 'last-name':
+      case 'lastName':
         setLastNameVisited(true);
         break;
-      case 'birth-day':
+      case 'birthDay':
         setBirthDayVisited(true);
         break;
       case 'city':
@@ -195,7 +196,7 @@ const RegistrationForm: React.FC = () => {
       case 'street':
         setStreetVisited(true);
         break;
-      case 'post-code':
+      case 'postCode':
         setPostCodeVisited(true);
         break;
       default:
@@ -306,6 +307,7 @@ const RegistrationForm: React.FC = () => {
           text="Register"
         />
       </Form>
+      <Popup active={popupActive} setActive={setPopupActive} />
     </Container>
   );
 };
