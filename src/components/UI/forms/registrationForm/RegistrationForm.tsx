@@ -13,7 +13,7 @@ import validatePassword from '../../../../utils/validation/PasswordValidation';
 import { IRegisterRequest } from '../../../../api/types';
 import ENV from '../../../../api/env';
 import { register } from '../../../../api/auth';
-import Popup from '../../popup/popup';
+import Popup from '../../popup/Popup';
 
 const RegistrationForm: React.FC = () => {
   const [email, setEmail] = useState('');
