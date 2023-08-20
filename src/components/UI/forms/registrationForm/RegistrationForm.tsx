@@ -10,6 +10,9 @@ import { useAppDispatch } from '../../../../store';
 import { ErrorMessages } from '../form/type';
 import ErrorMessage from '../../error-message/ErrorMessage';
 import validatePassword from '../../../../utils/validation/PasswordValidation';
+import { IRegisterRequest } from '../../../../api/types';
+import ENV from '../../../../api/env';
+import { register } from '../../../../api/auth';
 
 const RegistrationForm: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -40,6 +43,22 @@ const RegistrationForm: React.FC = () => {
   const [formValid, setFormValid] = useState(false);
 
   const dispatch = useAppDispatch();
+
+  const handleRegister = async (data: IRegisterRequest): Promise<void> => {
+    const token = await register();
+
+    const response = await fetch(`${ENV.Host}/${ENV.ProjectKey}/customers`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token.access_token}`,
+      },
+      body: JSON.stringify(data),
+    });
+    const user = await response.json();
+    // eslint-disable-next-line no-console
+    console.log(user);
+  };
 
   useEffect(() => {
     if (
@@ -211,7 +230,7 @@ const RegistrationForm: React.FC = () => {
           value={firstName}
           onBlur={(e): void => blurHandler(e)}
           onChange={(e): void => firstNameHandler(e)}
-          name="first-name"
+          name="firstName"
           type="text"
           placeholder="First name"
         />
@@ -220,7 +239,7 @@ const RegistrationForm: React.FC = () => {
           value={lastName}
           onBlur={(e): void => blurHandler(e)}
           onChange={(e): void => lastNameHandler(e)}
-          name="last-name"
+          name="lastName"
           type="text"
           placeholder="Last name"
         />
@@ -230,7 +249,7 @@ const RegistrationForm: React.FC = () => {
           value={birthDay}
           onBlur={(e): void => blurHandler(e)}
           onChange={(e): void => birthDayHandler(e)}
-          name="birth-day"
+          name="birthDay"
           type="date"
         />
         <H3 text="Address:" />
@@ -261,11 +280,31 @@ const RegistrationForm: React.FC = () => {
           value={postCode}
           onBlur={(e): void => blurHandler(e)}
           onChange={(e): void => postCodeHandler(e)}
-          name="post-code"
+          name="postCode"
           type="text"
           placeholder="Post code"
         />
-        <Button disabled={!formValid} text="Register" />
+        <Button
+          onClick={(): Promise<void> =>
+            handleRegister({
+              email,
+              password,
+              firstName,
+              lastName,
+              birthDay,
+              addresses: [
+                {
+                  country: 'US',
+                  city,
+                  street,
+                  postCode,
+                },
+              ],
+            })
+          }
+          disabled={!formValid}
+          text="Register"
+        />
       </Form>
     </Container>
   );
