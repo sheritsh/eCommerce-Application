@@ -22,7 +22,7 @@ const Footer: React.FC = () => {
               </li>
             </ul>
           </div>
-          <div className={classes.copyright}>Copyright ©2023</div>
+          <div className={classes.copyright}>Tourist Tracks Store ©2023</div>
           <div className={classes.rs_school}>
             <a href="https://rs.school/js/">
               <img src="../../src/assets/svg/rs_school_js.svg" alt="RS_School_logo" width="100%"></img>

@@ -7,6 +7,9 @@ import RegistrationPage from './pages/RegistrationPage';
 import ProfilePage from './pages/ProfilePage';
 import CartPage from './pages/CartPage';
 import Footer from './components/Footer/Footer';
+import NotFoundPage from './pages/NotFoundPage';
+import PrivateRoute from './components/Routing/PrivateRoute';
+import GuestRoute from './components/Routing/GuestRoute';
 
 const App: React.FC = () => {
   return (
@@ -15,10 +18,41 @@ const App: React.FC = () => {
 
       <Routes>
         <Route path="/dist" element={<MainPage />} />
-        <Route path="/registration" element={<RegistrationPage />} />
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/profile" element={<ProfilePage />} />
-        <Route path="/shopping-cart" element={<CartPage />} />
+        <Route path="*" element={<NotFoundPage />} />
+
+        <Route
+          path="/login"
+          element={
+            <GuestRoute>
+              <LoginPage />
+            </GuestRoute>
+          }
+        />
+        <Route
+          path="/registration"
+          element={
+            <GuestRoute>
+              <RegistrationPage />
+            </GuestRoute>
+          }
+        />
+
+        <Route
+          path="/profile"
+          element={
+            <PrivateRoute>
+              <ProfilePage />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/shopping-cart"
+          element={
+            <PrivateRoute>
+              <CartPage />
+            </PrivateRoute>
+          }
+        />
       </Routes>
 
       <Footer />
