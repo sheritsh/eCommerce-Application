@@ -17,7 +17,7 @@ const App: React.FC = () => {
       <Header />
 
       <Routes>
-        <Route path="/dist" element={<MainPage />} />
+        <Route path="/" element={<MainPage />} />
         <Route path="*" element={<NotFoundPage />} />
 
         <Route
