@@ -22,28 +22,29 @@ const RegistrationForm: React.FC = () => {
   const [password, setPassword] = useState('');
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
-  const [birthDay, setBirthDay] = useState('');
+  const [dateOfBirth, setDateOfBirth] = useState('');
+  const [country, setCountry] = useState('');
   const [city, setCity] = useState('');
-  const [street, setStreet] = useState('');
-  const [postCode, setPostCode] = useState('');
+  const [streetName, setStreetName] = useState('');
+  const [postalCode, setPostalCode] = useState('');
   const [popupActive, setPopupActive] = useState(false);
   const [popupErrActive, setPopupErrActive] = useState(false);
   const [emailVisited, setEmailVisited] = useState(false);
   const [passwordVisited, setPasswordVisited] = useState(false);
   const [firstNameVisited, setFirstNameVisited] = useState(false);
   const [lastNameVisited, setLastNameVisited] = useState(false);
-  const [birthDayVisited, setBirthDayVisited] = useState(false);
+  const [dateOfBirthVisited, setDateOfBirthVisited] = useState(false);
   const [cityVisited, setCityVisited] = useState(false);
-  const [streetVisited, setStreetVisited] = useState(false);
-  const [postCodeVisited, setPostCodeVisited] = useState(false);
+  const [streetNameVisited, setStreetNameVisited] = useState(false);
+  const [postalCodeVisited, setPostalCodeVisited] = useState(false);
   const [emailError, setEmailError] = useState(ErrorMessages.EmptyEmail);
   const [passwordError, setPasswordError] = useState(ErrorMessages.EmptyPassword);
   const [firstNameError, setFirstNameError] = useState(ErrorMessages.EmptyFirstName);
   const [lastNameError, setLastNameError] = useState(ErrorMessages.EmptyLastName);
-  const [birthDayError, setBirthDayError] = useState(ErrorMessages.EmptyBirthDay);
+  const [dateOfBirthError, setDateOfBirthError] = useState(ErrorMessages.EmptyDateOfBirth);
   const [cityError, setCityError] = useState(ErrorMessages.EmptyCity);
-  const [streetError, setStreetError] = useState(ErrorMessages.EmptyStreet);
-  const [postCodeError, setPostCodeError] = useState(ErrorMessages.EmptyPostCode);
+  const [streetNameError, setStreetNameError] = useState(ErrorMessages.EmptyStreetName);
+  const [postalCodeError, setPostalCodeError] = useState(ErrorMessages.EmptyPostalCode);
   const [formValid, setFormValid] = useState(false);
   const [passwordFieldType, setPasswordFieldType] = useState<'password' | 'text'>('password');
 
@@ -82,16 +83,25 @@ const RegistrationForm: React.FC = () => {
       passwordError ||
       firstNameError ||
       lastNameError ||
-      birthDayError ||
+      dateOfBirthError ||
       cityError ||
-      streetError ||
-      postCodeError
+      streetNameError ||
+      postalCodeError
     ) {
       setFormValid(false);
     } else {
       setFormValid(true);
     }
-  }, [emailError, passwordError, firstNameError, lastNameError, birthDayError, cityError, streetError, postCodeError]);
+  }, [
+    emailError,
+    passwordError,
+    firstNameError,
+    lastNameError,
+    dateOfBirthError,
+    cityError,
+    streetNameError,
+    postalCodeError,
+  ]);
 
   const emailHandler = (e: React.ChangeEvent): void => {
     const target = e.target as HTMLInputElement;
@@ -141,18 +151,23 @@ const RegistrationForm: React.FC = () => {
     }
   };
 
-  const birthDayHandler = (e: React.ChangeEvent): void => {
+  const dateOfBirthHandler = (e: React.ChangeEvent): void => {
     const target = e.target as HTMLInputElement;
     const today = new Date();
     const birthDate = new Date(target.value);
     const msInYear = 31536000000;
     const age = Math.trunc((+today - +birthDate) / msInYear);
-    setBirthDay(target.value);
+    setDateOfBirth(target.value);
     if (age < 13) {
-      setBirthDayError(ErrorMessages.NotValidBirthDay);
+      setDateOfBirthError(ErrorMessages.NotValidDateOfBirth);
     } else {
-      setBirthDayError(ErrorMessages.NoErrors);
+      setDateOfBirthError(ErrorMessages.NoErrors);
     }
+  };
+
+  const countryHandler = (e: React.ChangeEvent): void => {
+    const target = e.target as HTMLInputElement;
+    setCountry(target.value);
   };
 
   const cityHandler = (e: React.ChangeEvent): void => {
@@ -166,25 +181,25 @@ const RegistrationForm: React.FC = () => {
     }
   };
 
-  const streetHandler = (e: React.ChangeEvent): void => {
+  const streetNameHandler = (e: React.ChangeEvent): void => {
     const target = e.target as HTMLInputElement;
-    setStreet(target.value);
+    setStreetName(target.value);
     const criterion = /^[a-zA-Z0-9][a-zA-Z0-9 ]*[a-zA-Z0-9]$/;
     if (!criterion.test(String(target.value))) {
-      setStreetError(ErrorMessages.NotValidStreet);
+      setStreetNameError(ErrorMessages.NotValidStreetName);
     } else {
-      setStreetError(ErrorMessages.NoErrors);
+      setStreetNameError(ErrorMessages.NoErrors);
     }
   };
 
-  const postCodeHandler = (e: React.ChangeEvent): void => {
+  const postalCodeHandler = (e: React.ChangeEvent): void => {
     const target = e.target as HTMLInputElement;
-    setPostCode(target.value);
+    setPostalCode(target.value);
     const criterion = /^[0-9]{5}$/;
     if (!criterion.test(String(target.value))) {
-      setPostCodeError(ErrorMessages.NotValidPostCode);
+      setPostalCodeError(ErrorMessages.NotValidPostalCode);
     } else {
-      setPostCodeError(ErrorMessages.NoErrors);
+      setPostalCodeError(ErrorMessages.NoErrors);
     }
   };
 
@@ -202,17 +217,17 @@ const RegistrationForm: React.FC = () => {
       case 'lastName':
         setLastNameVisited(true);
         break;
-      case 'birthDay':
-        setBirthDayVisited(true);
+      case 'dateOfBirth':
+        setDateOfBirthVisited(true);
         break;
       case 'city':
         setCityVisited(true);
         break;
-      case 'street':
-        setStreetVisited(true);
+      case 'streetName':
+        setStreetNameVisited(true);
         break;
-      case 'postCode':
-        setPostCodeVisited(true);
+      case 'postalCode':
+        setPostalCodeVisited(true);
         break;
       default:
         break;
@@ -263,16 +278,16 @@ const RegistrationForm: React.FC = () => {
           placeholder="Last name"
         />
         <H3 text="Date of birth:" />
-        {birthDayVisited && birthDayError && <ErrorMessage>{birthDayError}</ErrorMessage>}
+        {dateOfBirthVisited && dateOfBirthError && <ErrorMessage>{dateOfBirthError}</ErrorMessage>}
         <Input
-          value={birthDay}
+          value={dateOfBirth}
           onBlur={(e): void => blurHandler(e)}
-          onChange={(e): void => birthDayHandler(e)}
-          name="birthDay"
+          onChange={(e): void => dateOfBirthHandler(e)}
+          name="dateOfBirth"
           type="date"
         />
         <H3 text="Address:" />
-        <select name="country">
+        <select onChange={(e): void => countryHandler(e)} name="country">
           <option value="US">United States</option>
           <option value="DE">Germany</option>
         </select>
@@ -285,21 +300,21 @@ const RegistrationForm: React.FC = () => {
           type="text"
           placeholder="City"
         />
-        {streetVisited && streetError && <ErrorMessage>{streetError}</ErrorMessage>}
+        {streetNameVisited && streetNameError && <ErrorMessage>{streetNameError}</ErrorMessage>}
         <Input
-          value={street}
+          value={streetName}
           onBlur={(e): void => blurHandler(e)}
-          onChange={(e): void => streetHandler(e)}
-          name="street"
+          onChange={(e): void => streetNameHandler(e)}
+          name="streetName"
           type="text"
           placeholder="Street"
         />
-        {postCodeVisited && postCodeError && <ErrorMessage>{postCodeError}</ErrorMessage>}
+        {postalCodeVisited && postalCodeError && <ErrorMessage>{postalCodeError}</ErrorMessage>}
         <Input
-          value={postCode}
+          value={postalCode}
           onBlur={(e): void => blurHandler(e)}
-          onChange={(e): void => postCodeHandler(e)}
-          name="postCode"
+          onChange={(e): void => postalCodeHandler(e)}
+          name="postalCode"
           type="text"
           placeholder="Post code"
         />
@@ -310,13 +325,13 @@ const RegistrationForm: React.FC = () => {
               password,
               firstName,
               lastName,
-              birthDay,
+              dateOfBirth,
               addresses: [
                 {
-                  country: 'US',
+                  country,
                   city,
-                  street,
-                  postCode,
+                  streetName,
+                  postalCode,
                 },
               ],
             })
