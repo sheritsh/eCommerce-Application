@@ -6,7 +6,7 @@ import { IRootState } from '../../store';
 const PrivateRoute: React.FC<RouteProps> = ({ children }) => {
   const isAuthenticated = useSelector((state: IRootState) => state.auth.authData.accessToken !== null);
 
-  return <>{isAuthenticated ? children : <Navigate to="/dist" />}</>;
+  return <>{isAuthenticated ? children : <Navigate to="/" />}</>;
 };
 
 export default PrivateRoute;

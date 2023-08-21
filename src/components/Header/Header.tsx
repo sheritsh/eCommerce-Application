@@ -19,12 +19,12 @@ const Header: React.FC = () => {
       <Container>
         <div className={classes.header}>
           <div className={classes.header__title} id="title">
-            <Link to="/dist">Tourist Tracks Store</Link>
+            <Link to="/">Tourist Tracks Store</Link>
           </div>
           <nav>
             <ul className={classes.nav}>
               <li>
-                <NavLink to="/dist">Main Page</NavLink>
+                <NavLink to="/">Main Page</NavLink>
               </li>
               {isAuthenticated ? (
                 <>
@@ -35,7 +35,7 @@ const Header: React.FC = () => {
                     <NavLink to="/shopping-cart">Cart</NavLink>
                   </li>
                   <li>
-                    <Link to="/dist" onClick={handleLogout}>
+                    <Link to="/" onClick={handleLogout}>
                       Logout
                     </Link>
                   </li>
