@@ -1,6 +1,6 @@
 import React, { useState, useEffect, FormEvent } from 'react';
 import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { removeLoginError } from '../../../../store/auth/reducer';
 import Form from '../form/Form';
 import H1 from '../../titles/h1/H1';
@@ -116,6 +116,9 @@ const LoginForm: React.FC = () => {
           disabled={buttonDisabled}
           text="Login"
         />
+        <div>
+          Don't have an account yet? <Link to="/registration">Sign up</Link> in a few easy steps.
+        </div>
       </Form>
     </Container>
   );
