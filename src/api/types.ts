@@ -7,6 +7,10 @@ export interface ILoginResponse {
   access_token: string;
 }
 
+export interface IRegisterResponce {
+  access_token: string;
+}
+
 export interface ICredentials {
   clientId: string;
   clientSecret: string;
@@ -18,4 +22,14 @@ export interface ISdkAuthOptions {
   credentials: ICredentials;
   fetch?: unknown;
   customerPasswordFlow: ({ username, password }: ILoginRequest) => Promise<ILoginResponse>;
+  clientCredentialsFlow: () => Promise<IRegisterResponce>;
+}
+
+export interface IRegisterRequest {
+  email: string;
+  password: string;
+  firstName: string;
+  lastName: string;
+  birthDay: string;
+  addresses: [{ country: string; city: string; street: string; postCode: string }];
 }
