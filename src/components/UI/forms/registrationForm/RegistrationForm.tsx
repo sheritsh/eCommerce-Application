@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Container from '../../container/Container';
 import { removeLoginError } from '../../../../store/auth/reducer';
 import Form from '../form/Form';
@@ -48,6 +48,7 @@ const RegistrationForm: React.FC = () => {
   const [passwordFieldType, setPasswordFieldType] = useState<'password' | 'text'>('password');
 
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   const togglePasswordVisibility = (): void => {
     setPasswordFieldType((prevType) => (prevType === 'password' ? 'text' : 'password'));
@@ -71,6 +72,7 @@ const RegistrationForm: React.FC = () => {
     } else {
       setPopupActive(true);
       setTimeout(() => setPopupActive(false), 2000);
+      setTimeout(() => navigate('/'), 2500);
     }
   };
 
@@ -156,7 +158,7 @@ const RegistrationForm: React.FC = () => {
   const cityHandler = (e: React.ChangeEvent): void => {
     const target = e.target as HTMLInputElement;
     setCity(target.value);
-    const criterion = /^[a-zA-Z0-9][a-zA-Z0-9 ]*[a-zA-Z0-9]$/;
+    const criterion = /^[a-zA-Z0-9!@#$%^&*]{1,}$/;
     if (!criterion.test(String(target.value))) {
       setCityError(ErrorMessages.NotValidCity);
     } else {
@@ -167,7 +169,7 @@ const RegistrationForm: React.FC = () => {
   const streetHandler = (e: React.ChangeEvent): void => {
     const target = e.target as HTMLInputElement;
     setStreet(target.value);
-    const criterion = /^[a-zA-Z0-9!@#$%^&*]{1,}$/;
+    const criterion = /^[a-zA-Z0-9][a-zA-Z0-9 ]*[a-zA-Z0-9]$/;
     if (!criterion.test(String(target.value))) {
       setStreetError(ErrorMessages.NotValidStreet);
     } else {
