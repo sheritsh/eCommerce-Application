@@ -1,4 +1,4 @@
-import { ErrorMessages } from '../../components/UI/forms/Form/type';
+import { ErrorMessages } from '../../components/UI/forms/form/type';
 
 const validatePassword = (e: React.ChangeEvent): string => {
   const target = e.target as HTMLInputElement;

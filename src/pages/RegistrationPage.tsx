@@ -1,6 +1,6 @@
 import React from 'react';
-import RegistrationForm from '../components/UI/forms/RegistrationForm/RegistrationForm';
-import Container from '../components/UI/Container/Container';
+import RegistrationForm from '../components/UI/forms/registrationForm/RegistrationForm';
+import Container from '../components/UI/container/Container';
 
 const RegistrationPage: React.FC = () => {
   return (
