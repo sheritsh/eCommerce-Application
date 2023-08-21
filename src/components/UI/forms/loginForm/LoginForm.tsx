@@ -71,9 +71,9 @@ const LoginForm: React.FC = () => {
     e.preventDefault();
     try {
       await dispatch(loginUser({ username, password }));
-      navigate('/dist');
+      navigate('/');
     } catch (error) {
-      console.error(error);
+      // console.error(error);
     }
   };
 
