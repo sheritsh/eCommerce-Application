@@ -4,7 +4,7 @@ const config = {
     "^[./a-zA-Z0-9$_-]+\\.png$": "RelativeImageStub",
     "\\.(css|less|scss|sass)$": "identity-obj-proxy",
   },
-  testEnvironment: 'node',
+  testEnvironment: 'jsdom',
   verbose: true,
   collectCoverageFrom: [
     "./src/**/*.tsx",

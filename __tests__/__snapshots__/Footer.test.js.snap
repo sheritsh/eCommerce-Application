@@ -1,0 +1,75 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Footer renders correctly 1`] = `
+<footer>
+  <div
+    className="container"
+  >
+    <div
+      className="footer"
+    >
+      <div
+        className="authors"
+      >
+        created by:
+         
+        <br />
+        <ul>
+          <li>
+            <a
+              href="https://github.com/ekatrif"
+            >
+              ekatrif
+            </a>
+          </li>
+          <li>
+            <a
+              href="https://github.com/sheritsh"
+            >
+              sheritsh
+            </a>
+          </li>
+          <li>
+            <a
+              href="https://github.com/montek1o"
+            >
+              montek1o
+            </a>
+          </li>
+        </ul>
+      </div>
+      <div
+        className="copyright"
+      >
+        Tourist Tracks Store ©2023
+      </div>
+      <div
+        className="rs_school"
+      >
+        <a
+          href="https://rs.school/js/"
+        >
+          <img
+            alt="RS_School_logo"
+            src="../../src/assets/svg/rs_school_js.svg"
+            width="100%"
+          />
+        </a>
+      </div>
+    </div>
+    <div
+      className="page_up"
+    >
+      <a
+        href="#"
+      >
+        <img
+          alt="page_up"
+          src="../../src/assets/svg/arrow_up.svg"
+          width="100%"
+        />
+      </a>
+    </div>
+  </div>
+</footer>
+`;

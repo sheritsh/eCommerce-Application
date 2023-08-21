@@ -1,6 +1,6 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
-import Input from '../components/UI/input/Input';
+import Input from '../src/components/UI/input/Input';
 
 test('Input renders correctly', () => {
   const tree = renderer

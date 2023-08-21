@@ -1,10 +1,10 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
-import Container from '../components/UI/container/Container';
+import MainPage from '../src/pages/MainPage';
 
-test('Empty container renders correctly', () => {
+test('MainPage renders correctly', () => {
   const tree = renderer
-    .create(<Container />)
+    .create(<MainPage />)
     .toJSON();
   expect(tree).toMatchSnapshot();
 });

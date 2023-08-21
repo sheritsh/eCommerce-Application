@@ -1,10 +1,10 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
-import Form from '../components/UI/forms/form/Form';
+import RegistrationPage from '../src/pages/RegistrationPage';
 
-test('Form renders correctly', () => {
+test('RegistrationPage renders correctly', () => {
   const tree = renderer
-    .create(<Form id="loginForm"></Form>)
+    .create(<RegistrationPage />)
     .toJSON();
   expect(tree).toMatchSnapshot();
 });

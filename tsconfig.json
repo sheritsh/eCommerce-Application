@@ -10,7 +10,7 @@
     "jsx": "react-jsx",
   },
   "plugins": [{ "name": "typescript-plugin-css-modules" }],
-  "include": ["./src/**/*"],
+  "include": ["./src/**/*", "__tests__", "__mocks__", "__mocks__"],
   "typeRoots": [
     "./node_modules/@types",
   ]     
