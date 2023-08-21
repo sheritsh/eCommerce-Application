@@ -2,11 +2,11 @@ import { configureStore } from '@reduxjs/toolkit';
 import { useDispatch } from 'react-redux';
 
 import logger from 'redux-logger';
-import authReducerInstance from './auth/reducer';
+import authReducerObj from './auth/reducer';
 
 export const store = configureStore({
   reducer: {
-    auth: authReducerInstance,
+    auth: authReducerObj,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(...(process.env.NODE_ENV !== 'production' ? [logger] : [])),
