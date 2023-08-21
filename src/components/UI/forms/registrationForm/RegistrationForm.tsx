@@ -15,6 +15,7 @@ import { IRegisterRequest } from '../../../../api/types';
 import ENV from '../../../../api/env';
 import { register } from '../../../../api/auth';
 import Popup from '../../popup/Popup';
+import PopupErr from '../../popup/PopupErr';
 
 const RegistrationForm: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -26,6 +27,7 @@ const RegistrationForm: React.FC = () => {
   const [street, setStreet] = useState('');
   const [postCode, setPostCode] = useState('');
   const [popupActive, setPopupActive] = useState(false);
+  const [popupErrActive, setPopupErrActive] = useState(false);
   const [emailVisited, setEmailVisited] = useState(false);
   const [passwordVisited, setPasswordVisited] = useState(false);
   const [firstNameVisited, setFirstNameVisited] = useState(false);
@@ -54,7 +56,7 @@ const RegistrationForm: React.FC = () => {
   const handleRegister = async (data: IRegisterRequest): Promise<void> => {
     const token = await register();
 
-    await fetch(`${ENV.Host}/${ENV.ProjectKey}/customers`, {
+    const response = await fetch(`${ENV.Host}/${ENV.ProjectKey}/customers`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -63,8 +65,13 @@ const RegistrationForm: React.FC = () => {
       body: JSON.stringify(data),
     });
 
-    setPopupActive(true);
-    setTimeout(() => setPopupActive(false), 2000);
+    if (response.status === 400) {
+      setPopupErrActive(true);
+      setTimeout(() => setPopupErrActive(false), 2000);
+    } else {
+      setPopupActive(true);
+      setTimeout(() => setPopupActive(false), 2000);
+    }
   };
 
   useEffect(() => {
@@ -149,7 +156,7 @@ const RegistrationForm: React.FC = () => {
   const cityHandler = (e: React.ChangeEvent): void => {
     const target = e.target as HTMLInputElement;
     setCity(target.value);
-    const criterion = /^[a-zA-Z]{1,}$/;
+    const criterion = /^[a-zA-Z0-9][a-zA-Z0-9 ]*[a-zA-Z0-9]$/;
     if (!criterion.test(String(target.value))) {
       setCityError(ErrorMessages.NotValidCity);
     } else {
@@ -320,6 +327,7 @@ const RegistrationForm: React.FC = () => {
         </div>
       </Form>
       <Popup active={popupActive} setActive={setPopupActive} />
+      <PopupErr active={popupErrActive} setActive={setPopupErrActive} />
     </Container>
   );
 };
