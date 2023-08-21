@@ -13,7 +13,7 @@ const NotFound: React.FC = () => {
           Sorry but the page you are looking for does not exist, have been removed. name changed or is temporarily
           unavailable
         </p>
-        <Link to="/dist">Back to homepage</Link>
+        <Link to="/">Back to homepage</Link>
       </div>
     </div>
   );

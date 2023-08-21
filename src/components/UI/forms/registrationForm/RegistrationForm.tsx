@@ -43,8 +43,13 @@ const RegistrationForm: React.FC = () => {
   const [streetError, setStreetError] = useState(ErrorMessages.EmptyStreet);
   const [postCodeError, setPostCodeError] = useState(ErrorMessages.EmptyPostCode);
   const [formValid, setFormValid] = useState(false);
+  const [passwordFieldType, setPasswordFieldType] = useState<'password' | 'text'>('password');
 
   const dispatch = useAppDispatch();
+
+  const togglePasswordVisibility = (): void => {
+    setPasswordFieldType((prevType) => (prevType === 'password' ? 'text' : 'password'));
+  };
 
   const handleRegister = async (data: IRegisterRequest): Promise<void> => {
     const token = await register();
@@ -224,10 +229,13 @@ const RegistrationForm: React.FC = () => {
           onBlur={(e): void => blurHandler(e)}
           onChange={(e): void => passwordHandler(e)}
           name="password"
-          type="password"
+          type={passwordFieldType}
           placeholder="Password"
         />
         {firstNameVisited && firstNameError && <ErrorMessage>{firstNameError}</ErrorMessage>}
+        <button className="password_hide" type="button" onClick={togglePasswordVisibility}>
+          {passwordFieldType === 'password' ? 'Show' : 'Hide'} Password
+        </button>
         <Input
           value={firstName}
           onBlur={(e): void => blurHandler(e)}
