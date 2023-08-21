@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import Container from '../../container/Container';
 import { removeLoginError } from '../../../../store/auth/reducer';
 import Form from '../form/Form';
@@ -306,6 +307,9 @@ const RegistrationForm: React.FC = () => {
           disabled={!formValid}
           text="Register"
         />
+        <div>
+          Already have an account? <Link to="/login">Log in</Link>!
+        </div>
       </Form>
       <Popup active={popupActive} setActive={setPopupActive} />
     </Container>
