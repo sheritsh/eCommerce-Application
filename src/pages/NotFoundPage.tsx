@@ -1,5 +1,5 @@
 import React from 'react';
-import Container from '../components/UI/container/Container';
+import Container from '../components/UI/Container/Container';
 import NotFound from '../components/NotFound/NotFound';
 
 const NotFoundPage: React.FC = () => {

@@ -2,16 +2,16 @@ import React, { useState, useEffect, FormEvent } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { removeLoginError } from '../../../../store/auth/reducer';
-import Form from '../form/Form';
-import H1 from '../../titles/h1/H1';
-import Input from '../../input/Input';
-import Container from '../../container/Container';
-import Button from '../../button/Button';
-import ErrorMessage from '../../error-message/ErrorMessage';
+import Form from '../Form/Form';
+import H1 from '../../titles/H1/H1';
+import Input from '../../Input/Input';
+import Container from '../../Container/Container';
+import Button from '../../Button/Button';
+import ErrorMessage from '../../ErrorMessage/ErrorMessage';
 import { useAppDispatch } from '../../../../store';
 import { loginUser } from '../../../../store/auth/actions';
-import { ErrorMessages, IRootState } from '../form/type';
-import validatePassword from '../../../../utils/validation/PasswordValidation';
+import { ErrorMessages, IRootState } from '../Form/type';
+import validatePassword from '../../../../utils/validation/password-validation';
 
 const LoginForm: React.FC = () => {
   const [username, setEmail] = useState('');

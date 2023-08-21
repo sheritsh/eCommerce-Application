@@ -1,6 +1,6 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
-import H3 from '../src/components/UI/titles/h3/H3';
+import H3 from '../src/components/UI/titles/H3/H3';
 
 test('H3 title renders correctly', () => {
   const tree = renderer
