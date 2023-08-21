@@ -2,7 +2,8 @@ module.exports = {
   plugins: ["@babel/plugin-transform-modules-commonjs"],
   presets: [
     ["@babel/preset-env",
-      { "targets": { "node": "current" } }
+      { "targets": { "node": "current" },
+      }
     ],
     [
       "@babel/preset-react",
@@ -11,6 +12,6 @@ module.exports = {
         runtime: 'automatic',
       },
     ],
-    "@babel/preset-typescript", 
+    "@babel/preset-typescript",
   ],
 };

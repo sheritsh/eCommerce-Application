@@ -1,4 +1,5 @@
 import SdkAuth from '@commercetools/sdk-auth';
+import fetch from 'node-fetch';
 import ENV from './env';
 import Endpoints from './endpoints';
 import { ISdkAuthOptions } from './types';

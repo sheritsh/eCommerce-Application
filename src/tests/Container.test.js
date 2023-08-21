@@ -1,6 +1,6 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
-import Container from '../components/UI/container/Container.tsx';
+import Container from '../components/UI/container/Container';
 
 test('Empty container renders correctly', () => {
   const tree = renderer

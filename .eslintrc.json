@@ -25,5 +25,5 @@
     "@typescript-eslint/explicit-function-return-type": "error",
     "no-console": ["error", { "allow": ["warn", "error"] }]
   },
-  "ignorePatterns": ["*.config.js", "typings.d.ts", "*.test.js"]
+  "ignorePatterns": ["*.config.js", "typings.d.ts", "*.test.js", "**/__mocks__/*.js"]
 }
