@@ -21,8 +21,8 @@ export const enum ErrorMessages {
   NotValidFirstName = 'First name: must contain at least one character and not contain special characters or numbers',
   NotValidLastName = 'Last name: must contain at least one character and not contain special characters or numbers.',
   NotValidBirthDay = 'You must be over 13 years old',
-  NotValidStreet = 'Street: must contain at least one character and ',
-  NotValidCity = 'City: must contain at least 1 character, should not include special characters, and must not start or end with a space.',
+  NotValidStreet = 'Street: must contain at least 1 character, should not include special characters, and must not start or end with a space.',
+  NotValidCity = 'City: must contain at least one character',
   NotValidPostCode = 'The index of your country must contain 5 digits',
 }
 
