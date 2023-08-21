@@ -1,6 +1,6 @@
 import React from 'react';
-import Container from '../components/UI/container/Container';
-import H1 from '../components/UI/titles/h1/H1';
+import Container from '../components/UI/Container/Container';
+import H1 from '../components/UI/titles/H1/H1';
 
 const CartPage: React.FC = () => {
   return (

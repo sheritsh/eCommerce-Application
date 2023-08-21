@@ -1,19 +1,19 @@
 import React, { useState, useEffect } from 'react';
-import Container from '../../container/Container';
+import Container from '../../Container/Container';
 import { removeLoginError } from '../../../../store/auth/reducer';
-import Form from '../form/Form';
-import H1 from '../../titles/h1/H1';
-import Input from '../../input/Input';
-import Button from '../../button/Button';
-import H3 from '../../titles/h3/H3';
+import Form from '../Form/Form';
+import H1 from '../../titles/H1/H1';
+import Input from '../../Input/Input';
+import Button from '../../Button/Button';
+import H3 from '../../titles/H3/H3';
 import { useAppDispatch } from '../../../../store';
-import { ErrorMessages } from '../form/type';
-import ErrorMessage from '../../error-message/ErrorMessage';
-import validatePassword from '../../../../utils/validation/PasswordValidation';
+import { ErrorMessages } from '../Form/type';
+import ErrorMessage from '../../ErrorMessage/ErrorMessage';
+import validatePassword from '../../../../utils/validation/password-validation';
 import { IRegisterRequest } from '../../../../api/types';
 import ENV from '../../../../api/env';
 import { register } from '../../../../api/auth';
-import Popup from '../../popup/Popup';
+import Popup from '../../Popup/Popup';
 
 const RegistrationForm: React.FC = () => {
   const [email, setEmail] = useState('');

@@ -2,7 +2,7 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { NavLink, Link } from 'react-router-dom';
 import classes from './Header.module.css';
-import Container from '../UI/container/Container';
+import Container from '../UI/Container/Container';
 import { IRootState } from '../../store';
 import { logout } from '../../store/auth/reducer';
 
