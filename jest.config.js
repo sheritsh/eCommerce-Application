@@ -10,7 +10,7 @@ const config = {
     "./src/**/*.tsx",
     "!**/node_modules/**",
   ],
-  transformIgnorePatterns: [],
+  displayName: 'eCommerce testing',
 };
 
 module.exports = config;

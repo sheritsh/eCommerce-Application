@@ -1,17 +1,18 @@
 {
   "compilerOptions": {
     "target": "es2017",
-    "module": "commonjs",
+    "module": "ES2022",
     "strict": true,
     "noImplicitAny": true,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "skipLibCheck": true,
     "jsx": "react-jsx",
+    "moduleResolution": "node",  
   },
   "plugins": [{ "name": "typescript-plugin-css-modules" }],
-  "include": ["./src/**/*", "__tests__", "__mocks__", "__mocks__"],
+  "include": ["./src/**/*"],
   "typeRoots": [
     "./node_modules/@types",
-  ]     
+  ],   
 }
