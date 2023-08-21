@@ -21,11 +21,16 @@ const LoginForm: React.FC = () => {
   const [emailError, setEmailError] = useState(ErrorMessages.EmptyEmail);
   const [passwordError, setPasswordError] = useState(ErrorMessages.EmptyPassword);
   const [buttonDisabled, setButtonDisabled] = useState(true);
+  const [passwordFieldType, setPasswordFieldType] = useState<'password' | 'text'>('password');
 
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   const errorLogin = useSelector((state: IRootState) => state.auth.authData.error);
+
+  const togglePasswordVisibility = (): void => {
+    setPasswordFieldType((prevType) => (prevType === 'password' ? 'text' : 'password'));
+  };
 
   useEffect(() => {
     if (!emailError && !passwordError) {
@@ -107,9 +112,12 @@ const LoginForm: React.FC = () => {
           onBlur={(e): void => blurHandler(e)}
           onChange={(e): void => passwordHandler(e)}
           name="password"
-          type="password"
+          type={passwordFieldType}
           placeholder="Enter your password"
         />
+        <button className="password_hide" type="button" onClick={togglePasswordVisibility}>
+          {passwordFieldType === 'password' ? 'Show' : 'Hide'} Password
+        </button>
         <Button
           type="button"
           onClick={(e: FormEvent): Promise<void> => sendData(e)}
