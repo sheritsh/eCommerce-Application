@@ -11,6 +11,10 @@ const config = {
     userAgent: 'Agent/007',
   },
   verbose: true,
+  collectCoverageFrom: [
+    "./src/**/*.tsx",
+    "!**/node_modules/**",
+]
 };
 
 module.exports = config;
