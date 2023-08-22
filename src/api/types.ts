@@ -30,6 +30,6 @@ export interface IRegisterRequest {
   password: string;
   firstName: string;
   lastName: string;
-  birthDay: string;
-  addresses: [{ country: string; city: string; street: string; postCode: string }];
+  dateOfBirth: string;
+  addresses: [{ country: string; city: string; streetName: string; postalCode: string }];
 }
