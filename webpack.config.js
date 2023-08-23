@@ -8,7 +8,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const mode = process.env.NODE_ENV || 'development';
 
 const baseConfig = {
-  entry: path.resolve(__dirname, './src/index.ts'),
+  entry: path.resolve(__dirname, './src/index.tsx'),
   mode: 'development',
   module: {
     rules: [
@@ -36,30 +36,34 @@ const baseConfig = {
         ],
       },
       {
-        test: /\.(ts|js)x?$/,
+        test: /\.(js|jsx)$/, 
         exclude: /node_modules/,
-        loader: 'babel-loader',
+        loader: "babel-loader",
       },
+      { 
+        test: /\.(ts|tsx)$/, 
+        loader: "babel-loader" 
+      }
     ],
   },
   resolve: {
-    extensions: ['.ts', '.tsx', '.js', '.json']
-},
+    extensions: [".*", ".js", ".jsx", ".ts", ".tsx"],    
+  },
   output: {
     filename: 'bundle.js',
     path: path.resolve(__dirname, 'dist'),
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: path.resolve(__dirname, './src/index.html'),
+      template: path.resolve(__dirname, 'public/index.html'),
       filename: 'index.html',
     }),
     new CleanWebpackPlugin(),
     new CopyWebpackPlugin({
       patterns: [
         {
-          from: path.resolve(__dirname, 'src/img'),
-          to: path.resolve(__dirname, 'dist/img')
+          from: path.resolve(__dirname, 'src/assets'),
+          to: path.resolve(__dirname, 'dist/assets')
         },
       ],
     }),

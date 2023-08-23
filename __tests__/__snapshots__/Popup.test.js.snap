@@ -1,0 +1,12 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Popup renders correctly 1`] = `
+<div
+  className="popup-active popup"
+  onClick={[Function]}
+>
+  <p>
+    Thank you for registering!
+  </p>
+</div>
+`;
