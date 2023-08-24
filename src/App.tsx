@@ -10,6 +10,7 @@ import Footer from './components/Footer/Footer';
 import NotFoundPage from './pages/NotFoundPage';
 import PrivateRoute from './components/Routing/PrivateRoute';
 import GuestRoute from './components/Routing/GuestRoute';
+import CatalogPage from './pages/CatalogPage';
 
 const App: React.FC = () => {
   return (
@@ -18,6 +19,7 @@ const App: React.FC = () => {
 
       <Routes>
         <Route path="/" element={<MainPage />} />
+        <Route path="/catalog" element={<CatalogPage />} />
         <Route path="*" element={<NotFoundPage />} />
 
         <Route

@@ -3,10 +3,12 @@ import { useDispatch } from 'react-redux';
 
 import logger from 'redux-logger';
 import authReducerObj from './auth/reducer';
+import productsReducerDefault from '../features/Products/products-slice';
 
 export const store = configureStore({
   reducer: {
     auth: authReducerObj,
+    products: productsReducerDefault,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(...(process.env.NODE_ENV !== 'production' ? [logger] : [])),
