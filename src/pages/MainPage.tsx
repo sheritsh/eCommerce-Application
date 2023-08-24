@@ -12,6 +12,9 @@ const MainPage: React.FC = () => {
           <h2>All pages of Sprint #2:</h2>
           <ul>
             <li>
+              <Link to="/catalog">Catalog Page</Link>
+            </li>
+            <li>
               <Link to="/login">Login Page</Link>
             </li>
             <li>

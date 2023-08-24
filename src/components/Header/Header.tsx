@@ -24,7 +24,10 @@ const Header: React.FC = () => {
           <nav>
             <ul className={classes.nav}>
               <li>
-                <NavLink to="/">Main Page</NavLink>
+                <NavLink to="/">Main</NavLink>
+              </li>
+              <li>
+                <NavLink to="/catalog">Catalog</NavLink>
               </li>
               {isAuthenticated ? (
                 <>
