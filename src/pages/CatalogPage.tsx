@@ -1,8 +1,7 @@
 import React from 'react';
 import Container from '../components/UI/container/Container';
 import H1 from '../components/UI/titles/h1/H1';
-import Product from '../api/product/Product';
-import Button from '../components/UI/button/Button';
+import Products from '../features/Products/Products';
 
 const Catalog: React.FC = () => {
   return (
@@ -10,7 +9,7 @@ const Catalog: React.FC = () => {
       <Container>
         <div className="catalog">
           <H1 text="Catalog" />
-          <Product />
+          <Products />
         </div>
       </Container>
     </div>

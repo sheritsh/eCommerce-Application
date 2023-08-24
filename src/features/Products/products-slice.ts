@@ -1,5 +1,6 @@
-import { createSlice } from '@reduxjs/toolkit';
-import { IProductsState, IProductsData } from './types';
+import axios from 'axios';
+import { createSlice, PayloadAction, Dispatch } from '@reduxjs/toolkit';
+import { IProductsState, IResult } from './types';
 import { register } from '../../api/auth';
 import Endpoints from '../../api/endpoints';
 
@@ -10,42 +11,63 @@ const initialState: IProductsState = {
     count: null,
     total: null,
     results: [],
-    loading: false,
+    isLoading: false,
+    error: null,
   },
-};
-
-export const fetchProducts = async (): Promise<string[]> => {
-  try {
-    const token = await register();
-    const response = await fetch(Endpoints.GET_PRODUCTS, {
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${token.access_token}`,
-      },
-    });
-    const data: IProductsData = await response.json();
-    const { results } = data;
-    const ids = results.map((result) => result.id);
-    return ids;
-  } catch (err) {
-    console.error(err);
-    return [];
-  }
 };
 
 export const productsReducer = createSlice({
   name: 'products',
   initialState,
   reducers: {
-    getProducts: (state): ProductsState => ({
+    getProductsStart: (state): IProductsState => ({
       ...state,
       productsData: {
         ...state.productsData,
+        isLoading: true,
+      },
+    }),
+    getProductsSuccess: (state, action: PayloadAction<IResult[]>): IProductsState => ({
+      ...state,
+      productsData: {
+        ...state.productsData,
+        results: action.payload,
+        isLoading: false,
+        error: null,
+      },
+    }),
+    getProductsFailure: (state, action: PayloadAction<string>): IProductsState => ({
+      ...state,
+      productsData: {
+        ...state.productsData,
+        isLoading: false,
+        error: action.payload,
       },
     }),
   },
 });
 
-export const { getProducts } = productsReducer.actions;
+export const { getProductsStart, getProductsSuccess, getProductsFailure } = productsReducer.actions;
 
 export default productsReducer.reducer;
+
+export const fetchProducts =
+  () =>
+  async (dispatch: Dispatch): Promise<void> => {
+    const token = await register();
+    try {
+      dispatch(getProductsStart());
+      const response = await axios.get(Endpoints.GET_PRODUCTS, {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token.access_token}`,
+        },
+      });
+      const products = response.data.results;
+      dispatch(getProductsSuccess(products));
+    } catch (e: unknown) {
+      console.error(e);
+      if (e instanceof Error) dispatch(getProductsFailure(e.message));
+      throw new Error('Something went wrong while fetching products');
+    }
+  };

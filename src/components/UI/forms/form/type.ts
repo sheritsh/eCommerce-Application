@@ -1,4 +1,5 @@
 import { AuthState } from '../../../../store/auth/reducer';
+import { IProductsState } from '../../../../features/Products/types';
 
 export const enum ErrorMessages {
   NoErrors = '',
@@ -28,4 +29,5 @@ export const enum ErrorMessages {
 
 export interface IRootState {
   auth: AuthState;
+  products: IProductsState;
 }

@@ -4,7 +4,6 @@ const ENV = {
   Client_id: 'YnYDArGtH6xQGGFMq36RXUtN',
   Client_secret: 'RxbdNfl4vbPcxk44oueUQwD5YNpjnvND',
   Scopes: ['manage_project:tourist-goods-store'],
-  LANGUAGE: 'en-US',
 };
 
 export default ENV;

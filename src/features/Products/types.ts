@@ -1,3 +1,7 @@
+export enum Languages {
+  English = 'en-US',
+}
+
 interface IImage {
   url: string;
   dimensions: {
@@ -29,7 +33,7 @@ interface IVariant {
   assets: string[];
 }
 
-interface IResult {
+export interface IResult {
   id: string;
   version: number;
   versionModifiedAt: string;
@@ -53,18 +57,18 @@ interface IResult {
   masterData: {
     current: {
       name: {
-        'en-US': string;
+        [Languages.English]: string;
       };
       categories: ICategory[];
       categoryOrderHints: object;
       slug: {
-        'en-US': string;
+        [Languages.English]: string;
       };
       metaTitle: {
-        'en-US': string;
+        [Languages.English]: string;
       };
       metaDescription: {
-        'en-US': string;
+        [Languages.English]: string;
       };
       masterVariant: {
         id: number;
@@ -78,21 +82,21 @@ interface IResult {
     };
     staged: {
       name: {
-        'en-US': string;
+        [Languages.English]: string;
       };
       description: {
-        'en-US': string;
+        [Languages.English]: string;
       };
       categories: ICategory[];
       categoryOrderHints: object;
       slug: {
-        'en-US': string;
+        [Languages.English]: string;
       };
       metaTitle: {
-        'en-US': string;
+        [Languages.English]: string;
       };
       metaDescription: {
-        'en-US': string;
+        [Languages.English]: string;
       };
       masterVariant: {
         id: number;
@@ -111,15 +115,16 @@ interface IResult {
   lastVariantId: number;
 }
 
-export interface IProductsData {
+interface IProductsData {
   limit: number | null;
   offset: number | null;
   count: number | null;
   total: number | null;
   results: IResult[];
-  loading: boolean;
+  isLoading: boolean;
+  error: string | null;
 }
 
-export interface ProductsState {
+export interface IProductsState {
   productsData: IProductsData;
 }
