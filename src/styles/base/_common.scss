@@ -1,0 +1,50 @@
+#root {
+  display: block;
+}
+
+html {
+  box-sizing: border-box;
+  scroll-behavior: smooth;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
+.main {
+  border-radius: 10px;
+  text-align: center;
+  height: 70vh;
+}
+
+body {
+  font-family: 'Overpass','Helvetica Neue', Helvetica, Arial,sans-serif;
+}
+
+.content {
+  min-height: 70vh;
+  padding: 2rem;
+  background-color: #E5E5E5;
+  overflow: hidden;
+}
+
+.active {
+  color: #247c52;
+}
+
+h1, h2, h3 {
+  margin-bottom: 1.5em;
+}
+
+h1 {
+  font-size: 2.5rem;
+  font-weight: bold;
+  text-align: center;
+}
+
+h3 {
+  text-align: center;
+  font-size: 1.5em;
+}

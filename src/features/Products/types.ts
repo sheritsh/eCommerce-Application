@@ -18,6 +18,18 @@ interface IPrice {
     centAmount: number;
     fractionDigits: number;
   };
+  discounted: {
+    discount: {
+      id: string;
+      typeId: string;
+    };
+    value: {
+      centAmount: number;
+      currencyCode: string;
+      fractionDigits: number;
+      type: string;
+    };
+  };
 }
 
 interface ICategory {

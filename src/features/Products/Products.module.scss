@@ -1,0 +1,67 @@
+.list {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 3em;
+  width: 100%;
+}
+
+.item {
+  max-width: 30%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: white;
+  padding: 1.5em;
+  transition: all 0.5s ease-in;
+
+  &:hover {
+    cursor: pointer;
+    transform: scale(1.1);
+    box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.4), -2px -2px 4px rgba(0, 0, 0, 0.4);
+    transition: all 0.5s ease-out;
+  }
+
+  & > * + * {
+    margin-top: 1em;
+  }
+
+  @media (max-width: 1220px) {
+    & {
+      max-width: 45%;
+    }
+  }
+
+  @media (max-width: 768px) {
+    & {
+      max-width: 100%;
+    }
+  }
+}
+
+.title {
+  font-weight: 700;
+  font-size: 1.4rem;
+}
+
+.prices {
+  display: flex;
+  gap: 1em;
+}
+
+.price {
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: inherit;
+}
+
+.discount {
+  font-size: 1.5rem;
+  color: #e5e5e5;
+  text-decoration: line-through;
+}
+
+.image {
+  width: 100%;
+  object-fit: cover;
+}
