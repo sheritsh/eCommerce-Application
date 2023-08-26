@@ -7,6 +7,7 @@
   font-size: 1rem;
   padding: 0.5rem 1rem;
   cursor: pointer;
+  text-transform: uppercase;
   &:hover,
   &:focus {
     opacity: 0.8;

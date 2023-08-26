@@ -44,9 +44,21 @@
   font-size: 1.4rem;
 }
 
+.prices {
+  display: flex;
+  gap: 1em;
+}
+
 .price {
   font-size: 1.5rem;
   font-weight: 500;
+  color: inherit;
+}
+
+.discount {
+  font-size: 1.5rem;
+  color: #e5e5e5;
+  text-decoration: line-through;
 }
 
 .image {

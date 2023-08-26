@@ -28,10 +28,23 @@ const Products: React.FC = () => {
                   {result.masterData.staged.name[Languages.English]}
                 </a>
               </h3>
-              <span className={classes.price}>
-                {formatPrice(result.masterData.staged.masterVariant.prices[0].value.centAmount)}{' '}
-                {result.masterData.staged.masterVariant.prices[0].value.currencyCode}
-              </span>
+              {result.masterData.staged.masterVariant.prices[0].discounted ? (
+                <div className={classes.prices}>
+                  <span className={classes.discount}>
+                    {formatPrice(result.masterData.staged.masterVariant.prices[0].value.centAmount)}{' '}
+                    {result.masterData.staged.masterVariant.prices[0].value.currencyCode}
+                  </span>
+                  <span className={classes.price}>
+                    {formatPrice(result.masterData.staged.masterVariant.prices[0].discounted.value.centAmount)}{' '}
+                    {result.masterData.staged.masterVariant.prices[0].discounted.value.currencyCode}
+                  </span>
+                </div>
+              ) : (
+                <span className={classes.price}>
+                  {formatPrice(result.masterData.staged.masterVariant.prices[0].value.centAmount)}{' '}
+                  {result.masterData.staged.masterVariant.prices[0].value.currencyCode}
+                </span>
+              )}
               <a href="#" title={result.masterData.staged.name[Languages.English]} className={classes.link}>
                 <img
                   src={result.masterData.staged.masterVariant.images[0].url}
