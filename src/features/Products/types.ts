@@ -1,6 +1,4 @@
-export enum Languages {
-  English = 'en-US',
-}
+import { Languages } from '../../api/types';
 
 interface IImage {
   url: string;

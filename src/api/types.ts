@@ -1,3 +1,7 @@
+export enum Languages {
+  English = 'en-US',
+}
+
 export interface ILoginRequest {
   username: string;
   password: string;
