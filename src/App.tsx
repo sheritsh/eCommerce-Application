@@ -18,7 +18,7 @@ const App: React.FC = () => {
   return (
     <Router>
       <Header />
-      <Suspense fallback={<div className="container">Loading...</div>}>
+      <Suspense fallback={<div className="loader">Loading...</div>}>
         <Routes>
           <Route path="/" element={<MainPage />} />
           <Route path="/catalog" element={<CatalogPage />} />

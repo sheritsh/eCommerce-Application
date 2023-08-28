@@ -54,8 +54,8 @@ export default categoriesReducer.reducer;
 export const fetchCategories =
   () =>
   async (dispatch: Dispatch): Promise<void> => {
-    const token = await register();
     try {
+      const token = await register();
       dispatch(getCategoriesStart());
       const response = await axios.get(Endpoints.GET_CATEGORIES, {
         headers: {
