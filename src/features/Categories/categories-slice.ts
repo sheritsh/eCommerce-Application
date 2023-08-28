@@ -66,7 +66,6 @@ export const fetchCategories =
       const categories = response.data.results;
       dispatch(getCategoriesSuccess(categories));
     } catch (e: unknown) {
-      console.error(e);
       if (e instanceof Error) dispatch(getCategoriesFailure(e.message));
       throw new Error('Something went wrong while fetching categories');
     }
