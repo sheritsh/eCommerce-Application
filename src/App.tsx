@@ -1,5 +1,6 @@
 import React, { lazy, Suspense } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { Grid } from 'react-loader-spinner';
 import PrivateRoute from './components/Routing/PrivateRoute';
 import GuestRoute from './components/Routing/GuestRoute';
 
@@ -18,7 +19,20 @@ const App: React.FC = () => {
   return (
     <Router>
       <Header />
-      <Suspense fallback={<div className="loader">Loading...</div>}>
+      <Suspense
+        fallback={
+          <Grid
+            height="80"
+            width="80"
+            color="#4fa94d"
+            ariaLabel="grid-loading"
+            radius="12.5"
+            wrapperStyle={{}}
+            wrapperClass="spinner"
+            visible={true}
+          />
+        }
+      >
         <Routes>
           <Route path="/" element={<MainPage />} />
           <Route path="/catalog" element={<CatalogPage />} />

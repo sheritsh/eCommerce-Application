@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import { Grid } from 'react-loader-spinner';
 import { useAppDispatch } from '../../store';
 import { fetchCategories } from './categories-slice';
 import { IRootState } from '../types';
@@ -15,7 +16,18 @@ const Categories: React.FC = () => {
   }, []);
   return (
     <>
-      {categories.isLoading && <div>Loading...</div>}
+      {categories.isLoading && (
+        <Grid
+          height="80"
+          width="80"
+          color="#4fa94d"
+          ariaLabel="grid-loading"
+          radius="12.5"
+          wrapperStyle={{}}
+          wrapperClass="spinner"
+          visible={true}
+        />
+      )}
       {!categories.isLoading && categories.error ? <div>{categories.error}</div> : null}
       {!categories.isLoading && categories.results.length ? (
         <ul className={classes.list}>

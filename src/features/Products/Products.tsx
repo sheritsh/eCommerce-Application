@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
+import { Grid } from 'react-loader-spinner';
 import { useAppDispatch } from '../../store';
 import { fetchProducts } from './products-slice';
 import { IRootState } from '../types';
@@ -18,7 +19,18 @@ const Products: React.FC<IProductsProps> = ({ categoryId }) => {
   }, []);
   return (
     <>
-      {products.isLoading && <div>Loading...</div>}
+      {products.isLoading && (
+        <Grid
+          height="80"
+          width="80"
+          color="#4fa94d"
+          ariaLabel="grid-loading"
+          radius="12.5"
+          wrapperStyle={{}}
+          wrapperClass="spinner"
+          visible={true}
+        />
+      )}
       {!products.isLoading && products.error ? <div>{products.error}</div> : null}
       {!products.isLoading && products.results.length && !categoryId ? (
         <ul className={classes.list}>
