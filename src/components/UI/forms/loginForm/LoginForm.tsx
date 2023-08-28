@@ -10,7 +10,8 @@ import Button from '../../button/Button';
 import ErrorMessage from '../../ErrorMessage/ErrorMessage';
 import { useAppDispatch } from '../../../../store';
 import { loginUser } from '../../../../store/auth/actions';
-import { ErrorMessages, IRootState } from '../form/type';
+import { ErrorMessages } from '../form/type';
+import { IRootState } from '../../../../features/types';
 import validatePassword from '../../../../utils/validation/password-validation';
 
 const LoginForm: React.FC = () => {

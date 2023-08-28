@@ -1,6 +1,3 @@
-import { AuthState } from '../../../../store/auth/reducer';
-import { IProductsState } from '../../../../features/Products/types';
-
 export const enum ErrorMessages {
   NoErrors = '',
   EmptyEmail = 'Please enter email',
@@ -25,9 +22,4 @@ export const enum ErrorMessages {
   NotValidStreetName = 'Street: must contain at least 1 character, should not include special characters, and must not start or end with a space.',
   NotValidCity = 'City: must contain at least one character',
   NotValidPostalCode = 'The index of your country must contain 5 digits',
-}
-
-export interface IRootState {
-  auth: AuthState;
-  products: IProductsState;
 }
