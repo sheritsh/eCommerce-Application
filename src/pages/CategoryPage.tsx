@@ -12,7 +12,6 @@ import Products from '../features/Products/Products';
 
 const CategoryPage: React.FC = () => {
   const params = useParams();
-  console.log(params)
   const categories = useSelector((state: IRootState) => state.categories.categoriesData);
   const dispatch = useAppDispatch();
   useEffect(() => {
