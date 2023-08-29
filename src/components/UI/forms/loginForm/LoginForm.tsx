@@ -95,7 +95,6 @@ const LoginForm: React.FC = () => {
       <Form id="loginForm">
         <h1>Login</h1>
         {errorLogin && <ErrorMessage>{errorLogin}</ErrorMessage>}
-        {emailVisited && emailError && <ErrorMessage>{emailError}</ErrorMessage>}
         <Input
           value={username}
           onBlur={(e): void => blurHandler(e)}
@@ -104,7 +103,7 @@ const LoginForm: React.FC = () => {
           type="text"
           placeholder="Enter your email"
         />
-        {passwordVisited && passwordError && <ErrorMessage>{passwordError}</ErrorMessage>}
+        {emailVisited && emailError && <ErrorMessage>{emailError}</ErrorMessage>}
         <Input
           value={password}
           onBlur={(e): void => blurHandler(e)}
@@ -113,6 +112,7 @@ const LoginForm: React.FC = () => {
           type={passwordFieldType}
           placeholder="Enter your password"
         />
+        {passwordVisited && passwordError && <ErrorMessage>{passwordError}</ErrorMessage>}
         <button className="password_hide" type="button" onClick={togglePasswordVisibility}>
           {passwordFieldType === 'password' ? 'Show' : 'Hide'} Password
         </button>

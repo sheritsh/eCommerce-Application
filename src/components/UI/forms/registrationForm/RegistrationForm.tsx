@@ -246,7 +246,6 @@ const RegistrationForm: React.FC = () => {
     <Container>
       <Form id="registrationForm">
         <h1>Registration</h1>
-        {emailVisited && emailError && <ErrorMessage>{emailError}</ErrorMessage>}
         <Input
           value={email}
           onBlur={(e): void => blurHandler(e)}
@@ -255,7 +254,7 @@ const RegistrationForm: React.FC = () => {
           type="text"
           placeholder="Email"
         />
-        {passwordVisited && passwordError && <ErrorMessage>{passwordError}</ErrorMessage>}
+        {emailVisited && emailError && <ErrorMessage>{emailError}</ErrorMessage>}
         <Input
           value={password}
           onBlur={(e): void => blurHandler(e)}
@@ -264,7 +263,7 @@ const RegistrationForm: React.FC = () => {
           type={passwordFieldType}
           placeholder="Password"
         />
-        {firstNameVisited && firstNameError && <ErrorMessage>{firstNameError}</ErrorMessage>}
+        {passwordVisited && passwordError && <ErrorMessage>{passwordError}</ErrorMessage>}
         <button className="password_hide" type="button" onClick={togglePasswordVisibility}>
           {passwordFieldType === 'password' ? 'Show' : 'Hide'} Password
         </button>
@@ -276,7 +275,7 @@ const RegistrationForm: React.FC = () => {
           type="text"
           placeholder="First name"
         />
-        {lastNameVisited && lastNameError && <ErrorMessage>{lastNameError}</ErrorMessage>}
+        {firstNameVisited && firstNameError && <ErrorMessage>{firstNameError}</ErrorMessage>}
         <Input
           value={lastName}
           onBlur={(e): void => blurHandler(e)}
@@ -285,8 +284,8 @@ const RegistrationForm: React.FC = () => {
           type="text"
           placeholder="Last name"
         />
+        {lastNameVisited && lastNameError && <ErrorMessage>{lastNameError}</ErrorMessage>}
         <h3>Date of birth:</h3>
-        {dateOfBirthVisited && dateOfBirthError && <ErrorMessage>{dateOfBirthError}</ErrorMessage>}
         <Input
           value={dateOfBirth}
           onBlur={(e): void => blurHandler(e)}
@@ -294,12 +293,12 @@ const RegistrationForm: React.FC = () => {
           name="dateOfBirth"
           type="date"
         />
+        {dateOfBirthVisited && dateOfBirthError && <ErrorMessage>{dateOfBirthError}</ErrorMessage>}
         <h3>Address:</h3>
         <select onChange={(e): void => countryHandler(e)} name="country" defaultValue="US">
           <option value="US">United States</option>
           <option value="DE">Germany</option>
         </select>
-        {cityVisited && cityError && <ErrorMessage>{cityError}</ErrorMessage>}
         <Input
           value={city}
           onBlur={(e): void => blurHandler(e)}
@@ -308,7 +307,7 @@ const RegistrationForm: React.FC = () => {
           type="text"
           placeholder="City"
         />
-        {streetNameVisited && streetNameError && <ErrorMessage>{streetNameError}</ErrorMessage>}
+        {cityVisited && cityError && <ErrorMessage>{cityError}</ErrorMessage>}
         <Input
           value={streetName}
           onBlur={(e): void => blurHandler(e)}
@@ -317,7 +316,7 @@ const RegistrationForm: React.FC = () => {
           type="text"
           placeholder="Street"
         />
-        {postalCodeVisited && postalCodeError && <ErrorMessage>{postalCodeError}</ErrorMessage>}
+        {streetNameVisited && streetNameError && <ErrorMessage>{streetNameError}</ErrorMessage>}
         <Input
           value={postalCode}
           onBlur={(e): void => blurHandler(e)}
@@ -326,6 +325,7 @@ const RegistrationForm: React.FC = () => {
           type="text"
           placeholder="Post code"
         />
+        {postalCodeVisited && postalCodeError && <ErrorMessage>{postalCodeError}</ErrorMessage>}
         <Button
           onClick={(): Promise<void> =>
             handleRegister({
