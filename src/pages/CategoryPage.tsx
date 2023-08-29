@@ -4,7 +4,6 @@ import { useParams } from 'react-router';
 import { useAppDispatch } from '../store';
 import Container from '../components/UI/container/Container';
 import { fetchCategories } from '../features/Categories/categories-slice';
-import H1 from '../components/UI/titles/h1/H1';
 import Categories from '../features/Categories/Categories';
 import { IRootState } from '../features/types';
 import { Languages } from '../api/types';
@@ -12,7 +11,6 @@ import Products from '../features/Products/Products';
 
 const CategoryPage: React.FC = () => {
   const params = useParams();
-  console.log(params)
   const categories = useSelector((state: IRootState) => state.categories.categoriesData);
   const dispatch = useAppDispatch();
   useEffect(() => {
@@ -25,7 +23,7 @@ const CategoryPage: React.FC = () => {
     <div className="content">
       <Container>
         <div className="catalog">
-          <H1 text={categoryName} />
+          <h1>{categoryName}</h1>
           <Categories />
           <Products categoryId={params.categoryId} />
         </div>

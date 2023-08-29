@@ -3,10 +3,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import Container from '../../container/Container';
 import { removeLoginError } from '../../../../store/auth/reducer';
 import Form from '../form/Form';
-import H1 from '../../titles/h1/H1';
 import Input from '../../input/Input';
 import Button from '../../button/Button';
-import H3 from '../../titles/h3/H3';
 import { useAppDispatch } from '../../../../store';
 import { ErrorMessages } from '../form/type';
 import ErrorMessage from '../../ErrorMessage/ErrorMessage';
@@ -239,7 +237,7 @@ const RegistrationForm: React.FC = () => {
   return (
     <Container>
       <Form id="registrationForm">
-        <H1 text="Registration" />
+        <h1>Registration</h1>
         {emailVisited && emailError && <ErrorMessage>{emailError}</ErrorMessage>}
         <Input
           value={email}
@@ -279,7 +277,7 @@ const RegistrationForm: React.FC = () => {
           type="text"
           placeholder="Last name"
         />
-        <H3 text="Date of birth:" />
+        <h3>Date of birth:</h3>
         {dateOfBirthVisited && dateOfBirthError && <ErrorMessage>{dateOfBirthError}</ErrorMessage>}
         <Input
           value={dateOfBirth}
@@ -288,7 +286,7 @@ const RegistrationForm: React.FC = () => {
           name="dateOfBirth"
           type="date"
         />
-        <H3 text="Address:" />
+        <h3>Address:</h3>
         <select onChange={(e): void => countryHandler(e)} name="country" defaultValue="US">
           <option value="US">United States</option>
           <option value="DE">Germany</option>

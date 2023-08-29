@@ -4,6 +4,8 @@ import Container from '../UI/container/Container';
 
 const Footer: React.FC = () => {
   const authorText = 'created by:';
+  const authors = ['ekatrif', 'sheritsh', 'montek1o'];
+
   return (
     <footer>
       <Container>
@@ -11,15 +13,13 @@ const Footer: React.FC = () => {
           <div className={classes.authors}>
             {authorText} <br />
             <ul>
-              <li>
-                <a href="https://github.com/ekatrif">ekatrif</a>
-              </li>
-              <li>
-                <a href="https://github.com/sheritsh">sheritsh</a>
-              </li>
-              <li>
-                <a href="https://github.com/montek1o">montek1o</a>
-              </li>
+              {authors.map((author) => {
+                return (
+                  <li key={author}>
+                    <a href={author}>{author}</a>
+                  </li>
+                );
+              })}
             </ul>
           </div>
           <div className={classes.copyright}>Tourist Tracks Store ©2023</div>
