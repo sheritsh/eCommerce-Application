@@ -130,7 +130,7 @@ const RegistrationForm: React.FC = () => {
   const firstNameHandler = (e: React.ChangeEvent): void => {
     const target = e.target as HTMLInputElement;
     setFirstName(target.value);
-    const criterion = /^[a-zA-Z]{1,}$/;
+    const criterion = /^[a-zA-Z]+$/;
     if (!criterion.test(String(target.value))) {
       setFirstNameError(ErrorMessages.NotValidFirstName);
     } else {
@@ -141,7 +141,7 @@ const RegistrationForm: React.FC = () => {
   const lastNameHandler = (e: React.ChangeEvent): void => {
     const target = e.target as HTMLInputElement;
     setLastName(target.value);
-    const criterion = /^[a-zA-Z]{1,}$/;
+    const criterion = /^[a-zA-Z]+$/;
     if (!criterion.test(String(target.value))) {
       setLastNameError(ErrorMessages.NotValidLastName);
     } else {
@@ -151,12 +151,15 @@ const RegistrationForm: React.FC = () => {
 
   const dateOfBirthHandler = (e: React.ChangeEvent): void => {
     const target = e.target as HTMLInputElement;
-    const today = new Date();
     const birthDate = new Date(target.value);
-    const msInYear = 31536000000;
-    const age = Math.trunc((+today - +birthDate) / msInYear);
+
+    const today = new Date();
+    const thirteenYearsAgo = new Date(today);
+    thirteenYearsAgo.setFullYear(today.getFullYear() - 13);
+
     setDateOfBirth(target.value);
-    if (age < 13) {
+
+    if (birthDate >= thirteenYearsAgo) {
       setDateOfBirthError(ErrorMessages.NotValidDateOfBirth);
     } else {
       setDateOfBirthError(ErrorMessages.NoErrors);
