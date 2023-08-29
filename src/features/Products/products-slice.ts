@@ -66,7 +66,6 @@ export const fetchProducts =
       const products = response.data.results;
       dispatch(getProductsSuccess(products));
     } catch (e: unknown) {
-      console.error(e);
       if (e instanceof Error) dispatch(getProductsFailure(e.message));
       throw new Error('Something went wrong while fetching products');
     }

@@ -54,8 +54,8 @@ export default categoriesReducer.reducer;
 export const fetchCategories =
   () =>
   async (dispatch: Dispatch): Promise<void> => {
-    const token = await register();
     try {
+      const token = await register();
       dispatch(getCategoriesStart());
       const response = await axios.get(Endpoints.GET_CATEGORIES, {
         headers: {
@@ -66,7 +66,6 @@ export const fetchCategories =
       const categories = response.data.results;
       dispatch(getCategoriesSuccess(categories));
     } catch (e: unknown) {
-      console.error(e);
       if (e instanceof Error) dispatch(getCategoriesFailure(e.message));
       throw new Error('Something went wrong while fetching categories');
     }
