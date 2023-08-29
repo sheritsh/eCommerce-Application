@@ -31,13 +31,16 @@ const Categories: React.FC = () => {
       {!categories.isLoading && categories.error ? <div>{categories.error}</div> : null}
       {!categories.isLoading && categories.results.length ? (
         <ul className={classes.list}>
-          {categories.results.map((result) => (
-            <li key={result.id} className={classes.item}>
-              <NavLink to={`/categories/${result.id}`} title={result.name[Languages.English]}>
-                {result.name[Languages.English]}
-              </NavLink>
-            </li>
-          ))}
+          {categories.results.map(
+            (result) =>
+              !result.ancestors.length && (
+                <li key={result.id} className={classes.item}>
+                  <NavLink to={`/categories/${result.id}`} title={result.name[Languages.English]}>
+                    {result.name[Languages.English]}
+                  </NavLink>
+                </li>
+              ),
+          )}
         </ul>
       ) : null}
     </>

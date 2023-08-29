@@ -1,10 +1,18 @@
 .list {
-  margin-bottom: 2em;
+  margin-bottom: 2.5em;
   display: flex;
   gap: 2em;
 }
 
 .item {
-  font-size: 1.5em;
-  font-weight: 600;
+  font-size: 1.2em;
+  font-weight: 400;
+  text-transform: uppercase;
+  background-color: #e5e5e5;
+  padding: 1em 1.5em;
+}
+
+.innerList {
+  margin-left: 2em;
+  display: flex;
 }
