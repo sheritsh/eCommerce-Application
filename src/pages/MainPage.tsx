@@ -15,6 +15,9 @@ const MainPage: React.FC = () => {
               <Link to="/catalog">Catalog Page</Link>
             </li>
             <li>
+              <Link to="/test">Test Page</Link>
+            </li>
+            <li>
               <Link to="/login">Login Page</Link>
             </li>
             <li>

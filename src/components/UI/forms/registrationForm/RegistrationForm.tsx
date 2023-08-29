@@ -15,7 +15,6 @@ import { IRegisterRequest } from '../../../../api/types';
 import ENV from '../../../../api/env';
 import { register } from '../../../../api/auth';
 import Popup from '../../popup/Popup';
-import PopupErr from '../../popup/PopupErr';
 
 const RegistrationForm: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -23,12 +22,13 @@ const RegistrationForm: React.FC = () => {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [dateOfBirth, setDateOfBirth] = useState('');
-  const [country, setCountry] = useState('');
+  const [country, setCountry] = useState('US');
   const [city, setCity] = useState('');
   const [streetName, setStreetName] = useState('');
   const [postalCode, setPostalCode] = useState('');
-  const [popupActive, setPopupActive] = useState(false);
-  const [popupErrActive, setPopupErrActive] = useState(false);
+  const [isSuccessPopupActive, setSuccessPopupActive] = useState(false);
+  const [isErrorPopupActive, setErrorPopupActive] = useState(false);
+  const [popupMessage, setPopupMessage] = useState('');
   const [emailVisited, setEmailVisited] = useState(false);
   const [passwordVisited, setPasswordVisited] = useState(false);
   const [firstNameVisited, setFirstNameVisited] = useState(false);
@@ -67,13 +67,15 @@ const RegistrationForm: React.FC = () => {
       body: JSON.stringify(data),
     });
 
-    if (response.status === 400) {
-      setPopupErrActive(true);
-      setTimeout(() => setPopupErrActive(false), 2000);
+    if (response.ok) {
+      setSuccessPopupActive(true);
+      setPopupMessage('Congratulations! Registration successful.');
+      setTimeout(() => navigate('/'), 5000);
     } else {
-      setPopupActive(true);
-      setTimeout(() => setPopupActive(false), 2000);
-      setTimeout(() => navigate('/'), 2500);
+      const errorData = await response.json();
+      setPopupMessage(`Oops! Error ${response.status}: ${errorData.message}`);
+      setErrorPopupActive(true);
+      console.error(response.statusText);
     }
   };
 
@@ -287,7 +289,7 @@ const RegistrationForm: React.FC = () => {
           type="date"
         />
         <H3 text="Address:" />
-        <select onChange={(e): void => countryHandler(e)} name="country">
+        <select onChange={(e): void => countryHandler(e)} name="country" defaultValue="US">
           <option value="US">United States</option>
           <option value="DE">Germany</option>
         </select>
@@ -343,8 +345,13 @@ const RegistrationForm: React.FC = () => {
           Already have an account? <Link to="/login">Log in</Link>!
         </div>
       </Form>
-      <Popup active={popupActive} setActive={setPopupActive} />
-      <PopupErr active={popupErrActive} setActive={setPopupErrActive} />
+      <Popup
+        active={isSuccessPopupActive}
+        setActive={setSuccessPopupActive}
+        popupType="success"
+        message={popupMessage}
+      />
+      <Popup active={isErrorPopupActive} setActive={setErrorPopupActive} popupType="error" message={popupMessage} />
     </Container>
   );
 };
