@@ -106,10 +106,8 @@ const RegistrationForm: React.FC = () => {
   const emailHandler = (e: React.ChangeEvent): void => {
     const target = e.target as HTMLInputElement;
     setEmail(target.value);
-    const re =
-      // eslint-disable-next-line no-useless-escape
-      /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
-    if (!re.test(String(target.value).toLowerCase())) {
+    const re = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    if (!re.test(String(target.value))) {
       setEmailError(ErrorMessages.NotValidEmail);
     } else {
       setEmailError(ErrorMessages.NoErrors);
