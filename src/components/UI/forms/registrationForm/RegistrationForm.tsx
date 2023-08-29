@@ -174,7 +174,7 @@ const RegistrationForm: React.FC = () => {
   const cityHandler = (e: React.ChangeEvent): void => {
     const target = e.target as HTMLInputElement;
     setCity(target.value);
-    const criterion = /^[a-zA-Z0-9!@#$%^&*]{1,}$/;
+    const criterion = /^[a-zA-Z]+$/;
     if (!criterion.test(String(target.value))) {
       setCityError(ErrorMessages.NotValidCity);
     } else {
@@ -185,7 +185,7 @@ const RegistrationForm: React.FC = () => {
   const streetNameHandler = (e: React.ChangeEvent): void => {
     const target = e.target as HTMLInputElement;
     setStreetName(target.value);
-    const criterion = /^[a-zA-Z0-9][a-zA-Z0-9 ]*[a-zA-Z0-9]$/;
+    const criterion = /^.+$/;
     if (!criterion.test(String(target.value))) {
       setStreetNameError(ErrorMessages.NotValidStreetName);
     } else {
@@ -196,7 +196,14 @@ const RegistrationForm: React.FC = () => {
   const postalCodeHandler = (e: React.ChangeEvent): void => {
     const target = e.target as HTMLInputElement;
     setPostalCode(target.value);
-    const criterion = /^[0-9]{5}$/;
+
+    let criterion = /^/;
+    if (country === 'US') {
+      criterion = /^[0-9]{5}(?:-[0-9]{4})?$/;
+    } else if (country === 'DE') {
+      criterion = /^\d{5}$/;
+    }
+
     if (!criterion.test(String(target.value))) {
       setPostalCodeError(ErrorMessages.NotValidPostalCode);
     } else {

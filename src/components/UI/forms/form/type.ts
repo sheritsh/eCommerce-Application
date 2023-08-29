@@ -21,5 +21,5 @@ export const enum ErrorMessages {
   NotValidDateOfBirth = 'You must be over 13 years old',
   NotValidStreetName = 'Street: must contain at least 1 character, should not include special characters, and must not start or end with a space.',
   NotValidCity = 'City: must contain at least one character',
-  NotValidPostalCode = 'The index of your country must contain 5 digits',
+  NotValidPostalCode = 'The postal code of your country must be valid',
 }
