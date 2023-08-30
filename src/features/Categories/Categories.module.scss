@@ -3,12 +3,6 @@
   margin-bottom: 2.5em;
   display: flex;
   gap: 2em;
-
-  &:hover .innerList {
-    opacity: 1;
-    visibility: visible;
-    transition: 0.5s all linear;
-  }
 }
 
 .item {
@@ -20,6 +14,12 @@
   & > a {
     display: block;
     padding: 1em 1.5em;
+  }
+
+  &:hover .innerList {
+    opacity: 1;
+    visibility: visible;
+    transition: 0.5s all linear;
   }
 }
 

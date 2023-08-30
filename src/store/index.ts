@@ -7,6 +7,7 @@ import storage from 'redux-persist/lib/storage';
 import authReducerObj from './auth/reducer';
 import productsReducerDefault from '../features/Products/products-slice';
 import categoriesReducerDefault from '../features/Categories/categories-slice';
+import productsByCategoryIdReducerDefault from '../features/filters/ProductsByCategoryId/products-by-category-id-slice';
 
 const persistConfig = {
   key: 'root',
@@ -17,6 +18,7 @@ export const rootReducers = combineReducers({
   auth: authReducerObj,
   products: productsReducerDefault,
   categories: categoriesReducerDefault,
+  productsByCategoryId: productsByCategoryIdReducerDefault,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducers);
