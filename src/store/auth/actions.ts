@@ -10,6 +10,7 @@ export const loginUser =
       dispatch(loginStart());
       const response = await login(data);
       dispatch(loginSuccess(response.access_token));
+      console.log(response.access_token);
     } catch (e: unknown) {
       console.error(e);
       if (e instanceof Error) dispatch(loginFailure(e.message));

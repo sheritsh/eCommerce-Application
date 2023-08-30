@@ -31,6 +31,7 @@ export const store = configureStore({
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
       },
     }).concat(...(process.env.NODE_ENV !== 'production' ? [logger] : [])),
+  devTools: true,
 });
 
 export type IRootState = ReturnType<typeof store.getState>;
