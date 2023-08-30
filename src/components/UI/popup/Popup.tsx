@@ -1,6 +1,6 @@
 import React from 'react';
 import { Alert, AlertTitle } from '@mui/material';
-import Snackbar, { SnackbarOrigin } from '@mui/material/Snackbar';
+import Snackbar from '@mui/material/Snackbar';
 import './Popup.css';
 
 interface IPopupProps {
