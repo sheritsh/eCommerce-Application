@@ -8,7 +8,7 @@ import H1 from '../components/UI/titles/h1/H1';
 import Categories from '../features/Categories/Categories';
 import { IRootState } from '../features/types';
 import { Languages } from '../api/types';
-import Products from '../features/Products/Products';
+import ProductsByCategoryId from '../features/filters/ProductsByCategoryId/ProductsByCategoryId';
 
 const CategoryPage: React.FC = () => {
   const params = useParams();
@@ -26,7 +26,7 @@ const CategoryPage: React.FC = () => {
         <div className="catalog">
           <H1 text={categoryName} />
           <Categories />
-          <Products categoryId={params.categoryId} />
+          <ProductsByCategoryId categoryId={params.categoryId} />
         </div>
       </Container>
     </div>

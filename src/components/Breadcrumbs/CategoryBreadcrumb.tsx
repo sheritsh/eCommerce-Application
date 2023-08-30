@@ -1,16 +1,13 @@
 import { useSelector } from 'react-redux';
 import { IRootState } from '../../features/types';
-import { Languages } from '../../api/types';
-import { IMatch, MatchingObject } from './types';
+import { IMatch } from './types';
+import categoriesNamesById from '../../utils/catalog/category-name-by-id';
 
 const CategoryBreadcrumb: React.FC<IMatch> = ({ match }) => {
   const categories = useSelector((state: IRootState) => state.categories.categoriesData);
-  const categoriesNamesById: MatchingObject = categories.results.reduce((acc: MatchingObject, curr) => {
-    acc[curr.id] = curr.name[Languages.English];
-    return acc;
-  }, {});
+  const matching = categoriesNamesById(categories);
 
-  return <li>{categoriesNamesById[match.params.categoryId]}</li>;
+  return <li>{matching[match.params.categoryId]}</li>;
 };
 
 export default CategoryBreadcrumb;
