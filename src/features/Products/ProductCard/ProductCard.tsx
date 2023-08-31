@@ -15,7 +15,7 @@ const ProductCard: React.FC<IProductProps> = ({ product }) => {
   return (
     <li className={classes.item}>
       <h3>
-        <a href="#" title={product.masterData.staged.name[Languages.English]} className={classes.title}>
+        <a href={`catalog/${product.id}`} title={product.masterData.staged.name[Languages.English]} className={classes.title}>
           {product.masterData.staged.name[Languages.English]}
         </a>
       </h3>
