@@ -4,9 +4,9 @@ import { Grid } from 'react-loader-spinner';
 import { Provider } from 'react-redux';
 import { persistStore } from 'redux-persist';
 import { PersistGate } from 'redux-persist/integration/react';
-import GuestRoute from './components/Routing/GuestRoute';
-import PrivateRoute from './components/Routing/PrivateRoute';
+import AuthRoute from './components/Routing/AuthRoute';
 import { store } from './store';
+import TestPage from './pages/TestPage';
 import ProductPage from './pages/ProductPage';
 
 const Header = lazy(() => import('./components/Header/Header'));
@@ -50,37 +50,38 @@ const App: React.FC = () => {
               <Route path="/categories/:categoryId/:productId" element={<ProductPage />} />
               <Route path="/product_page/test" element={<ProductPage />} />
               <Route path="*" element={<NotFoundPage />} />
+              <Route path="/test" element={<TestPage />} />
               <Route
                 path="/login"
                 element={
-                  <GuestRoute>
+                  <AuthRoute isGuest>
                     <LoginPage />
-                  </GuestRoute>
+                  </AuthRoute>
                 }
               />
               <Route
                 path="/registration"
                 element={
-                  <GuestRoute>
+                  <AuthRoute isGuest>
                     <RegistrationPage />
-                  </GuestRoute>
+                  </AuthRoute>
                 }
               />
 
               <Route
                 path="/profile"
                 element={
-                  <PrivateRoute>
+                  <AuthRoute isPrivate>
                     <ProfilePage />
-                  </PrivateRoute>
+                  </AuthRoute>
                 }
               />
               <Route
                 path="/shopping-cart"
                 element={
-                  <PrivateRoute>
+                  <AuthRoute isPrivate>
                     <CartPage />
-                  </PrivateRoute>
+                  </AuthRoute>
                 }
               />
             </Routes>

@@ -16,9 +16,6 @@ const validatePassword = (e: React.ChangeEvent): string => {
   if (!/[0-9]/.test(password)) {
     return ErrorMessages.NotValidPasswordNoDigit;
   }
-  // if (!/[!@#$%^&*]/.test(password)) {
-  //   return ErrorMessages.NotValidPasswordNoSpecial;
-  // }
   if (password !== password.trim()) {
     return ErrorMessages.NotValidPasswordTrailing;
   }
