@@ -1,5 +1,15 @@
 import { Languages } from '../../api/types';
 
+interface IAncestor {
+  typeId: string;
+  id: string;
+}
+
+interface IParent {
+  typeId: string;
+  id: string;
+}
+
 export interface ICategory {
   id: string;
   version: number;
@@ -10,8 +20,8 @@ export interface ICategory {
   };
   slug: string;
   description: string;
-  ancestors: object[];
-  parent: string;
+  ancestors: IAncestor[];
+  parent: IParent;
   orderHint: string;
   metaTitle: string;
   metaDescription: string;
@@ -24,7 +34,7 @@ export interface ICategory {
   lastModifiedBy: string;
 }
 
-interface ICategoriesData {
+export interface ICategoriesData {
   limit: number | null;
   offset: number | null;
   count: number | null;

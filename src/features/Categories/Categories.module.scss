@@ -1,10 +1,48 @@
 .list {
-  margin-bottom: 2em;
+  position: relative;
+  margin-bottom: 2.5em;
   display: flex;
   gap: 2em;
 }
 
 .item {
-  font-size: 1.5em;
-  font-weight: 600;
+  font-size: 1.2rem;
+  font-weight: 400;
+  text-transform: uppercase;
+  background-color: #deeaee;
+
+  & > a {
+    display: block;
+    padding: 1em 1.5em;
+  }
+
+  &:hover .innerList {
+    opacity: 1;
+    visibility: visible;
+    transition: 0.5s all linear;
+  }
+}
+
+.innerList {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 3em;
+  left: 0;
+  opacity: 0;
+  visibility: hidden;
+  transition: 0.5s all linear;
+}
+
+.innerItem {
+  font-size: 1.2rem;
+  font-weight: 400;
+  text-transform: uppercase;
+  background-color: #eea29a;
+  
+  & > a {
+    display: block;
+    padding: 1em 1.5em;
+    color: white;
+  }
 }

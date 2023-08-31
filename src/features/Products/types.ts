@@ -1,6 +1,6 @@
 import { Languages } from '../../api/types';
 
-interface IImage {
+export interface IImage {
   url: string;
   dimensions: {
     w: number;
@@ -8,7 +8,7 @@ interface IImage {
   };
 }
 
-interface IPrice {
+export interface IPrice {
   id: string;
   value: {
     type: string;
@@ -30,7 +30,7 @@ interface IPrice {
   };
 }
 
-interface ICategory {
+export interface ICategory {
   typeId: string;
   id: string;
 }
@@ -125,7 +125,7 @@ export interface IResult {
   lastVariantId: number;
 }
 
-interface IProductsData {
+export interface IProductsData {
   limit: number | null;
   offset: number | null;
   count: number | null;

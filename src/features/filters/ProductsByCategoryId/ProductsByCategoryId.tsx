@@ -1,22 +1,22 @@
 import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { Grid } from 'react-loader-spinner';
-import { useAppDispatch } from '../../store';
-import { fetchProducts } from './products-slice';
-import { IRootState } from '../types';
-import classes from './Products.module.scss';
+import { useAppDispatch } from '../../../store';
+import { fetchProductsByCategoryId } from './products-by-category-id-slice';
+import { IRootState } from '../../types';
+import classes from '../../Products/Products.module.scss';
 import ProductCard from './ProductCard/ProductCard';
 
 interface IProductsProps {
   categoryId?: string;
 }
 
-const Products: React.FC<IProductsProps> = ({ categoryId }) => {
-  const products = useSelector((state: IRootState) => state.products.productsData);
+const ProductsByCategoryId: React.FC<IProductsProps> = ({ categoryId = '' }) => {
+  const products = useSelector((state: IRootState) => state.productsByCategoryId.productsByCategoryIdData);
   const dispatch = useAppDispatch();
   useEffect(() => {
-    dispatch(fetchProducts());
-  }, []);
+    dispatch(fetchProductsByCategoryId(categoryId));
+  }, [categoryId]);
   return (
     <>
       {products.isLoading && (
@@ -39,8 +39,15 @@ const Products: React.FC<IProductsProps> = ({ categoryId }) => {
           ))}
         </ul>
       ) : null}
+      {categoryId ? (
+        <ul className={classes.list}>
+          {products.results.map((result) => (
+            <ProductCard product={result} key={result.id} />
+          ))}
+        </ul>
+      ) : null}
     </>
   );
 };
 
-export default Products;
+export default ProductsByCategoryId;
