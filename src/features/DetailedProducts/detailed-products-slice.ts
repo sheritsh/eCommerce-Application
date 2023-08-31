@@ -1,4 +1,4 @@
-import { createSlice, createAsyncThunk, PayloadAction, Dispatch } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import Endpoints from '../../api/endpoints';
 import { IDetailedProductState } from './types';
 import { register } from '../../api/auth';
@@ -12,9 +12,9 @@ const initialState: IDetailedProductState = {
   },
 };
 
-export const fetchProductDetails = createAsyncThunk('detailed-products/fetchProductDetails', async () => {
+export const fetchProductDetails = createAsyncThunk('detailed-products/fetchProductDetails', async (id) => {
   const token = await register();
-  const response = await fetch(`${Endpoints.GET_PRODUCTS}/1ffa9ba4-c4b0-4fee-8c59-6873ec2b01e6`, {
+  const response = await fetch(`${Endpoints.GET_PRODUCTS}/${id}`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
@@ -22,39 +22,13 @@ export const fetchProductDetails = createAsyncThunk('detailed-products/fetchProd
     },
   });
   const data = await response.json();
-
   return data;
 });
 
 export const detailedProductReducer = createSlice({
   name: 'detailedProduct',
   initialState,
-  reducers: {
-    // getProductsStart: (state): IProductsState => ({
-    //   ...state,
-    //   productsData: {
-    //     ...state.productsData,
-    //     isLoading: true,
-    //   },
-    // }),
-    // getProductsSuccess: (state, action: PayloadAction<IResult[]>): IProductsState => ({
-    //   ...state,
-    //   productsData: {
-    //     ...state.productsData,
-    //     results: action.payload,
-    //     isLoading: false,
-    //     error: null,
-    //   },
-    // }),
-    // getProductsFailure: (state, action: PayloadAction<string>): IProductsState => ({
-    //   ...state,
-    //   productsData: {
-    //     ...state.productsData,
-    //     isLoading: false,
-    //     error: action.payload,
-    //   },
-    // }),
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder
       .addCase(fetchProductDetails.pending, (state) => ({
@@ -65,15 +39,18 @@ export const detailedProductReducer = createSlice({
           error: null,
         },
       }))
-      .addCase(fetchProductDetails.fulfilled, (state, action) => ({
-        ...state,
-        detailedProductData: {
-          ...state.detailedProductData,
-          result: action.payload,
-          isLoading: false,
-          error: null,
-        },
-      }))
+      .addCase(fetchProductDetails.fulfilled, (state, action) => {
+        // code for fullfiled data
+        return {
+          ...state,
+          detailedProductData: {
+            ...state.detailedProductData,
+            result: action.payload,
+            isLoading: false,
+            error: null,
+          },
+        };
+      })
       .addCase(fetchProductDetails.rejected, (state, action) => ({
         ...state,
         detailedProductData: {
@@ -85,6 +62,4 @@ export const detailedProductReducer = createSlice({
   },
 });
 
-// export const { getProductsStart, getProductsSuccess, getProductsFailure } = productsReducer.actions;
-
-// export default detailedProductReducer.reducer;
+export default detailedProductReducer.reducer;
