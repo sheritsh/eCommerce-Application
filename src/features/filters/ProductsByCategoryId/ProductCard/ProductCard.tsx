@@ -1,4 +1,5 @@
 import React from 'react';
+import { useParams } from 'react-router';
 import { Languages } from '../../../../api/types';
 import formatPrice from '../../../../utils/catalog/format-price';
 import truncateString from '../../../../utils/catalog/truncate-string';
@@ -12,10 +13,15 @@ interface IProductProps {
 }
 
 const ProductCard: React.FC<IProductProps> = ({ product }) => {
+  const category = useParams();
   return (
     <li className={classes.item}>
       <h3>
-        <a href="#" title={product.name[Languages.English]} className={classes.title}>
+        <a
+          href={`${category.categoryId}/${product.id}`}
+          title={product.name[Languages.English]}
+          className={classes.title}
+        >
           {product.name[Languages.English]}
         </a>
       </h3>

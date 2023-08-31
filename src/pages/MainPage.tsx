@@ -31,6 +31,9 @@ const MainPage: React.FC = () => {
             <li>
               <Link to="/kakayato-eres">404 Not Found Page</Link>
             </li>
+            <li>
+              <Link to="/product_page/test">Detailed Product Page</Link>
+            </li>
           </ul>
         </div>
       </Container>
