@@ -7,7 +7,7 @@ const ProductPageBreadcrumb: React.FC<IMatch> = () => {
     (state: IRootState) => state.detailedProduct.detailedProductData.result?.masterData?.current?.name,
   );
 
-  return productName['en-US'] ?? null;
+  return productName ? productName['en-US'] : null;
 };
 
 export default ProductPageBreadcrumb;
