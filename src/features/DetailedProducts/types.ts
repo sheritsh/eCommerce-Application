@@ -11,9 +11,9 @@ export interface IDetailedProductState {
 }
 
 export interface IProcessedProductData {
-  name: string;
-  price: number;
+  name: string | null;
+  price: number | null;
   discountedPrice: number | null;
-  description: string;
+  description: string | null;
   images: string[];
 }

@@ -25,7 +25,7 @@ const DetailedProduct: React.FC<IProductsProps> = () => {
 
   useEffect(() => {
     dispatch(fetchProductDetails(productId));
-  }, [productId]);
+  }, [productId, dispatch]);
 
   const processedProductData = processProductData(productData.result);
 

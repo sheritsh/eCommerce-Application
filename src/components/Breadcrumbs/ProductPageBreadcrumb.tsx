@@ -4,10 +4,10 @@ import { IMatch } from './types';
 
 const ProductPageBreadcrumb: React.FC<IMatch> = () => {
   const productName = useSelector(
-    (state: IRootState) => state.detailedProduct.detailedProductData.result.masterData.current.name,
+    (state: IRootState) => state.detailedProduct.detailedProductData.result?.masterData?.current?.name,
   );
 
-  return productName['en-US'];
+  return productName['en-US'] ?? null;
 };
 
 export default ProductPageBreadcrumb;
