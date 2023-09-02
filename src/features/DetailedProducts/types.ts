@@ -15,5 +15,9 @@ export interface IProcessedProductData {
   price: number | null;
   discountedPrice: number | null;
   description: string | null;
-  images: string[];
+  images: IFetchedImages[];
+}
+
+interface IFetchedImages {
+  url: string;
 }

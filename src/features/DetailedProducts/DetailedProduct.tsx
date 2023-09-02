@@ -1,14 +1,17 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router';
 import { Grid } from 'react-loader-spinner';
-import { useAppDispatch } from '../../store';
-import { IRootState } from '../types';
-import { fetchProductDetails } from './detailed-products-slice';
-import processProductData from '../../utils/details/process-product-data';
-import classes from './DetailedProduct.module.scss';
+import Box from '@mui/material/Box';
+import Modal from '@mui/material/Modal';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation, Pagination, Mousewheel } from 'swiper/modules';
+import { Navigation, Pagination } from 'swiper/modules';
+import classes from './DetailedProduct.module.scss';
+import processProductData from '../../utils/details/process-product-data';
+import { fetchProductDetails } from './detailed-products-slice';
+import { IRootState } from '../types';
+import { useAppDispatch } from '../../store';
+import Button from '../../components/UI/button/Button';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
@@ -17,6 +20,18 @@ import 'swiper/css/scrollbar';
 interface IProductsProps {
   categoryId?: string;
 }
+
+const style = {
+  position: 'absolute' as const,
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: '50vw',
+  bgcolor: 'background.paper',
+  border: '2px solid #000',
+  boxShadow: 24,
+  p: 4,
+};
 
 const DetailedProduct: React.FC<IProductsProps> = () => {
   const { productId } = useParams();
@@ -28,6 +43,22 @@ const DetailedProduct: React.FC<IProductsProps> = () => {
   }, [productId, dispatch]);
 
   const processedProductData = processProductData(productData.result);
+  const [open, setOpen] = useState(false);
+  const [selectedImageIndex, setSelectedImageIndex] = useState<number | null>(null);
+  const discountAmout =
+    processedProductData.price !== null && processedProductData.discountedPrice
+      ? (
+          ((processedProductData.price - processedProductData.discountedPrice / 100) / processedProductData.price) *
+          100
+        ).toFixed(0)
+      : null;
+
+  const handleOpen = (): void => setOpen(true);
+  const handleClose = (): void => setOpen(false);
+  const handleImageClick = (index: number): void => {
+    setSelectedImageIndex(index);
+    handleOpen();
+  };
 
   return (
     <>
@@ -49,22 +80,42 @@ const DetailedProduct: React.FC<IProductsProps> = () => {
           <div className={classes.detailed__main}>
             <div className={classes.main_slider}>
               <Swiper
-                modules={[Navigation, Pagination, Mousewheel]}
+                modules={[Navigation, Pagination]}
                 style={{
                   '--swiper-navigation-color': '#1D1E24',
                   '--swiper-pagination-color': '#FEBE70',
                 }}
                 spaceBetween={40}
                 height={50}
-                mousewheel={true}
                 slidesPerView={1}
                 navigation
                 pagination={{ clickable: true }}
               >
                 {processedProductData.images.map(({ url }, index) => {
                   return (
-                    <SwiperSlide>
-                      <img src={url} width="100%" alt={`Goods image ${index + 1}`}></img>
+                    <SwiperSlide key={index}>
+                      <img
+                        src={url}
+                        width="100%"
+                        alt={`Goods image ${index + 1}`}
+                        onClick={(): void => handleImageClick(index)}
+                      ></img>
+                      <Modal
+                        open={open}
+                        onClose={handleClose}
+                        aria-labelledby="modal-modal-title"
+                        aria-describedby="modal-modal-description"
+                      >
+                        <Box sx={style}>
+                          {selectedImageIndex !== null && (
+                            <img
+                              src={processedProductData.images[selectedImageIndex]?.url}
+                              width="100%"
+                              alt={`Goods image ${selectedImageIndex + 1}`}
+                            />
+                          )}
+                        </Box>
+                      </Modal>
                     </SwiperSlide>
                   );
                 })}
@@ -72,8 +123,26 @@ const DetailedProduct: React.FC<IProductsProps> = () => {
             </div>
             <div className={classes.main__main_info}>
               <h3>{processedProductData.name}</h3>
-              <div className={classes.main_info__price}>Price: ${processedProductData.price}</div>
-              {processedProductData.discountedPrice ? processedProductData.discountedPrice / 100 : null}
+              <div className={classes.main_info__price}>
+                Price:{' '}
+                <div
+                  className={`${classes.main_info__price_reg} ${
+                    processedProductData.discountedPrice ? classes.old_price : null
+                  }`}
+                >
+                  ${processedProductData.price}
+                </div>
+                {processedProductData.discountedPrice && (
+                  <div className={classes.main_info__disc}>
+                    <div className={classes.disc_amount}>-{discountAmout}%</div>
+                    <div className={classes.main_info__price_disc}>${processedProductData.discountedPrice / 100}</div>
+                  </div>
+                )}
+              </div>
+              <form className={classes.buy_form}>
+                <input type="number" min="1" max="99" defaultValue="1"></input>
+                <Button type="button" text="Add to cart" />
+              </form>
             </div>
           </div>
           <div className={classes.description}>
