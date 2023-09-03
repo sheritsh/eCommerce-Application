@@ -12,9 +12,7 @@ const initialState: ICustomerState = {
   },
 };
 
-export const fetchCustomer = createAsyncThunk('customer/fetchCustomer', async () => {
-  const token = useSelector((state: IRootState) => state.auth.authData.accessToken);
-
+export const fetchCustomer = createAsyncThunk('customer/fetchCustomer', async (token: string | null) => {
   const response = await fetch(`${ENV.Host}/${ENV.ProjectKey}/me`, {
     method: 'GET',
     headers: {

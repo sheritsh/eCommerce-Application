@@ -11,12 +11,12 @@ import Button from '../../components/UI/button/Button';
 const Profile: React.FC = () => {
   const dispatch = useAppDispatch();
   const customerData = useSelector((state: IRootState) => state.customer.customerData);
-
+  const newToken = useSelector((state: IRootState) => state.auth.authData.accessToken);
   // eslint-disable-next-line no-console
   console.log(customerData.result);
 
   useEffect(() => {
-    dispatch(fetchCustomer());
+    dispatch(fetchCustomer(newToken));
   }, [dispatch]);
 
   return (
