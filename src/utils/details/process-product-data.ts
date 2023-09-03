@@ -21,7 +21,6 @@ const processProductData = (rawData: IResult): IProcessedProductData => {
     description: null,
     images: [],
   };
-  
 };
 
 export default processProductData;

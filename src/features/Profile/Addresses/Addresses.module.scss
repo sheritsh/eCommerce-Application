@@ -1,0 +1,29 @@
+.profile__addresses {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  column-gap: 10px;
+}
+
+.profile__item {
+  padding: 1rem;
+  border-radius: 10px;
+  background-color: #e9e7e7;
+
+  &__title {
+    font-size: 1.3rem;
+  }
+
+  &__value {
+    margin-top: 10px;
+  }
+
+  .default {
+    font-size: 0.8rem;
+    color: #29892d;
+    border: 1px solid #29892d;
+    border-radius: 5px;
+    padding: 2px;
+    margin-left: 10px;
+  }
+}
+
