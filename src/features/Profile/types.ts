@@ -16,6 +16,8 @@ export interface ICustomer {
     isPlatformClient: boolean;
   };
   dateOfBirth: string;
+  defaultBillingAddressId: string;
+  defaultShippingAddressId: string;
   email: string;
   firstName: string;
   id: string;

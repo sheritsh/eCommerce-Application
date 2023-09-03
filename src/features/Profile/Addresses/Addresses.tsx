@@ -1,41 +1,81 @@
+import { ICustomer } from '../types';
 import classes from './Addresses.module.scss';
 
 interface AddressesProps {
-  type: string;
+  id: string;
   country: string;
   city: string;
   street: string;
   postCode: string;
+  customer: ICustomer;
 }
 
-const Addresses: React.FC<AddressesProps> = ({ type, country, city, street, postCode }) => {
+function addressCheckType(id: string, customer: ICustomer): string {
+  const billing = customer.billingAddressIds.find((e) => {
+    return e === id;
+  });
+  const shipping = customer.shippingAddressIds.find((e) => {
+    return e === id;
+  });
+
+  if (billing && shipping) {
+    return 'billing shipping';
+  }
+  if (shipping) {
+    return 'shipping';
+  }
+  if (billing) {
+    return 'billing';
+  }
+  return '-';
+}
+
+function addressCheckDefault(id: string, customer: ICustomer): JSX.Element | null {
+  if (id === customer.defaultBillingAddressId && id === customer.defaultShippingAddressId) {
+    return (
+      <div>
+        <p className={classes.default}>default billing</p>
+        <p className={classes.default}>default shipping</p>
+      </div>
+    );
+  }
+  if (id === customer.defaultShippingAddressId) {
+    return <p className={classes.default}>default shipping</p>;
+  }
+  if (id === customer.defaultBillingAddressId) {
+    return <p className={classes.default}>default billing</p>;
+  }
+  return null;
+}
+
+const Addresses: React.FC<AddressesProps> = ({ id, country, city, street, postCode, customer }) => {
   return (
     <div>
-      <form className={classes.profile__addresses}>
-        <label className={classes.profile__item}>
+      <div className={classes.profile__addresses}>
+        <div className={classes.profile__item}>
           <p className={classes.profile__item__title}>TYPE</p>
-          <p className={classes.profile__item__value}>
-            {type}
-            <span className={classes.default}>default</span>
-          </p>
-        </label>
-        <label className={classes.profile__item}>
+          <div className={classes.profile__item__value}>
+            <p>{addressCheckType(id, customer)}</p>
+            {addressCheckDefault(id, customer)}
+          </div>
+        </div>
+        <div className={classes.profile__item}>
           <p className={classes.profile__item__title}>COUNTRY</p>
           <p className={classes.profile__item__value}>{country}</p>
-        </label>
-        <label className={classes.profile__item}>
+        </div>
+        <div className={classes.profile__item}>
           <p className={classes.profile__item__title}>CITY</p>
           <p className={classes.profile__item__value}>{city}</p>
-        </label>
-        <label className={classes.profile__item}>
+        </div>
+        <div className={classes.profile__item}>
           <p className={classes.profile__item__title}>STREET</p>
           <p className={classes.profile__item__value}>{street}</p>
-        </label>
-        <label className={classes.profile__item}>
+        </div>
+        <div className={classes.profile__item}>
           <p className={classes.profile__item__title}>POSTAL CODE</p>
           <p className={classes.profile__item__value}>{postCode}</p>
-        </label>
-      </form>
+        </div>
+      </div>
     </div>
   );
 };

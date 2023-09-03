@@ -33,11 +33,12 @@ const Profile: React.FC = () => {
       </div>
       {addresses.map((address) => (
         <Addresses
-          type={address.id}
+          id={address.id}
           country={address.country}
           city={address.city}
           street={address.streetName}
           postCode={address.postalCode}
+          customer={customer}
         />
       ))}
       <span></span>
