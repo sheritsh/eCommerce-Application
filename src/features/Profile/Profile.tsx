@@ -10,13 +10,14 @@ import Button from '../../components/UI/button/Button';
 
 const Profile: React.FC = () => {
   const dispatch = useAppDispatch();
-  const customerData = useSelector((state: IRootState) => state.customer.customerData);
-  const newToken = useSelector((state: IRootState) => state.auth.authData.accessToken);
+  const customer = useSelector((state: IRootState) => state.customer.customerData).result;
+  const token = useSelector((state: IRootState) => state.auth.authData.accessToken);
+  const { addresses } = customer;
   // eslint-disable-next-line no-console
-  console.log(customerData.result);
+  console.log(customer, addresses);
 
   useEffect(() => {
-    dispatch(fetchCustomer(newToken));
+    dispatch(fetchCustomer(token));
   }, [dispatch]);
 
   return (
@@ -25,12 +26,20 @@ const Profile: React.FC = () => {
         <h3>Personal information</h3>
         <Button text="edit" />
       </div>
-      <PersonalInfo firstName="Andrey" lastName="Nezhdanov" birthDate="11.11.1997" />
+      <PersonalInfo firstName={customer.firstName} lastName={customer.lastName} birthDate={customer.dateOfBirth} />
       <div className={classes.profile__title}>
         <h3>Addresses</h3>
         <Button text="edit" />
       </div>
-      <Addresses type="Shipping" country="US" city="Moscow" street="Glagoleva" postCode="12312" />
+      {addresses.map((address) => (
+        <Addresses
+          type={address.id}
+          country={address.country}
+          city={address.city}
+          street={address.streetName}
+          postCode={address.postalCode}
+        />
+      ))}
       <span></span>
     </div>
   );

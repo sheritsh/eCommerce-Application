@@ -1,7 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { useSelector } from 'react-redux';
 import ENV from '../../api/env';
-import { IRootState } from '../types';
 import { ICustomer, ICustomerState } from './types';
 
 const initialState: ICustomerState = {
