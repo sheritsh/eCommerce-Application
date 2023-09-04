@@ -25,13 +25,13 @@ const Footer: React.FC = () => {
           <div className={classes.copyright}>Tourist Tracks Store ©2023</div>
           <div className={classes.rs_school}>
             <a href="https://rs.school/js/">
-              <img src="assets/svg/rs_school_js.svg" alt="RS_School_logo" width="100%"></img>
+              <img src="/assets/svg/rs_school_js.svg" alt="RS_School_logo" width="100%"></img>
             </a>
           </div>
         </div>
         <div className={classes.page_up}>
           <a href="#">
-            <img src="assets/svg/arrow_up.svg" alt="page_up" width="100%"></img>
+            <img src="/assets/svg/arrow_up.svg" alt="page_up" width="100%"></img>
           </a>
         </div>
       </Container>

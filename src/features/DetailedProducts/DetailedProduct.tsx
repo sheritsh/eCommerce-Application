@@ -5,7 +5,9 @@ import { Grid } from 'react-loader-spinner';
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation, Pagination } from 'swiper/modules';
+import { Zoom, Keyboard, Navigation, Pagination } from 'swiper/modules';
+import IconButton from '@mui/material/IconButton';
+import CloseIcon from '@mui/icons-material/Close';
 import classes from './DetailedProduct.module.scss';
 import processProductData from '../../utils/details/process-product-data';
 import { fetchProductDetails } from './detailed-products-slice';
@@ -13,6 +15,7 @@ import { IRootState } from '../types';
 import { useAppDispatch } from '../../store';
 import Button from '../../components/UI/button/Button';
 import 'swiper/css';
+import 'swiper/css/zoom';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
@@ -21,12 +24,12 @@ interface IProductsProps {
   categoryId?: string;
 }
 
-const style = {
+const modalWindowStyle = {
   position: 'absolute' as const,
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
-  width: '50vw',
+  width: 'min(60vw, 1200px)',
   bgcolor: 'background.paper',
   border: '2px solid #000',
   boxShadow: 24,
@@ -106,14 +109,48 @@ const DetailedProduct: React.FC<IProductsProps> = () => {
                         aria-labelledby="modal-modal-title"
                         aria-describedby="modal-modal-description"
                       >
-                        <Box sx={style}>
-                          {selectedImageIndex !== null && (
-                            <img
-                              src={processedProductData.images[selectedImageIndex]?.url}
-                              width="100%"
-                              alt={`Goods image ${selectedImageIndex + 1}`}
-                            />
-                          )}
+                        <Box sx={modalWindowStyle}>
+                          <IconButton
+                            edge="end"
+                            color="inherit"
+                            onClick={handleClose}
+                            aria-label="Закрыть"
+                            style={{ position: 'absolute', top: 0, right: 10 }}
+                          >
+                            <CloseIcon />
+                          </IconButton>
+                          <Swiper
+                            modules={[Zoom, Keyboard, Navigation, Pagination]}
+                            style={{
+                              '--swiper-navigation-color': '#1D1E24',
+                              '--swiper-pagination-color': '#FEBE70',
+                            }}
+                            keyboard={{
+                              enabled: true,
+                            }}
+                            initialSlide={selectedImageIndex}
+                            spaceBetween={40}
+                            height={50}
+                            slidesPerView={1}
+                            navigation
+                            zoom={true}
+                            pagination={{ clickable: true }}
+                          >
+                            {processedProductData.images.map(({ url }, idx) => {
+                              return (
+                                <SwiperSlide key={idx}>
+                                  <div className="swiper-zoom-container">
+                                    <img
+                                      src={url}
+                                      width="100%"
+                                      alt={`Goods image ${idx + 1}`}
+                                      onClick={(): void => handleImageClick(idx)}
+                                    ></img>
+                                  </div>
+                                </SwiperSlide>
+                              );
+                            })}
+                          </Swiper>
                         </Box>
                       </Modal>
                     </SwiperSlide>

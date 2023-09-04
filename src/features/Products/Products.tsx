@@ -9,14 +9,16 @@ import ProductCard from './ProductCard/ProductCard';
 
 interface IProductsProps {
   categoryId?: string;
+  searchQuery?: string;
 }
 
-const Products: React.FC<IProductsProps> = ({ categoryId }) => {
+const Products: React.FC<IProductsProps> = ({ categoryId, searchQuery }) => {
   const products = useSelector((state: IRootState) => state.products.productsData);
   const dispatch = useAppDispatch();
+
   useEffect(() => {
-    dispatch(fetchProducts());
-  }, []);
+    dispatch(fetchProducts(searchQuery));
+  }, [searchQuery]);
   return (
     <>
       {products.isLoading && (
