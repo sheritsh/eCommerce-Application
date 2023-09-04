@@ -1,7 +1,6 @@
-import { IProcessedProductData } from '../../features/DetailedProducts/types';
-import { IResult } from '../../features/Products/types';
+import { IProcessedProductData, IProduct } from '../../features/DetailedProducts/types';
 
-const processProductData = (rawData: IResult): IProcessedProductData => {
+const processProductData = (rawData: IProduct): IProcessedProductData => {
   if (rawData.id) {
     const { masterVariant } = rawData.masterData.current;
     const { prices } = masterVariant;

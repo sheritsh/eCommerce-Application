@@ -1,12 +1,11 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import Endpoints from '../../api/endpoints';
-import { IDetailedProductState } from './types';
+import { IDetailedProductState, IProduct } from './types';
 import { register } from '../../api/auth';
-import { IResult } from '../Products/types';
 
 const initialState: IDetailedProductState = {
   detailedProductData: {
-    result: {} as IResult,
+    result: {} as IProduct,
     isLoading: false,
     error: null,
   },
@@ -22,6 +21,7 @@ export const fetchProductDetails = createAsyncThunk('detailed-products/fetchProd
     },
   });
   const data = await response.json();
+
   return data;
 });
 
