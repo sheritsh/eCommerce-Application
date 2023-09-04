@@ -30,20 +30,22 @@ const Profile: React.FC = () => {
         <h3>Addresses</h3>
         <Button text="Add new address" />
       </div>
-      {addresses.map((address) => (
-        <div>
-          <Addresses
-            id={address.id}
-            country={address.country}
-            city={address.city}
-            street={address.streetName}
-            postCode={address.postalCode}
-            customer={customer}
-          />
-          <button>edit</button>
-          <button>delete</button>
-        </div>
-      ))}
+      {addresses
+        ? addresses.map((address) => (
+            <div>
+              <Addresses
+                id={address.id}
+                country={address.country}
+                city={address.city}
+                street={address.streetName}
+                postCode={address.postalCode}
+                customer={customer}
+              />
+              <button>edit</button>
+              <button>delete</button>
+            </div>
+          ))
+        : null}
       <span></span>
     </div>
   );
