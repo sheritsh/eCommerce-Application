@@ -5,7 +5,7 @@ import { Grid } from 'react-loader-spinner';
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Zoom, Navigation, Pagination } from 'swiper/modules';
+import { Zoom, Keyboard, Navigation, Pagination } from 'swiper/modules';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import classes from './DetailedProduct.module.scss';
@@ -120,10 +120,13 @@ const DetailedProduct: React.FC<IProductsProps> = () => {
                             <CloseIcon />
                           </IconButton>
                           <Swiper
-                            modules={[Zoom, Navigation, Pagination]}
+                            modules={[Zoom, Keyboard, Navigation, Pagination]}
                             style={{
                               '--swiper-navigation-color': '#1D1E24',
                               '--swiper-pagination-color': '#FEBE70',
+                            }}
+                            keyboard={{
+                              enabled: true,
                             }}
                             initialSlide={selectedImageIndex}
                             spaceBetween={40}
