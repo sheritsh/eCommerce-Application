@@ -12,7 +12,7 @@ interface IProductProps {
 }
 
 const SelectedProductCard: React.FC<IProductProps> = ({ product }) => {
-  if (product) {
+  if (product.name) {
     const productName = product.name[Languages.English];
     const productDescription = product.description[Languages.English];
     const productRegularPrice = product.masterVariant.prices[0].value.centAmount;
