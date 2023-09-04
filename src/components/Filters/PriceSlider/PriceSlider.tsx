@@ -7,10 +7,9 @@ const PriceSlider: React.FC<IPrice> = ({ value, price, changePrice }) => {
   return (
     <div className={classes.slider}>
       <Slider
-        aria-label="Price"
         defaultValue={price.min}
         value={value}
-        onChange={changePrice}
+        onChangeCommitted={changePrice}
         valueLabelDisplay="auto"
         sx={{
           color: '#247C52',

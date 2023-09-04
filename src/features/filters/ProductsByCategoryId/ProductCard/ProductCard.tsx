@@ -42,7 +42,7 @@ export const ProductCard: React.FC<IProductProps> = ({ product }) => {
           {product.masterVariant.prices[0].value.currencyCode}
         </span>
       )}
-      <a href="#" title={product.name[Languages.English]} className={classes.link}>
+      <a href={`${category.categoryId}/${product.id}`} title={product.name[Languages.English]} className={classes.link}>
         <img
           src={product.masterVariant.images[0].url}
           alt={product.name[Languages.English]}
@@ -51,7 +51,11 @@ export const ProductCard: React.FC<IProductProps> = ({ product }) => {
       </a>
       <Button type="button" text="Add to cart" />
       <p>
-        <a href="#" title={product.name[Languages.English]} className={classes.link}>
+        <a
+          href={`${category.categoryId}/${product.id}`}
+          title={product.name[Languages.English]}
+          className={classes.link}
+        >
           {truncateString(product.description[Languages.English], 200)}
         </a>
       </p>
