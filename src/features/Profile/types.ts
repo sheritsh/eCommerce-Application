@@ -45,3 +45,10 @@ export interface ICustomerData {
 export interface ICustomerState {
   customerData: ICustomerData;
 }
+
+export interface IPersonalInfo {
+  firstName: string;
+  lastName: string;
+  dateOfBirth: string;
+  email: string;
+}
