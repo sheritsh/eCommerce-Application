@@ -1,6 +1,7 @@
 .detailed__main {
   display: flex;
-  align-items: center;
+  // width: min(80%, 1440px);
+  // margin: 0 auto;
 }
 
 .main_slider {
@@ -86,4 +87,22 @@ input {
   font-size: 1rem;
   padding: 5px;
   opacity: 0.8;
+}
+
+@media screen and (min-width: 780px) {
+  .detailed__main {
+    width: min(80%, 1440px);
+    margin: 0 auto;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .detailed__main {
+    flex-wrap: wrap;
+  }
+
+  .main_slider {
+    width: 100%;
+    align-self: center;
+  }
 }
