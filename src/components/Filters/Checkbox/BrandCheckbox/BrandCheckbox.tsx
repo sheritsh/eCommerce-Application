@@ -5,10 +5,9 @@ import Checkbox from '@mui/material/Checkbox';
 import { IBrand } from './types';
 
 const BrandCheckbox: React.FC<IBrand> = ({ brand }: IBrand) => {
-  const { title } = brand;
   return (
     <FormGroup>
-      <FormControlLabel control={<Checkbox />} label={title} />
+      <FormControlLabel control={<Checkbox />} label={brand} />
     </FormGroup>
   );
 };

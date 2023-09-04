@@ -2,14 +2,14 @@ import React from 'react';
 import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
-import { IColor } from './types';
+import { ISize } from './types';
 
-const ColorCheckbox: React.FC<IColor> = ({ color }: IColor) => {
+const SizeCheckbox: React.FC<ISize> = ({ size }: ISize) => {
   return (
     <FormGroup>
-      <FormControlLabel control={<Checkbox />} label={color} />
+      <FormControlLabel control={<Checkbox />} label={size} />
     </FormGroup>
   );
 };
 
-export default ColorCheckbox;
+export default SizeCheckbox;

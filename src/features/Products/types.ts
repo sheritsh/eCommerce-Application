@@ -1,5 +1,25 @@
 import { Languages } from '../../api/types';
 
+interface INumber {
+  name: 'size';
+  value: number;
+}
+
+interface IString {
+  name: 'brand';
+  value: string;
+}
+
+export interface IObject {
+  name: 'color';
+  value: {
+    key: string;
+    label: string;
+  };
+}
+
+type Attribute = INumber | IString | IObject;
+
 export interface IImage {
   url: string;
   dimensions: {
@@ -112,7 +132,7 @@ export interface IResult {
         id: number;
         prices: IPrice[];
         images: IImage[];
-        attributes: string[];
+        attributes: Attribute[];
         assets: string[];
       };
       variants: string[];
