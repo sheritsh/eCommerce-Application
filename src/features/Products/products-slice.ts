@@ -52,19 +52,28 @@ export const { getProductsStart, getProductsSuccess, getProductsFailure } = prod
 export default productsReducer.reducer;
 
 export const fetchProducts =
-  (searchQuery: string, sortQuery: string) =>
+  (searchQuery: string, sortQuery: string, brands: [], colors: [], sizes: [], selectedPrice : []) =>
   async (dispatch: Dispatch): Promise<void> => {
     let endpoint = Endpoints.GET_PRODUCTS;
     if (searchQuery) {
       endpoint = `${Endpoints.GET_SEARCH}/search?text.en-US="${searchQuery}"`;
-    }
-    if (sortQuery) {
+      if (sortQuery) {
+        endpoint = `${endpoint}&${sortQuery}`;
+      }
+    } else if (sortQuery) {
       if (sortQuery === 'sort=name.en-US') {
         endpoint = `${Endpoints.GET_SEARCH}/?${sortQuery}`;
       } else {
         endpoint = `${Endpoints.GET_SEARCH}/search?${sortQuery}`;
       }
     }
+    // const filteredBrands = brands.filter((item) => item.checked === true);
+    // const brandsArray = filteredBrands.map((item) => item.label);
+    // const filteredColors = colors.filter((item) => item.checked === true);
+    // const colorsArray = filteredColors.map((item) => item.label);
+    // const filteredSizes = sizes.filter((item) => item.checked === true);
+    // const sizesArray = filteredSizes.map((item) => item.label);
+
     const token = await register();
     try {
       dispatch(getProductsStart());

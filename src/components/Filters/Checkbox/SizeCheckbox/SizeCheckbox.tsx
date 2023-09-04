@@ -2,18 +2,18 @@ import React from 'react';
 import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
-import { IColor } from './types';
+import { ISize } from './types';
 
-const ColorCheckbox: React.FC<IColor> = ({ handleChangeCheckedColor, color }) => {
-  const { checked, label, id } = color;
+const SizeCheckbox: React.FC<ISize> = ({ handleChangeCheckedSize, size }) => {
+  const { checked, label, id } = size;
   return (
     <FormGroup>
       <FormControlLabel
-        control={<Checkbox checked={checked} onChange={(): void => handleChangeCheckedColor(id)} />}
+        control={<Checkbox checked={checked} onChange={(): void => handleChangeCheckedSize(id)} />}
         label={label}
       />
     </FormGroup>
   );
 };
 
-export default ColorCheckbox;
+export default SizeCheckbox;

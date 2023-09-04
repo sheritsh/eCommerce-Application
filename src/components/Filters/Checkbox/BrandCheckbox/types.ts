@@ -1,7 +1,8 @@
 export interface IBrand {
   brand: {
     id: number;
-    title: string;
-    isChecked: boolean;
+    checked: boolean;
+    label: string;
   };
+  handleChangeCheckedBrand: (id: number) => void;
 }

@@ -1,23 +1,21 @@
 import * as React from 'react';
 import Slider from '@mui/material/Slider';
 import classes from './PriceSlider.module.scss';
+import { IPrice } from './types';
 
-const PriceSlider: React.FC = () => {
-  const [value, setValue] = React.useState<number>(30);
-
-  const handleChange = (event: Event, newValue: number | number[]): void => {
-    setValue(newValue as number);
-  };
-
+const PriceSlider: React.FC<IPrice> = ({ value, price, changePrice }) => {
   return (
     <div className={classes.slider}>
       <Slider
-        aria-label="Volume"
+        defaultValue={price.min}
         value={value}
-        onChange={handleChange}
+        onChangeCommitted={changePrice}
+        valueLabelDisplay="auto"
         sx={{
           color: '#247C52',
         }}
+        min={price.min}
+        max={price.max}
       />
     </div>
   );

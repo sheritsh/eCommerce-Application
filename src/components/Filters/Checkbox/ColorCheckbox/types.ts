@@ -1,6 +1,8 @@
 export interface IColor {
   color: {
     id: number;
-    name: string;
+    checked: boolean;
+    label: string;
   };
+  handleChangeCheckedColor: (id: number) => void;
 }

@@ -9,19 +9,62 @@ import ProductCard from './ProductCard/ProductCard';
 import SelectedProductCard from './ProductCard/SelectedProductCard';
 import { IResult, ISelectedProduct } from './types';
 
+interface IFilterQuery {
+  brands: {
+    id: number;
+    checked: boolean;
+    label: string;
+  }[];
+  colors: {
+    id: number;
+    checked: boolean;
+    label: string;
+  }[];
+  sizes: {
+    id: number;
+    checked: boolean;
+    label: number;
+  }[];
+  selectedPrice: number[];
+}
+
+interface IFilterProp {
+  id: number;
+  checked: boolean;
+  label: string;
+}
+
+interface IFilterPropNumber {
+  id: number;
+  checked: boolean;
+  label: number;
+}
+
 interface IProductsProps {
   categoryId?: string;
   searchQuery?: string;
   sortQuery?: string;
+  brands: IFilterProp[];
+  colors: IFilterProp[];
+  sizes: IFilterPropNumber[];
+  selectedPrice: number[];
 }
 
-const Products: React.FC<IProductsProps> = ({ categoryId = '', searchQuery = '', sortQuery = '' }) => {
+const Products: React.FC<IProductsProps> = ({
+  categoryId = '',
+  searchQuery = '',
+  sortQuery = '',
+  brands,
+  colors,
+  sizes,
+  selectedPrice,
+}) => {
   const products = useSelector((state: IRootState) => state.products.productsData);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    dispatch(fetchProducts(searchQuery, sortQuery));
-  }, [searchQuery, sortQuery]);
+    dispatch(fetchProducts(searchQuery, sortQuery, brands, colors, sizes, selectedPrice));
+  }, [searchQuery, sortQuery, brands, colors, sizes, selectedPrice]);
   return (
     <>
       {products.isLoading && (

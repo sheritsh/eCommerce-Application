@@ -44,7 +44,11 @@ const ProductCard: React.FC<IProductProps> = ({ product }) => {
           {product.masterData.staged.masterVariant.prices[0].value.currencyCode}
         </span>
       )}
-      <a href="#" title={product.masterData.staged.name[Languages.English]} className={classes.link}>
+      <a
+        href={`catalog/${product.id}`}
+        title={product.masterData.staged.name[Languages.English]}
+        className={classes.link}
+      >
         <img
           src={product.masterData.staged.masterVariant.images[0].url}
           alt={product.masterData.staged.name[Languages.English]}
@@ -53,7 +57,11 @@ const ProductCard: React.FC<IProductProps> = ({ product }) => {
       </a>
       <Button type="button" text="Add to cart" />
       <p>
-        <a href="#" title={product.masterData.staged.name[Languages.English]} className={classes.link}>
+        <a
+          href={`catalog/${product.id}`}
+          title={product.masterData.staged.name[Languages.English]}
+          className={classes.link}
+        >
           {truncateString(product.masterData.staged.description[Languages.English], 200)}
         </a>
       </p>
