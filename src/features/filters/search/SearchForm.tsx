@@ -10,12 +10,19 @@ const SearchForm: React.FC<{ onSearch: (event: React.ChangeEvent<HTMLInputElemen
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
-    setTimeout(onSearch({ target: { value: searchQuery } } as React.ChangeEvent<HTMLInputElement>), 1000);
+    onSearch({ target: { value: searchQuery } } as React.ChangeEvent<HTMLInputElement>);
   };
 
   return (
     <form onSubmit={handleSubmit}>
-      <TextField type="search" placeholder="Search products" value={searchQuery} onChange={handleInputChange} />
+      <TextField
+        type="search"
+        label="Search"
+        placeholder="Enter product name"
+        variant="outlined"
+        value={searchQuery}
+        onChange={handleInputChange}
+      />
     </form>
   );
 };
