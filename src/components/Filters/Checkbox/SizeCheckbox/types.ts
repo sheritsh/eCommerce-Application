@@ -1,3 +1,8 @@
 export interface ISize {
-  size: number;
+  size: {
+    id: number;
+    checked: boolean;
+    label: number;
+  };
+  handleChangeCheckedSize: (id: number) => void;
 }
