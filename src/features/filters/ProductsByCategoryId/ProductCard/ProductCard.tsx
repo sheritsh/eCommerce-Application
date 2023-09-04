@@ -12,7 +12,7 @@ interface IProductProps {
   key?: string;
 }
 
-const ProductCard: React.FC<IProductProps> = ({ product }) => {
+export const ProductCard: React.FC<IProductProps> = ({ product }) => {
   const category = useParams();
   return (
     <li className={classes.item}>

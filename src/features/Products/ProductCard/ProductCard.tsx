@@ -12,6 +12,9 @@ interface IProductProps {
 }
 
 const ProductCard: React.FC<IProductProps> = ({ product }) => {
+  if (product.name) {
+    console.error(product.name['en-US']);
+  }
   if (!product.masterData) {
     return null;
   }
