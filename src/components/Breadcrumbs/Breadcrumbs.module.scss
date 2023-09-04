@@ -5,12 +5,12 @@
   font-size: 0.9em;
   font-weight: 400;
 
-  & > a:not(:last-child) {
+  &>a:not(:last-child) {
     position: relative;
     width: fit-content;
   }
 
-  & > a:not(:last-child):after {
+  &>a:not(:last-child):after {
     position: absolute;
     content: '/';
     top: 0;
