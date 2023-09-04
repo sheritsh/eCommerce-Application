@@ -52,12 +52,15 @@ export const { getProductsStart, getProductsSuccess, getProductsFailure } = prod
 export default productsReducer.reducer;
 
 export const fetchProducts =
-  () =>
+  (searchQuery: string) =>
   async (dispatch: Dispatch): Promise<void> => {
+    const endpoint = searchQuery
+      ? `${Endpoints.GET_SEARCH}/search?text.en-US="${searchQuery}"`
+      : Endpoints.GET_PRODUCTS;
     const token = await register();
     try {
       dispatch(getProductsStart());
-      const response = await axios.get(Endpoints.GET_PRODUCTS, {
+      const response = await axios.get(endpoint, {
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${token.access_token}`,
