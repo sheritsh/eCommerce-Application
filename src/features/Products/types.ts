@@ -130,7 +130,7 @@ export interface IProductsData {
   offset: number | null;
   count: number | null;
   total: number | null;
-  results: IResult[];
+  results: IResult[] | ISelectedProduct[];
   isLoading: boolean;
   error: string | null;
 }

@@ -4,12 +4,18 @@ import Container from '../components/UI/container/Container';
 import Products from '../features/Products/Products';
 import Categories from '../features/Categories/Categories';
 import Filters from '../components/Filters/Filters';
+import SortForm from '../features/filters/sorting/SortForm';
 
 const Catalog: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState('');
+  const [sortQuery, setSortQuery] = useState('');
 
   const handleSearch = (event: React.ChangeEvent<HTMLInputElement>): void => {
     setSearchQuery(event.target.value);
+  };
+
+  const handleSort = (sortOption: string): void => {
+    setSortQuery(sortOption);
   };
 
   return (
@@ -20,19 +26,15 @@ const Catalog: React.FC = () => {
           <div className="catalog-wrapper">
             <div className="filters-wrapper">
               <Categories />
-              <SearchForm onSearch={handleSearch} />
-              <Filters
-              // selectedCategory={selectedCategory}
-              // selectCategory={handleSelectCategory}
-              // selectedRating={selectedRating}
-              // selectedPrice={selectedPrice}
-              // selectRating={handleSelectRating}
-              // cuisines={cuisines}
-              // changeChecked={handleChangeChecked}
-              // changePrice={handleChangePrice}
-              />
+              <Filters />
             </div>
-            <Products searchQuery={searchQuery} />
+            <div className="catalog-main">
+              <div className="catalog-nav">
+                <SearchForm onSearch={handleSearch} />
+                <SortForm onSort={handleSort} />
+              </div>
+              <Products searchQuery={searchQuery} sortQuery={sortQuery} />
+            </div>
           </div>
         </div>
       </Container>

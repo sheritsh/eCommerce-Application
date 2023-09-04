@@ -5,20 +5,21 @@ import { useAppDispatch } from '../../../store';
 import { fetchProductsByCategoryId } from './products-by-category-id-slice';
 import { IRootState } from '../../types';
 import classes from '../../Products/Products.module.scss';
-import ProductCard from './ProductCard/ProductCard';
 import SelectedProductCard from '../../Products/ProductCard/SelectedProductCard';
+import ProductCard from './ProductCard/ProductCard';
 
 interface IProductsProps {
   categoryId?: string;
   searchQuery?: string;
+  sortQuery?: string;
 }
 
-const ProductsByCategoryId: React.FC<IProductsProps> = ({ categoryId = '', searchQuery }) => {
+const ProductsByCategoryId: React.FC<IProductsProps> = ({ categoryId = '', searchQuery = '', sortQuery = '' }) => {
   const products = useSelector((state: IRootState) => state.productsByCategoryId.productsByCategoryIdData);
   const dispatch = useAppDispatch();
   useEffect(() => {
-    dispatch(fetchProductsByCategoryId(categoryId, searchQuery));
-  }, [categoryId, searchQuery]);
+    dispatch(fetchProductsByCategoryId(categoryId, searchQuery, sortQuery));
+  }, [categoryId, searchQuery, sortQuery]);
   return (
     <>
       {products.isLoading && (
