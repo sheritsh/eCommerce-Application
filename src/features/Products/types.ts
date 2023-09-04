@@ -138,3 +138,81 @@ export interface IProductsData {
 export interface IProductsState {
   productsData: IProductsData;
 }
+
+export interface ISelectedProduct {
+  id: string;
+  version: number;
+  productType: {
+    typeId: string;
+    id: string;
+  };
+  name: {
+    [language: string]: string;
+  };
+  description: {
+    [language: string]: string;
+  };
+  categories: {
+    typeId: string;
+    id: string;
+  }[];
+  categoryOrderHints: Record<string, unknown>;
+  slug: {
+    [language: string]: string;
+  };
+  metaTitle: {
+    [language: string]: string;
+  };
+  metaDescription: {
+    [language: string]: string;
+  };
+  variants: unknown[];
+  masterVariant: {
+    attributes: unknown[];
+    assets: unknown[];
+    images: {
+      url: string;
+      dimensions: {
+        w: number;
+        h: number;
+      };
+    }[];
+    prices: {
+      id: string;
+      value: {
+        type: string;
+        currencyCode: string;
+        centAmount: number;
+        fractionDigits: number;
+      };
+      discounted: {
+        value: {
+          type: string;
+          currencyCode: string;
+          centAmount: number;
+          fractionDigits: number;
+        };
+        discount: {
+          typeId: string;
+          id: string;
+        };
+      };
+    }[];
+    id: number;
+  };
+  searchKeywords: Record<string, unknown>;
+  hasStagedChanges: boolean;
+  published: boolean;
+  priceMode: string;
+  createdAt: string;
+  lastModifiedAt: string;
+}
+
+export interface ISelectedProductSearchResponse {
+  limit: number;
+  offset: number;
+  count: number;
+  total: number;
+  results: ISelectedProduct[];
+  facets: Record<string, unknown>;
+}

@@ -1,8 +1,6 @@
-import { IProcessedProductData } from '../../features/DetailedProducts/types';
-import { IResult } from '../../features/Products/types';
+import { IProcessedProductData, IProduct } from '../../features/DetailedProducts/types';
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const processProductData = (rawData: IResult | any): IProcessedProductData => {
+const processProductData = (rawData: IProduct): IProcessedProductData => {
   if (rawData.id) {
     const { masterVariant } = rawData.masterData.current;
     const { prices } = masterVariant;

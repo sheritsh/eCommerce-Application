@@ -6,6 +6,8 @@ import { fetchProducts } from './products-slice';
 import { IRootState } from '../types';
 import classes from './Products.module.scss';
 import ProductCard from './ProductCard/ProductCard';
+import SelectedProductCard from './ProductCard/SelectedProductCard';
+import { ISelectedProduct } from './types';
 
 interface IProductsProps {
   categoryId?: string;
@@ -36,11 +38,17 @@ const Products: React.FC<IProductsProps> = ({ categoryId = '', searchQuery = '' 
       {!products.isLoading && products.error ? <div>{products.error}</div> : null}
       {!products.isLoading && products.results.length && !categoryId ? (
         <ul className={classes.list}>
-          {products.results.map((result) => (
-            <ProductCard product={result} key={result.id} />
-          ))}
+          {products.results.map((result) =>
+            searchQuery ? (
+              <SelectedProductCard product={result} key={result.id} />
+            ) : (
+              <ProductCard product={result} key={result.id} />
+            ),
+          )}
         </ul>
-      ) : null}
+      ) : (
+        <div className={classes.not_found}>No products matching your search criteria</div>
+      )}
     </>
   );
 };

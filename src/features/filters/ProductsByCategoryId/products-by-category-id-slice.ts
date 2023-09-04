@@ -53,12 +53,15 @@ export const { getProductsByCategoryIdStart, getProductsByCategoryIdSuccess, get
 export default productsByCategoryIdReducer.reducer;
 
 export const fetchProductsByCategoryId =
-  (categoryId: string) =>
+  (categoryId: string, searchQuery: string) =>
   async (dispatch: Dispatch): Promise<void> => {
+    const endpoint = searchQuery
+      ? `${Endpoints.GET_PRODUCTS_BY_CATEGORY}"${categoryId}"&text.en-US="${searchQuery}"`
+      : `${Endpoints.GET_PRODUCTS_BY_CATEGORY}"${categoryId}"`;
     const token = await register();
     try {
       dispatch(getProductsByCategoryIdStart());
-      const response = await axios.get(`${Endpoints.GET_PRODUCTS_BY_CATEGORY}"${categoryId}"`, {
+      const response = await axios.get(endpoint, {
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${token.access_token}`,

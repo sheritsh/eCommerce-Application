@@ -4,7 +4,7 @@ import classes from './Button.module.css';
 interface ButtonProps {
   type?: 'button' | 'submit';
   text?: string;
-  onClick?: (event: React.MouseEvent<HTMLButtonElement>) => Promise<void>;
+  onClick?: (event: React.MouseEvent<HTMLButtonElement>) => Promise<void> | void;
   disabled?: boolean;
 }
 

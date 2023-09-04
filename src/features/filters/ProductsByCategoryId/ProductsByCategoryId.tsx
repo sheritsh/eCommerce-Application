@@ -6,17 +6,19 @@ import { fetchProductsByCategoryId } from './products-by-category-id-slice';
 import { IRootState } from '../../types';
 import classes from '../../Products/Products.module.scss';
 import ProductCard from './ProductCard/ProductCard';
+import SelectedProductCard from '../../Products/ProductCard/SelectedProductCard';
 
 interface IProductsProps {
   categoryId?: string;
+  searchQuery?: string;
 }
 
-const ProductsByCategoryId: React.FC<IProductsProps> = ({ categoryId = '' }) => {
+const ProductsByCategoryId: React.FC<IProductsProps> = ({ categoryId = '', searchQuery }) => {
   const products = useSelector((state: IRootState) => state.productsByCategoryId.productsByCategoryIdData);
   const dispatch = useAppDispatch();
   useEffect(() => {
-    dispatch(fetchProductsByCategoryId(categoryId));
-  }, [categoryId]);
+    dispatch(fetchProductsByCategoryId(categoryId, searchQuery));
+  }, [categoryId, searchQuery]);
   return (
     <>
       {products.isLoading && (
@@ -41,9 +43,13 @@ const ProductsByCategoryId: React.FC<IProductsProps> = ({ categoryId = '' }) => 
       ) : null}
       {categoryId ? (
         <ul className={classes.list}>
-          {products.results.map((result) => (
-            <ProductCard product={result} key={result.id} />
-          ))}
+          {products.results.map((result) =>
+            searchQuery ? (
+              <SelectedProductCard product={result} key={result.id} />
+            ) : (
+              <ProductCard product={result} key={result.id} />
+            ),
+          )}
         </ul>
       ) : null}
     </>
