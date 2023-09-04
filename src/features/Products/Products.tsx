@@ -12,7 +12,7 @@ interface IProductsProps {
   searchQuery?: string;
 }
 
-const Products: React.FC<IProductsProps> = ({ categoryId, searchQuery }) => {
+const Products: React.FC<IProductsProps> = ({ categoryId = '', searchQuery = '' }) => {
   const products = useSelector((state: IRootState) => state.products.productsData);
   const dispatch = useAppDispatch();
 

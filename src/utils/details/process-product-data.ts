@@ -1,7 +1,8 @@
 import { IProcessedProductData } from '../../features/DetailedProducts/types';
 import { IResult } from '../../features/Products/types';
 
-const processProductData = (rawData: IResult): IProcessedProductData => {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const processProductData = (rawData: IResult | any): IProcessedProductData => {
   if (rawData.id) {
     const { masterVariant } = rawData.masterData.current;
     const { prices } = masterVariant;
@@ -21,7 +22,6 @@ const processProductData = (rawData: IResult): IProcessedProductData => {
     description: null,
     images: [],
   };
-  
 };
 
 export default processProductData;
