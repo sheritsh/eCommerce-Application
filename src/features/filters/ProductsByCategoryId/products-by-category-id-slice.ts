@@ -53,11 +53,19 @@ export const { getProductsByCategoryIdStart, getProductsByCategoryIdSuccess, get
 export default productsByCategoryIdReducer.reducer;
 
 export const fetchProductsByCategoryId =
-  (categoryId: string, searchQuery: string) =>
+  (categoryId: string, searchQuery: string, sortQuery: string) =>
   async (dispatch: Dispatch): Promise<void> => {
-    const endpoint = searchQuery
-      ? `${Endpoints.GET_PRODUCTS_BY_CATEGORY}"${categoryId}"&text.en-US="${searchQuery}"`
-      : `${Endpoints.GET_PRODUCTS_BY_CATEGORY}"${categoryId}"`;
+    let endpoint = `${Endpoints.GET_PRODUCTS_BY_CATEGORY}"${categoryId}"`;
+    if (searchQuery) {
+      endpoint = `${Endpoints.GET_PRODUCTS_BY_CATEGORY}"${categoryId}"&text.en-US+asc"${searchQuery}"`;
+    }
+    if (sortQuery) {
+      if (sortQuery === 'sort=name.en-US') {
+        endpoint = `${Endpoints.GET_PRODUCTS_BY_CATEGORY_FILTER}sort=${sortQuery}&&staged=true&limit=10&filter=categories.id:"${categoryId}"`;
+      } else {
+        endpoint = `${Endpoints.GET_PRODUCTS_BY_CATEGORY_FILTER}${sortQuery}&&staged=true&limit=10&filter=categories.id:"${categoryId}"`;
+      }
+    }
     const token = await register();
     try {
       dispatch(getProductsByCategoryIdStart());
