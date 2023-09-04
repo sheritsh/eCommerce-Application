@@ -7,6 +7,7 @@ import { IRootState } from '../types';
 import classes from './Products.module.scss';
 import ProductCard from './ProductCard/ProductCard';
 import SelectedProductCard from './ProductCard/SelectedProductCard';
+import { ISelectedProduct } from './types';
 
 interface IProductsProps {
   categoryId?: string;

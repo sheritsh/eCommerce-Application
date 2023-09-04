@@ -4,15 +4,15 @@ import formatPrice from '../../../utils/catalog/format-price';
 import truncateString from '../../../utils/catalog/truncate-string';
 import classes from './ProductCard.module.scss';
 import Button from '../../../components/UI/button/Button';
-import { IResult } from '../types';
+import { ISelectedProduct } from '../types';
 
 interface IProductProps {
-  product: object;
+  product: ISelectedProduct;
   key?: string;
 }
 
 const SelectedProductCard: React.FC<IProductProps> = ({ product }) => {
-  if (product.masterVariant) {
+  if (product) {
     const productName = product.name[Languages.English];
     const productDescription = product.description[Languages.English];
     const productRegularPrice = product.masterVariant.prices[0].value.centAmount;
