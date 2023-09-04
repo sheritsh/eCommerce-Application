@@ -9,7 +9,7 @@ const BrandCheckbox: React.FC<IBrand> = ({ handleChangeCheckedBrand, brand }) =>
   return (
     <FormGroup>
       <FormControlLabel
-        control={<Checkbox checked={checked} onChange={() => handleChangeCheckedBrand(id)} />}
+        control={<Checkbox checked={checked} onChange={(): void => handleChangeCheckedBrand(id)} />}
         label={label}
       />
     </FormGroup>

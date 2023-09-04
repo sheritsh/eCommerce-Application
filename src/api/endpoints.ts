@@ -6,6 +6,7 @@ const Endpoints = {
   GET_SEARCH: `${ENV.Host}/${ENV.ProjectKey}/product-projections`,
   GET_CATEGORIES: `${ENV.Host}/${ENV.ProjectKey}/categories`,
   GET_PRODUCTS_BY_CATEGORY: `${ENV.Host}/${ENV.ProjectKey}/product-projections/search?staged=true&limit=10&filter=categories.id:`,
+  GET_PRODUCTS_BY_CATEGORY_FILTER: `${ENV.Host}/${ENV.ProjectKey}/product-projections/search?`,
 };
 
 export default Endpoints;

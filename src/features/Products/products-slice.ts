@@ -52,11 +52,19 @@ export const { getProductsStart, getProductsSuccess, getProductsFailure } = prod
 export default productsReducer.reducer;
 
 export const fetchProducts =
-  (searchQuery: string) =>
+  (searchQuery: string, sortQuery: string) =>
   async (dispatch: Dispatch): Promise<void> => {
-    const endpoint = searchQuery
-      ? `${Endpoints.GET_SEARCH}/search?text.en-US="${searchQuery}"`
-      : Endpoints.GET_PRODUCTS;
+    let endpoint = Endpoints.GET_PRODUCTS;
+    if (searchQuery) {
+      endpoint = `${Endpoints.GET_SEARCH}/search?text.en-US="${searchQuery}"`;
+    }
+    if (sortQuery) {
+      if (sortQuery === 'sort=name.en-US') {
+        endpoint = `${Endpoints.GET_SEARCH}/?${sortQuery}`;
+      } else {
+        endpoint = `${Endpoints.GET_SEARCH}/search?${sortQuery}`;
+      }
+    }
     const token = await register();
     try {
       dispatch(getProductsStart());
