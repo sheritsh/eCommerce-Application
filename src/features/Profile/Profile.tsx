@@ -14,6 +14,8 @@ const Profile: React.FC = () => {
   const customer = useSelector((state: IRootState) => state.customer.customerData).result;
   const token = useSelector((state: IRootState) => state.auth.authData.accessToken);
   const { addresses } = customer;
+  // eslint-disable-next-line no-console
+  console.log(customer.id, customer, customer.version);
 
   useEffect(() => {
     dispatch(fetchCustomer(token));
@@ -25,7 +27,12 @@ const Profile: React.FC = () => {
         <h3>Personal information</h3>
         <EditPersonalInfo />
       </div>
-      <PersonalInfo firstName={customer.firstName} lastName={customer.lastName} birthDate={customer.dateOfBirth} />
+      <PersonalInfo
+        firstName={customer.firstName}
+        lastName={customer.lastName}
+        birthDate={customer.dateOfBirth}
+        email={customer.email}
+      />
       <div className={classes.profile__title}>
         <h3>Addresses</h3>
         <Button text="Add new address" />

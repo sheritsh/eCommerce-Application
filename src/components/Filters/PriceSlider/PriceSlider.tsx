@@ -9,7 +9,7 @@ const PriceSlider: React.FC<IPrice> = ({ value, price, changePrice }) => {
       <Slider
         defaultValue={price.min}
         value={value}
-        onChangeCommitted={changePrice}
+        onChange={changePrice}
         valueLabelDisplay="auto"
         sx={{
           color: '#247C52',

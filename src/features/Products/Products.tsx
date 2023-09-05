@@ -83,7 +83,13 @@ const Products: React.FC<IProductsProps> = ({
       {!products.isLoading && products.results.length && !categoryId ? (
         <ul className={classes.list}>
           {products.results.map((result) =>
-            searchQuery || sortQuery ? (
+            searchQuery ||
+            sortQuery ||
+            brands.some((brand) => brand.checked) ||
+            colors.some((color) => color.checked) ||
+            sizes.some((size) => size.checked) ||
+            selectedPrice[0] > 3605 ||
+            selectedPrice[1] < 13279 ? (
               <SelectedProductCard product={result as ISelectedProduct} key={result.id} />
             ) : (
               <ProductCard product={result as IResult} key={result.id} />
