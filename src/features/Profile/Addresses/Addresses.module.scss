@@ -17,6 +17,10 @@
     margin-top: 10px;
   }
 
+  &:first-child {
+    border-top-left-radius: 0px;
+  }
+
   .default {
     font-size: 0.8rem;
     width: fit-content;

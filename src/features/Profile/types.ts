@@ -52,3 +52,10 @@ export interface IPersonalInfo {
   dateOfBirth: string;
   email: string;
 }
+
+export interface IAddressInfo {
+  country: string;
+  city: string;
+  streetName: string;
+  postalCode: string;
+}

@@ -52,7 +52,7 @@ export const { getProductsStart, getProductsSuccess, getProductsFailure } = prod
 export default productsReducer.reducer;
 
 export const fetchProducts =
-  (searchQuery: string, sortQuery: string, brands: [], colors: [], sizes: [], selectedPrice: []) =>
+  (searchQuery: string, sortQuery: string, brands: [], colors: [], sizes: []) =>
   async (dispatch: Dispatch): Promise<void> => {
     const convertArrayToString = (arr: []): string | null => {
       const filteredArr = arr.filter((item) => item.checked);
@@ -77,12 +77,12 @@ export const fetchProducts =
     const filteredSizes = sizes.filter((item) => item.checked === true);
     const sizeQuery = convertSizeArrayToString(filteredSizes);
 
-    let priceQuery = null;
+    const priceQuery = null;
 
-    let brandsFilterEndpoint = brandsQuery ? `filter=variants.attributes.brand:${brandsQuery}` : null;
-    let colorsFilterEndpoint = colorsQuery ? `filter=variants.attributes.color.key:${colorsQuery}` : null;
-    let sizesFilterEndpoint = sizeQuery ? `filter=variants.attributes.size:${sizeQuery}` : null;
-    let priceFilterEndpoint = priceQuery ? `filter=variants.price.centAmount:range${priceQuery}` : null;
+    const brandsFilterEndpoint = brandsQuery ? `filter=variants.attributes.brand:${brandsQuery}` : null;
+    const colorsFilterEndpoint = colorsQuery ? `filter=variants.attributes.color.key:${colorsQuery}` : null;
+    const sizesFilterEndpoint = sizeQuery ? `filter=variants.attributes.size:${sizeQuery}` : null;
+    const priceFilterEndpoint = priceQuery ? `filter=variants.price.centAmount:range${priceQuery}` : null;
 
     const filters = [brandsFilterEndpoint, colorsFilterEndpoint, sizesFilterEndpoint, priceFilterEndpoint].filter(
       (filter) => filter,
