@@ -59,3 +59,10 @@ export interface IAddressInfo {
   streetName: string;
   postalCode: string;
 }
+
+export interface IPassword {
+  id: string;
+  version: number;
+  currentPassword: string;
+  newPassword: string;
+}

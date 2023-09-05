@@ -10,6 +10,7 @@ import EditPersonalInfo from './PersonalInfo/EditPersonalInfo/EditPersonalInfo';
 import ENV from '../../api/env';
 import EditAddress from './Addresses/EditAddress/EditAddress';
 import AddAddress from './Addresses/newAddress/AddAddress';
+import ChangePassword from './PersonalInfo/ChangePassword/ChangePassword';
 
 const Profile: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -52,6 +53,7 @@ const Profile: React.FC = () => {
       <div className={classes.profile__title}>
         <p className={classes.profile__title__text}>Personal information</p>
         <EditPersonalInfo />
+        <ChangePassword />
       </div>
       <PersonalInfo
         firstName={customer.firstName}
