@@ -1,20 +1,18 @@
-import React, { useEffect } from 'react';
+import React, {useEffect} from 'react';
 import { useSelector } from 'react-redux';
 import { Grid } from 'react-loader-spinner';
-import { useAppDispatch } from '../../store';
-import { fetchProducts } from './products-slice';
-import { IRootState } from '../types';
-import classes from './Products.module.scss';
-import ProductCard from './ProductCard/ProductCard';
-import { IResult } from './types';
+import { IRootState } from '../../types';
+import classes from '../../Products/Products.module.scss';
+import ProductCard from '../../Products/ProductCard/ProductCard';
+import { useAppDispatch } from '../../../store';
+import { fetchProductsByCategory } from './fetch-products-by-category';
 
-const Products: React.FC = () => {
+const ProductsByCategory: React.FC = ({ categoryId: string }) => {
   const products = useSelector((state: IRootState) => state.products.productsData);
-  // const dispatch = useAppDispatch();
-
-  // useEffect(() => {
-  //   dispatch(fetchProducts());
-  // }, []);
+  const dispatch = useAppDispatch();
+  useEffect(() => {
+    dispatch(fetchProductsByCategory(categoryId));
+  }, [categoryId]);
   return (
     <>
       {products.isLoading && (
@@ -37,10 +35,10 @@ const Products: React.FC = () => {
           ))}
         </ul>
       ) : (
-        <div className={classes.not_found}>No products matching your search criteria</div>
+        <div className={classes.not_found}>No products in the category</div>
       )}
     </>
   );
 };
 
-export default Products;
+export default ProductsByCategory;

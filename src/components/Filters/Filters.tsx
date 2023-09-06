@@ -6,6 +6,7 @@ import SizeCheckbox from './Checkbox/SizeCheckbox/SizeCheckbox';
 import classes from './Filters.module.scss';
 import { IFilters } from './types';
 import { IPrice } from './PriceSlider/types';
+import Button from '../UI/button/Button';
 
 const Filters: React.FC<IFilters> = ({
   brands,

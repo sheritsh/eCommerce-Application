@@ -4,4 +4,5 @@ export interface IPrice {
     max: number;
   };
   value: number[];
+  changePrice: () => void;
 }

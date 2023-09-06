@@ -3,7 +3,6 @@ import TextField from '@mui/material/TextField';
 
 const SearchForm: React.FC<{ onSearch: (event: React.ChangeEvent<HTMLInputElement>) => void }> = ({ onSearch }) => {
   const [searchQuery, setSearchQuery] = useState('');
-
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
     setSearchQuery(event.target.value);
   };

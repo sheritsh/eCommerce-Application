@@ -1,4 +1,5 @@
 import { Languages } from '../../api/types';
+import { IAttribute } from '../DetailedProducts/types';
 
 interface INumber {
   name: 'size';
@@ -150,7 +151,7 @@ export interface IProductsData {
   offset: number | null;
   count: number | null;
   total: number | null;
-  results: IResult[] | ISelectedProduct[];
+  results: ISelectedProduct[];
   isLoading: boolean;
   error: string | null;
 }
@@ -186,10 +187,10 @@ export interface ISelectedProduct {
   metaDescription: {
     [language: string]: string;
   };
-  variants: unknown[];
+  variants: string[];
   masterVariant: {
-    attributes: unknown[];
-    assets: unknown[];
+    attributes: Attribute[];
+    assets: [];
     images: {
       url: string;
       dimensions: {
