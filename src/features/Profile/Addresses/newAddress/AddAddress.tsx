@@ -249,7 +249,7 @@ const AddAddress: React.FC = () => {
   };
 
   return (
-    <div className="container">
+    <div className="add-address">
       <Button text="add address" onClick={(): void => setOpen((e) => !e)} />
       <Modal open={open} closeOnDocumentClick onClose={closeModal}>
         <div>

@@ -32,3 +32,25 @@
   }
 }
 
+@media (max-width: 900px) {
+  .profile__addresses {
+    row-gap: 10px;
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+  .postalCode {
+    grid-column-start: 2;
+    grid-column-end: 4;
+  }
+}
+
+@media (max-width: 420px) {
+  .profile__addresses {
+    grid-template-columns: 1fr;
+    border-radius: 10px;
+  }
+  .postalCode {
+    grid-column-start: 1;
+    grid-column-end: 2;
+  }
+}
+

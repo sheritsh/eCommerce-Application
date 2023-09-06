@@ -17,3 +17,16 @@
     margin-top: 10px;
   }
 }
+
+@media (max-width: 900px) {
+  .profile__personal {
+    grid-template-columns: 1fr 1fr;
+    row-gap: 10px;
+  }
+}
+
+@media (max-width: 420px) {
+  .profile__personal {
+    grid-template-columns: 1fr;
+  }
+}

@@ -52,7 +52,7 @@ const Addresses: React.FC<AddressesProps> = ({ id, country, city, street, postCo
   return (
     <div>
       <div className={classes.profile__addresses}>
-        <div className={classes.profile__item}>
+        <div className={`${classes.profile__item} ${classes.type}`}>
           <p className={classes.profile__item__title}>TYPE</p>
           <div className={classes.profile__item__value}>
             <p>{addressCheckType(id, customer)}</p>
@@ -71,7 +71,7 @@ const Addresses: React.FC<AddressesProps> = ({ id, country, city, street, postCo
           <p className={classes.profile__item__title}>STREET</p>
           <p className={classes.profile__item__value}>{street}</p>
         </div>
-        <div className={classes.profile__item}>
+        <div className={`${classes.profile__item} ${classes.postalCode}`}>
           <p className={classes.profile__item__title}>POSTAL CODE</p>
           <p className={classes.profile__item__value}>{postCode}</p>
         </div>

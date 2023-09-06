@@ -5,15 +5,12 @@
 
   &__title {
     display: flex;
+    flex-wrap: wrap;
 
     &__text {
       display: flex;
       align-items: center;
       font-size: 22px;
-    }
-    
-    button {
-      margin-left: 10px;
     }
   }
 }
@@ -45,3 +42,12 @@
     border: 2px solid #e04141;
   }
 }
+
+/* @media (max-width: 620px) {
+  .profile {
+
+     {
+      font-size: 100px;
+    }
+  }
+} */

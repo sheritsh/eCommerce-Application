@@ -160,7 +160,7 @@ const EditPersonalInfo: React.FC = () => {
   };
 
   return (
-    <div>
+    <div className="edit">
       <Button text="Edit" onClick={(): void => setOpen((e) => !e)} />
       <Modal open={open} closeOnDocumentClick onClose={closeModal}>
         <div>

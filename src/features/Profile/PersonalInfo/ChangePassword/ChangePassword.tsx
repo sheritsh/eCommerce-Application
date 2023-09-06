@@ -15,6 +15,7 @@ import ENV from '../../../../api/env';
 import { register } from '../../../../api/auth';
 import { IPassword } from '../../types';
 import { IRootState } from '../../../types';
+import './ChangePassword.scss';
 
 const ChangePassword: React.FC = () => {
   const customer = useSelector((state: IRootState) => state.customer.customerData).result;
@@ -109,7 +110,7 @@ const ChangePassword: React.FC = () => {
   };
 
   return (
-    <div className="container">
+    <div className="change-password">
       <Button text="change password" onClick={(): void => setOpen((e) => !e)} />
       <Modal open={open} closeOnDocumentClick onClose={closeModal}>
         <div>
