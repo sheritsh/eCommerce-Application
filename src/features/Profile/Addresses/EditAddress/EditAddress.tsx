@@ -109,12 +109,12 @@ const EditAddress: React.FC<IProp> = ({ addressId }) => {
     } else if (typeAddress === 'billing') {
       action = {
         version: version + 1,
-        actions: [removeShippingAddressId, addBillingAddressId],
+        actions: [addBillingAddressId],
       };
     } else if (typeAddress === 'shipping') {
       action = {
         version: version + 1,
-        actions: [removeBillingAddressId, addShippingAddressId],
+        actions: [addShippingAddressId],
       };
     } else if (typeAddress === 'shipping and billing') {
       action = {

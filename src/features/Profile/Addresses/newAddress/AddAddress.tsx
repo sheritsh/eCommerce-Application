@@ -16,14 +16,7 @@ import { IAction, IAddressInfo, ICustomer } from '../../types';
 
 const AddAddress: React.FC = () => {
   const customer = useSelector((state: IRootState) => state.customer.customerData).result;
-  // const setDefaultShippingAddress = {
-  //   action: 'setDefaultShippingAddress',
-  //   addressId: customer.addresses[customer.addresses.length - 1].id,
-  // };
-  // const setDefaultBillingAddress = {
-  //   action: 'setDefaultBillingAddress',
-  //   addressId: customer.addresses[customer.addresses.length - 1].id,
-  // };
+  const [defaultAddress, setDefaultAddress] = useState(false);
   const [typeAddress, setTypeAddress] = useState('none');
   const [open, setOpen] = useState(false);
   const closeModal = (): void => setOpen(false);
@@ -53,6 +46,10 @@ const AddAddress: React.FC = () => {
     setTypeAddress(e.target.value);
   }
 
+  function changeDefault(): void {
+    setDefaultAddress(!defaultAddress);
+  }
+
   let action: IAction;
 
   const addAddress = async (id: string, version: number, data: IAddressInfo): Promise<void> => {
@@ -80,6 +77,15 @@ const AddAddress: React.FC = () => {
 
     const dataActual: ICustomer = await response.json();
 
+    const setDefaultShippingAddress = {
+      action: 'setDefaultShippingAddress',
+      addressId: dataActual.addresses[dataActual.addresses.length - 1].id,
+    };
+    const setDefaultBillingAddress = {
+      action: 'setDefaultBillingAddress',
+      addressId: dataActual.addresses[dataActual.addresses.length - 1].id,
+    };
+
     const addBillingAddressId = {
       action: 'addBillingAddressId',
       addressId: dataActual.addresses[dataActual.addresses.length - 1].id,
@@ -89,15 +95,30 @@ const AddAddress: React.FC = () => {
       addressId: dataActual.addresses[dataActual.addresses.length - 1].id,
     };
 
-    if (typeAddress === 'billing') {
+    if (typeAddress === 'billing' && defaultAddress) {
+      action = {
+        version: version + 1,
+        actions: [setDefaultBillingAddress],
+      };
+    } else if (typeAddress === 'billing') {
       action = {
         version: version + 1,
         actions: [addBillingAddressId],
+      };
+    } else if (typeAddress === 'shipping' && defaultAddress) {
+      action = {
+        version: version + 1,
+        actions: [setDefaultShippingAddress],
       };
     } else if (typeAddress === 'shipping') {
       action = {
         version: version + 1,
         actions: [addShippingAddressId],
+      };
+    } else if (typeAddress === 'shipping and billing' && defaultAddress) {
+      action = {
+        version: version + 1,
+        actions: [setDefaultShippingAddress, setDefaultBillingAddress],
       };
     } else if (typeAddress === 'shipping and billing') {
       action = {
@@ -199,6 +220,34 @@ const AddAddress: React.FC = () => {
     }
   };
 
+  const defaultAddressType = (): JSX.Element => {
+    if (typeAddress === 'billing') {
+      return (
+        <label>
+          <input type="checkbox" checked={defaultAddress} onChange={changeDefault} />
+          Default billing
+        </label>
+      );
+    }
+    if (typeAddress === 'shipping') {
+      return (
+        <label>
+          <input type="checkbox" checked={defaultAddress} onChange={changeDefault} />
+          Default shipping
+        </label>
+      );
+    }
+    if (typeAddress === 'shipping and billing') {
+      return (
+        <label>
+          <input type="checkbox" checked={defaultAddress} onChange={changeDefault} />
+          Default shipping and billing
+        </label>
+      );
+    }
+    return <span></span>;
+  };
+
   return (
     <div className="container">
       <Button text="add address" onClick={(): void => setOpen((e) => !e)} />
@@ -283,6 +332,7 @@ const AddAddress: React.FC = () => {
                 Shipping and billing
               </label>
             </div>
+            {defaultAddressType()}
             <Button
               disabled={!formValid}
               onClick={(): void => {
