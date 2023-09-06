@@ -12,18 +12,10 @@ import { fetchCustomer } from '../../customer-slice';
 import { IRootState, useAppDispatch } from '../../../../store';
 import Popup from '../../../../components/UI/popup/Popup';
 import ENV from '../../../../api/env';
-import { IAddressInfo } from '../../types';
+import { IAction, IAddressInfo, ICustomer } from '../../types';
 
 const AddAddress: React.FC = () => {
   const customer = useSelector((state: IRootState) => state.customer.customerData).result;
-  // const addBillingAddressId = {
-  //   action: 'addBillingAddressId',
-  //   addressId: customer.addresses[customer.addresses.length - 1].id,
-  // };
-  // const addShippingAddressId = {
-  //   action: 'addShippingAddressId',
-  //   addressId: customer.addresses[customer.addresses.length - 1].id,
-  // };
   // const setDefaultShippingAddress = {
   //   action: 'setDefaultShippingAddress',
   //   addressId: customer.addresses[customer.addresses.length - 1].id,
@@ -32,7 +24,7 @@ const AddAddress: React.FC = () => {
   //   action: 'setDefaultBillingAddress',
   //   addressId: customer.addresses[customer.addresses.length - 1].id,
   // };
-
+  const [typeAddress, setTypeAddress] = useState('none');
   const [open, setOpen] = useState(false);
   const closeModal = (): void => setOpen(false);
   const token = useSelector((state: IRootState) => state.auth.authData.accessToken);
@@ -55,25 +47,13 @@ const AddAddress: React.FC = () => {
   const [isErrorPopupActive, setErrorPopupActive] = useState(false);
   const [popupMessage, setPopupMessage] = useState('');
 
-  const [billing, setBilling] = useState(false);
-  const [billingDefault, setBillingDefault] = useState(false);
-  const [shipping, setShipping] = useState(false);
-  const [shippingDefault, setShippingDefault] = useState(false);
-
   const [formValid, setFormValid] = useState(false);
 
-  function changeBilling(): void {
-    setBilling(!billing);
+  function changeType(e: { target: { value: React.SetStateAction<string> } }): void {
+    setTypeAddress(e.target.value);
   }
-  function changeShipping(): void {
-    setShipping(!shipping);
-  }
-  function changeBillingDefault(): void {
-    setBillingDefault(!billingDefault);
-  }
-  function changeShippingDefault(): void {
-    setShippingDefault(!shippingDefault);
-  }
+
+  let action: IAction;
 
   const addAddress = async (id: string, version: number, data: IAddressInfo): Promise<void> => {
     const response = await fetch(`${ENV.Host}/${ENV.ProjectKey}/customers/${id}`, {
@@ -98,6 +78,43 @@ const AddAddress: React.FC = () => {
       }),
     });
 
+    const dataActual: ICustomer = await response.json();
+
+    const addBillingAddressId = {
+      action: 'addBillingAddressId',
+      addressId: dataActual.addresses[dataActual.addresses.length - 1].id,
+    };
+    const addShippingAddressId = {
+      action: 'addShippingAddressId',
+      addressId: dataActual.addresses[dataActual.addresses.length - 1].id,
+    };
+
+    if (typeAddress === 'billing') {
+      action = {
+        version: version + 1,
+        actions: [addBillingAddressId],
+      };
+    } else if (typeAddress === 'shipping') {
+      action = {
+        version: version + 1,
+        actions: [addShippingAddressId],
+      };
+    } else if (typeAddress === 'shipping and billing') {
+      action = {
+        version: version + 1,
+        actions: [addBillingAddressId, addShippingAddressId],
+      };
+    }
+
+    await fetch(`${ENV.Host}/${ENV.ProjectKey}/customers/${id}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(action),
+    });
+
     if (response.ok) {
       setSuccessPopupActive(true);
       setPopupMessage('Address successfully added');
@@ -108,6 +125,7 @@ const AddAddress: React.FC = () => {
       const errorData = await response.json();
       setPopupMessage(`Oops! Error ${response.status}: ${errorData.message}`);
       setErrorPopupActive(true);
+      setTimeout(() => setSuccessPopupActive(false), 1500);
       console.error(response.statusText);
     }
   };
@@ -222,43 +240,48 @@ const AddAddress: React.FC = () => {
               placeholder="Post code"
             />
             {postalCodeVisited && postalCodeError && <ErrorMessage>{postalCodeError}</ErrorMessage>}
-            <div className="checkbox__container">
-              <label className="checkbox__item">
-                <input type="checkbox" checked={billing} onChange={changeBilling} />
+            <p>Select type address:</p>
+            <div className="radio__container">
+              <label>
+                <input
+                  type="radio"
+                  name="typeAddress"
+                  value="none"
+                  checked={typeAddress === 'none'}
+                  onChange={changeType}
+                />
+                None
+              </label>
+              <label>
+                <input
+                  type="radio"
+                  name="typeAddress"
+                  value="billing"
+                  // checked={value == 'billing' ? true : false}
+                  onChange={changeType}
+                />
                 Billing
               </label>
-              <label className="checkbox__item">
-                <input type="checkbox" checked={shipping} onChange={changeShipping} />
+              <label>
+                <input
+                  type="radio"
+                  name="typeAddress"
+                  value="shipping"
+                  // checked={value === 'shipping' ? true : false}
+                  onChange={changeType}
+                />
                 Shipping
               </label>
-              {billing ? (
-                <label className="checkbox__item">
-                  <input
-                    type="checkbox"
-                    checked={billingDefault}
-                    onChange={changeBillingDefault}
-                    value="default-billing"
-                    name="adress-type"
-                  />
-                  Default billing
-                </label>
-              ) : (
-                <span></span>
-              )}
-              {shipping ? (
-                <label className="checkbox__item">
-                  <input
-                    type="checkbox"
-                    checked={shippingDefault}
-                    onChange={changeShippingDefault}
-                    value="default-shipping"
-                    name="adress-type"
-                  />
-                  Default shipping
-                </label>
-              ) : (
-                <span></span>
-              )}
+              <label>
+                <input
+                  type="radio"
+                  name="typeAddress"
+                  value="shipping and billing"
+                  // checked={value === 'shipping and billing' ? true : false}
+                  onChange={changeType}
+                />
+                Shipping and billing
+              </label>
             </div>
             <Button
               disabled={!formValid}

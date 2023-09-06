@@ -12,38 +12,21 @@ import { fetchCustomer } from '../../customer-slice';
 import { IRootState, useAppDispatch } from '../../../../store';
 import Popup from '../../../../components/UI/popup/Popup';
 import ENV from '../../../../api/env';
-import { IAddressInfo } from '../../types';
+import { IAction, IAddressInfo } from '../../types';
 
 interface IProp {
   addressId: string;
 }
 
 const EditAddress: React.FC<IProp> = ({ addressId }) => {
-  const addBillingAddressId = {
-    action: 'addBillingAddressId',
-    addressId,
-  };
-  const removeBillingAddressId = {
-    action: 'removeBillingAddressId',
-    addressId,
-  };
-  const addShippingAddressId = {
-    action: 'addShippingAddressId',
-    addressId,
-  };
-  const removeShippingAddressId = {
-    action: 'removeShippingAddressId',
-    addressId,
-  };
-  const setDefaultShippingAddress = {
-    action: 'setDefaultShippingAddress',
-    addressId,
-  };
-  const setDefaultBillingAddress = {
-    action: 'setDefaultBillingAddress',
-    addressId,
-  };
-
+  // const setDefaultShippingAddress = {
+  //   action: 'setDefaultShippingAddress',
+  //   addressId,
+  // };
+  // const setDefaultBillingAddress = {
+  //   action: 'setDefaultBillingAddress',
+  //   addressId,
+  // };
   const [open, setOpen] = useState(false);
   const closeModal = (): void => setOpen(false);
   const token = useSelector((state: IRootState) => state.auth.authData.accessToken);
@@ -67,25 +50,15 @@ const EditAddress: React.FC<IProp> = ({ addressId }) => {
   const [isErrorPopupActive, setErrorPopupActive] = useState(false);
   const [popupMessage, setPopupMessage] = useState('');
 
-  const [billing, setBilling] = useState(false);
-  const [billingDefault, setBillingDefault] = useState(false);
-  const [shipping, setShipping] = useState(false);
-  const [shippingDefault, setShippingDefault] = useState(false);
+  const [typeAddress, setTypeAddress] = useState('none');
 
   const [formValid, setFormValid] = useState(false);
 
-  function changeBilling(): void {
-    setBilling(!billing);
+  function changeType(e: { target: { value: React.SetStateAction<string> } }): void {
+    setTypeAddress(e.target.value);
   }
-  function changeShipping(): void {
-    setShipping(!shipping);
-  }
-  function changeBillingDefault(): void {
-    setBillingDefault(!billingDefault);
-  }
-  function changeShippingDefault(): void {
-    setShippingDefault(!shippingDefault);
-  }
+
+  let action: IAction;
 
   const changeAddress = async (id: string, version: number, data: IAddressInfo): Promise<void> => {
     const response = await fetch(`${ENV.Host}/${ENV.ProjectKey}/customers/${id}`, {
@@ -111,89 +84,53 @@ const EditAddress: React.FC<IProp> = ({ addressId }) => {
       }),
     });
 
-    if (billing) {
-      await fetch(`${ENV.Host}/${ENV.ProjectKey}/customers/${id}`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({
-          version,
-          actions: [addBillingAddressId],
-        }),
-      });
+    const addBillingAddressId = {
+      action: 'addBillingAddressId',
+      addressId,
+    };
+    const addShippingAddressId = {
+      action: 'addShippingAddressId',
+      addressId,
+    };
+    const removeBillingAddressId = {
+      action: 'removeBillingAddressId',
+      addressId,
+    };
+    const removeShippingAddressId = {
+      action: 'removeShippingAddressId',
+      addressId,
+    };
+
+    if (typeAddress === 'none') {
+      action = {
+        version: version + 1,
+        actions: [removeBillingAddressId, removeShippingAddressId],
+      };
+    } else if (typeAddress === 'billing') {
+      action = {
+        version: version + 1,
+        actions: [removeShippingAddressId, addBillingAddressId],
+      };
+    } else if (typeAddress === 'shipping') {
+      action = {
+        version: version + 1,
+        actions: [removeBillingAddressId, addShippingAddressId],
+      };
+    } else if (typeAddress === 'shipping and billing') {
+      action = {
+        version: version + 1,
+        actions: [addBillingAddressId, addShippingAddressId],
+      };
     }
 
-    if (!billing) {
-      await fetch(`${ENV.Host}/${ENV.ProjectKey}/customers/${id}`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({
-          version,
-          actions: [removeBillingAddressId],
-        }),
-      });
-    }
-
-    if (shipping) {
-      await fetch(`${ENV.Host}/${ENV.ProjectKey}/customers/${id}`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({
-          version,
-          actions: [addShippingAddressId],
-        }),
-      });
-    }
-
-    if (!shipping) {
-      await fetch(`${ENV.Host}/${ENV.ProjectKey}/customers/${id}`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({
-          version,
-          actions: [removeShippingAddressId],
-        }),
-      });
-    }
-
-    if (billingDefault) {
-      await fetch(`${ENV.Host}/${ENV.ProjectKey}/customers/${id}`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({
-          version,
-          actions: [setDefaultBillingAddress],
-        }),
-      });
-    }
-
-    if (shippingDefault) {
-      await fetch(`${ENV.Host}/${ENV.ProjectKey}/customers/${id}`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({
-          version,
-          actions: [setDefaultShippingAddress],
-        }),
-      });
-    }
+    await fetch(`${ENV.Host}/${ENV.ProjectKey}/customers/${id}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(action),
+    });
 
     if (response.ok) {
       setSuccessPopupActive(true);
@@ -321,43 +258,48 @@ const EditAddress: React.FC<IProp> = ({ addressId }) => {
               placeholder="Post code"
             />
             {postalCodeVisited && postalCodeError && <ErrorMessage>{postalCodeError}</ErrorMessage>}
-            <div className="checkbox__container">
-              <label className="checkbox__item">
-                <input type="checkbox" checked={billing} onChange={changeBilling} />
+            <p>Select type address:</p>
+            <div className="radio__container">
+              <label>
+                <input
+                  type="radio"
+                  name="typeAddress"
+                  value="none"
+                  checked={typeAddress === 'none'}
+                  onChange={changeType}
+                />
+                None
+              </label>
+              <label>
+                <input
+                  type="radio"
+                  name="typeAddress"
+                  value="billing"
+                  // checked={value == 'billing' ? true : false}
+                  onChange={changeType}
+                />
                 Billing
               </label>
-              <label className="checkbox__item">
-                <input type="checkbox" checked={shipping} onChange={changeShipping} />
+              <label>
+                <input
+                  type="radio"
+                  name="typeAddress"
+                  value="shipping"
+                  // checked={value === 'shipping' ? true : false}
+                  onChange={changeType}
+                />
                 Shipping
               </label>
-              {billing ? (
-                <label className="checkbox__item">
-                  <input
-                    type="checkbox"
-                    checked={billingDefault}
-                    onChange={changeBillingDefault}
-                    value="default-billing"
-                    name="adress-type"
-                  />
-                  Default billing
-                </label>
-              ) : (
-                <span></span>
-              )}
-              {shipping ? (
-                <label className="checkbox__item">
-                  <input
-                    type="checkbox"
-                    checked={shippingDefault}
-                    onChange={changeShippingDefault}
-                    value="default-shipping"
-                    name="adress-type"
-                  />
-                  Default shipping
-                </label>
-              ) : (
-                <span></span>
-              )}
+              <label>
+                <input
+                  type="radio"
+                  name="typeAddress"
+                  value="shipping and billing"
+                  // checked={value === 'shipping and billing' ? true : false}
+                  onChange={changeType}
+                />
+                Shipping and billing
+              </label>
             </div>
             <Button
               disabled={!formValid}

@@ -66,3 +66,8 @@ export interface IPassword {
   currentPassword: string;
   newPassword: string;
 }
+
+export interface IAction {
+  version: number;
+  actions: object[];
+}
