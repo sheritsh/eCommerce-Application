@@ -19,14 +19,6 @@ interface IProp {
 }
 
 const EditAddress: React.FC<IProp> = ({ addressId }) => {
-  // const setDefaultShippingAddress = {
-  //   action: 'setDefaultShippingAddress',
-  //   addressId,
-  // };
-  // const setDefaultBillingAddress = {
-  //   action: 'setDefaultBillingAddress',
-  //   addressId,
-  // };
   const [open, setOpen] = useState(false);
   const closeModal = (): void => setOpen(false);
   const token = useSelector((state: IRootState) => state.auth.authData.accessToken);
@@ -51,11 +43,16 @@ const EditAddress: React.FC<IProp> = ({ addressId }) => {
   const [popupMessage, setPopupMessage] = useState('');
 
   const [typeAddress, setTypeAddress] = useState('none');
+  const [defaultAddress, setDefaultAddress] = useState(false);
 
   const [formValid, setFormValid] = useState(false);
 
   function changeType(e: { target: { value: React.SetStateAction<string> } }): void {
     setTypeAddress(e.target.value);
+  }
+
+  function changeDefault(): void {
+    setDefaultAddress(!defaultAddress);
   }
 
   let action: IAction;
@@ -100,26 +97,154 @@ const EditAddress: React.FC<IProp> = ({ addressId }) => {
       action: 'removeShippingAddressId',
       addressId,
     };
+    const setDefaultShippingAddress = {
+      action: 'setDefaultShippingAddress',
+      addressId,
+    };
+    const setDefaultBillingAddress = {
+      action: 'setDefaultBillingAddress',
+      addressId,
+    };
 
-    if (typeAddress === 'none') {
+    const arrBilling: string[] = customer.billingAddressIds;
+    const arrShipping: string[] = customer.shippingAddressIds;
+
+    // eslint-disable-next-line no-console
+    console.log(customer.billingAddressIds);
+
+    if (typeAddress === 'none' && arrBilling.includes(addressId) && arrShipping.includes(addressId)) {
       action = {
         version: version + 1,
         actions: [removeBillingAddressId, removeShippingAddressId],
       };
-    } else if (typeAddress === 'billing') {
+    } else if (typeAddress === 'none' && arrBilling.includes(addressId)) {
+      action = {
+        version: version + 1,
+        actions: [removeBillingAddressId],
+      };
+    } else if (typeAddress === 'none' && arrShipping.includes(addressId)) {
+      action = {
+        version: version + 1,
+        actions: [removeShippingAddressId],
+      };
+    } else if (
+      typeAddress === 'billing' &&
+      !arrBilling.includes(addressId) &&
+      !arrShipping.includes(addressId) &&
+      defaultAddress
+    ) {
+      action = {
+        version: version + 1,
+        actions: [setDefaultBillingAddress],
+      };
+    } else if (typeAddress === 'billing' && !arrBilling.includes(addressId) && !arrShipping.includes(addressId)) {
       action = {
         version: version + 1,
         actions: [addBillingAddressId],
       };
-    } else if (typeAddress === 'shipping') {
+    } else if (
+      typeAddress === 'billing' &&
+      arrBilling.includes(addressId) &&
+      arrShipping.includes(addressId) &&
+      defaultAddress
+    ) {
+      action = {
+        version: version + 1,
+        actions: [removeShippingAddressId, setDefaultBillingAddress],
+      };
+    } else if (typeAddress === 'billing' && arrBilling.includes(addressId) && arrShipping.includes(addressId)) {
+      action = {
+        version: version + 1,
+        actions: [removeShippingAddressId],
+      };
+    } else if (typeAddress === 'billing' && arrShipping.includes(addressId) && defaultAddress) {
+      action = {
+        version: version + 1,
+        actions: [removeShippingAddressId, setDefaultBillingAddress],
+      };
+    } else if (typeAddress === 'billing' && arrShipping.includes(addressId)) {
+      action = {
+        version: version + 1,
+        actions: [removeShippingAddressId, addBillingAddressId],
+      };
+    } else if (
+      typeAddress === 'shipping' &&
+      !arrBilling.includes(addressId) &&
+      !arrShipping.includes(addressId) &&
+      defaultAddress
+    ) {
+      action = {
+        version: version + 1,
+        actions: [setDefaultShippingAddress],
+      };
+    } else if (typeAddress === 'shipping' && !arrBilling.includes(addressId) && !arrShipping.includes(addressId)) {
       action = {
         version: version + 1,
         actions: [addShippingAddressId],
       };
-    } else if (typeAddress === 'shipping and billing') {
+    } else if (
+      typeAddress === 'shipping' &&
+      arrBilling.includes(addressId) &&
+      arrShipping.includes(addressId) &&
+      defaultAddress
+    ) {
+      action = {
+        version: version + 1,
+        actions: [removeBillingAddressId, setDefaultShippingAddress],
+      };
+    } else if (typeAddress === 'shipping' && arrBilling.includes(addressId) && arrShipping.includes(addressId)) {
+      action = {
+        version: version + 1,
+        actions: [removeBillingAddressId],
+      };
+    } else if (typeAddress === 'shipping' && arrBilling.includes(addressId) && defaultAddress) {
+      action = {
+        version: version + 1,
+        actions: [removeBillingAddressId, setDefaultShippingAddress],
+      };
+    } else if (typeAddress === 'shipping' && arrBilling.includes(addressId)) {
+      action = {
+        version: version + 1,
+        actions: [removeBillingAddressId, addShippingAddressId],
+      };
+    } else if (
+      typeAddress === 'shipping and billing' &&
+      !arrBilling.includes(addressId) &&
+      !arrShipping.includes(addressId) &&
+      defaultAddress
+    ) {
+      action = {
+        version: version + 1,
+        actions: [setDefaultBillingAddress, setDefaultShippingAddress],
+      };
+    } else if (
+      typeAddress === 'shipping and billing' &&
+      !arrBilling.includes(addressId) &&
+      !arrShipping.includes(addressId)
+    ) {
       action = {
         version: version + 1,
         actions: [addBillingAddressId, addShippingAddressId],
+      };
+    } else if (typeAddress === 'shipping and billing' && arrBilling.includes(addressId) && defaultAddress) {
+      action = {
+        version: version + 1,
+        actions: [setDefaultShippingAddress, setDefaultBillingAddress],
+      };
+    } else if (typeAddress === 'shipping and billing' && arrBilling.includes(addressId)) {
+      action = {
+        version: version + 1,
+        actions: [addShippingAddressId],
+      };
+    } else if (typeAddress === 'shipping and billing' && arrShipping.includes(addressId) && defaultAddress) {
+      action = {
+        version: version + 1,
+        actions: [setDefaultBillingAddress, setDefaultShippingAddress],
+      };
+    } else if (typeAddress === 'shipping and billing' && arrShipping.includes(addressId)) {
+      action = {
+        version: version + 1,
+        actions: [addBillingAddressId],
       };
     }
 
@@ -215,6 +340,34 @@ const EditAddress: React.FC<IProp> = ({ addressId }) => {
     }
   };
 
+  const defaultAddressType = (): JSX.Element => {
+    if (typeAddress === 'billing') {
+      return (
+        <label>
+          <input type="checkbox" checked={defaultAddress} onChange={changeDefault} />
+          Default billing
+        </label>
+      );
+    }
+    if (typeAddress === 'shipping') {
+      return (
+        <label>
+          <input type="checkbox" checked={defaultAddress} onChange={changeDefault} />
+          Default shipping
+        </label>
+      );
+    }
+    if (typeAddress === 'shipping and billing') {
+      return (
+        <label>
+          <input type="checkbox" checked={defaultAddress} onChange={changeDefault} />
+          Default shipping and billing
+        </label>
+      );
+    }
+    return <span></span>;
+  };
+
   return (
     <div className="container">
       <button className="addressButton_edit" onClick={(): void => setOpen((e) => !e)}>
@@ -301,6 +454,7 @@ const EditAddress: React.FC<IProp> = ({ addressId }) => {
                 Shipping and billing
               </label>
             </div>
+            {defaultAddressType()}
             <Button
               disabled={!formValid}
               onClick={(): void => {
