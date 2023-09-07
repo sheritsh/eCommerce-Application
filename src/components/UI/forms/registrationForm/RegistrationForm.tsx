@@ -3,10 +3,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import Container from '../../container/Container';
 import { removeLoginError } from '../../../../store/auth/reducer';
 import Form from '../form/Form';
-import H1 from '../../titles/h1/H1';
 import Input from '../../input/Input';
 import Button from '../../button/Button';
-import H3 from '../../titles/h3/H3';
 import { useAppDispatch } from '../../../../store';
 import { ErrorMessages } from '../form/type';
 import ErrorMessage from '../../ErrorMessage/ErrorMessage';
@@ -15,7 +13,6 @@ import { IRegisterRequest } from '../../../../api/types';
 import ENV from '../../../../api/env';
 import { register } from '../../../../api/auth';
 import Popup from '../../popup/Popup';
-import PopupErr from '../../popup/PopupErr';
 
 const RegistrationForm: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -23,12 +20,13 @@ const RegistrationForm: React.FC = () => {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [dateOfBirth, setDateOfBirth] = useState('');
-  const [country, setCountry] = useState('');
+  const [country, setCountry] = useState('US');
   const [city, setCity] = useState('');
   const [streetName, setStreetName] = useState('');
   const [postalCode, setPostalCode] = useState('');
-  const [popupActive, setPopupActive] = useState(false);
-  const [popupErrActive, setPopupErrActive] = useState(false);
+  const [isSuccessPopupActive, setSuccessPopupActive] = useState(false);
+  const [isErrorPopupActive, setErrorPopupActive] = useState(false);
+  const [popupMessage, setPopupMessage] = useState('');
   const [emailVisited, setEmailVisited] = useState(false);
   const [passwordVisited, setPasswordVisited] = useState(false);
   const [firstNameVisited, setFirstNameVisited] = useState(false);
@@ -67,13 +65,15 @@ const RegistrationForm: React.FC = () => {
       body: JSON.stringify(data),
     });
 
-    if (response.status === 400) {
-      setPopupErrActive(true);
-      setTimeout(() => setPopupErrActive(false), 2000);
+    if (response.ok) {
+      setSuccessPopupActive(true);
+      setPopupMessage('Congratulations! Registration successful.');
+      setTimeout(() => navigate('/'), 5000);
     } else {
-      setPopupActive(true);
-      setTimeout(() => setPopupActive(false), 2000);
-      setTimeout(() => navigate('/'), 2500);
+      const errorData = await response.json();
+      setPopupMessage(`Oops! Error ${response.status}: ${errorData.message}`);
+      setErrorPopupActive(true);
+      console.error(response.statusText);
     }
   };
 
@@ -106,10 +106,8 @@ const RegistrationForm: React.FC = () => {
   const emailHandler = (e: React.ChangeEvent): void => {
     const target = e.target as HTMLInputElement;
     setEmail(target.value);
-    const re =
-      // eslint-disable-next-line no-useless-escape
-      /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
-    if (!re.test(String(target.value).toLowerCase())) {
+    const re = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    if (!re.test(String(target.value))) {
       setEmailError(ErrorMessages.NotValidEmail);
     } else {
       setEmailError(ErrorMessages.NoErrors);
@@ -132,7 +130,7 @@ const RegistrationForm: React.FC = () => {
   const firstNameHandler = (e: React.ChangeEvent): void => {
     const target = e.target as HTMLInputElement;
     setFirstName(target.value);
-    const criterion = /^[a-zA-Z]{1,}$/;
+    const criterion = /^[a-zA-Z]+$/;
     if (!criterion.test(String(target.value))) {
       setFirstNameError(ErrorMessages.NotValidFirstName);
     } else {
@@ -143,7 +141,7 @@ const RegistrationForm: React.FC = () => {
   const lastNameHandler = (e: React.ChangeEvent): void => {
     const target = e.target as HTMLInputElement;
     setLastName(target.value);
-    const criterion = /^[a-zA-Z]{1,}$/;
+    const criterion = /^[a-zA-Z]+$/;
     if (!criterion.test(String(target.value))) {
       setLastNameError(ErrorMessages.NotValidLastName);
     } else {
@@ -153,12 +151,15 @@ const RegistrationForm: React.FC = () => {
 
   const dateOfBirthHandler = (e: React.ChangeEvent): void => {
     const target = e.target as HTMLInputElement;
-    const today = new Date();
     const birthDate = new Date(target.value);
-    const msInYear = 31536000000;
-    const age = Math.trunc((+today - +birthDate) / msInYear);
+
+    const today = new Date();
+    const thirteenYearsAgo = new Date(today);
+    thirteenYearsAgo.setFullYear(today.getFullYear() - 13);
+
     setDateOfBirth(target.value);
-    if (age < 13) {
+
+    if (birthDate >= thirteenYearsAgo) {
       setDateOfBirthError(ErrorMessages.NotValidDateOfBirth);
     } else {
       setDateOfBirthError(ErrorMessages.NoErrors);
@@ -173,7 +174,7 @@ const RegistrationForm: React.FC = () => {
   const cityHandler = (e: React.ChangeEvent): void => {
     const target = e.target as HTMLInputElement;
     setCity(target.value);
-    const criterion = /^[a-zA-Z0-9!@#$%^&*]{1,}$/;
+    const criterion = /^[a-zA-Z]+$/;
     if (!criterion.test(String(target.value))) {
       setCityError(ErrorMessages.NotValidCity);
     } else {
@@ -184,7 +185,7 @@ const RegistrationForm: React.FC = () => {
   const streetNameHandler = (e: React.ChangeEvent): void => {
     const target = e.target as HTMLInputElement;
     setStreetName(target.value);
-    const criterion = /^[a-zA-Z0-9][a-zA-Z0-9 ]*[a-zA-Z0-9]$/;
+    const criterion = /^.+$/;
     if (!criterion.test(String(target.value))) {
       setStreetNameError(ErrorMessages.NotValidStreetName);
     } else {
@@ -195,7 +196,14 @@ const RegistrationForm: React.FC = () => {
   const postalCodeHandler = (e: React.ChangeEvent): void => {
     const target = e.target as HTMLInputElement;
     setPostalCode(target.value);
-    const criterion = /^[0-9]{5}$/;
+
+    let criterion = /^/;
+    if (country === 'US') {
+      criterion = /^[0-9]{5}(?:-[0-9]{4})?$/;
+    } else if (country === 'DE') {
+      criterion = /^\d{5}$/;
+    }
+
     if (!criterion.test(String(target.value))) {
       setPostalCodeError(ErrorMessages.NotValidPostalCode);
     } else {
@@ -237,8 +245,7 @@ const RegistrationForm: React.FC = () => {
   return (
     <Container>
       <Form id="registrationForm">
-        <H1 text="Registration" />
-        {emailVisited && emailError && <ErrorMessage>{emailError}</ErrorMessage>}
+        <h1>Registration</h1>
         <Input
           value={email}
           onBlur={(e): void => blurHandler(e)}
@@ -247,7 +254,7 @@ const RegistrationForm: React.FC = () => {
           type="text"
           placeholder="Email"
         />
-        {passwordVisited && passwordError && <ErrorMessage>{passwordError}</ErrorMessage>}
+        {emailVisited && emailError && <ErrorMessage>{emailError}</ErrorMessage>}
         <Input
           value={password}
           onBlur={(e): void => blurHandler(e)}
@@ -256,7 +263,7 @@ const RegistrationForm: React.FC = () => {
           type={passwordFieldType}
           placeholder="Password"
         />
-        {firstNameVisited && firstNameError && <ErrorMessage>{firstNameError}</ErrorMessage>}
+        {passwordVisited && passwordError && <ErrorMessage>{passwordError}</ErrorMessage>}
         <button className="password_hide" type="button" onClick={togglePasswordVisibility}>
           {passwordFieldType === 'password' ? 'Show' : 'Hide'} Password
         </button>
@@ -268,7 +275,7 @@ const RegistrationForm: React.FC = () => {
           type="text"
           placeholder="First name"
         />
-        {lastNameVisited && lastNameError && <ErrorMessage>{lastNameError}</ErrorMessage>}
+        {firstNameVisited && firstNameError && <ErrorMessage>{firstNameError}</ErrorMessage>}
         <Input
           value={lastName}
           onBlur={(e): void => blurHandler(e)}
@@ -277,8 +284,8 @@ const RegistrationForm: React.FC = () => {
           type="text"
           placeholder="Last name"
         />
-        <H3 text="Date of birth:" />
-        {dateOfBirthVisited && dateOfBirthError && <ErrorMessage>{dateOfBirthError}</ErrorMessage>}
+        {lastNameVisited && lastNameError && <ErrorMessage>{lastNameError}</ErrorMessage>}
+        <h3>Date of birth:</h3>
         <Input
           value={dateOfBirth}
           onBlur={(e): void => blurHandler(e)}
@@ -286,12 +293,12 @@ const RegistrationForm: React.FC = () => {
           name="dateOfBirth"
           type="date"
         />
-        <H3 text="Address:" />
-        <select onChange={(e): void => countryHandler(e)} name="country">
+        {dateOfBirthVisited && dateOfBirthError && <ErrorMessage>{dateOfBirthError}</ErrorMessage>}
+        <h3>Address:</h3>
+        <select onChange={(e): void => countryHandler(e)} name="country" defaultValue="US">
           <option value="US">United States</option>
           <option value="DE">Germany</option>
         </select>
-        {cityVisited && cityError && <ErrorMessage>{cityError}</ErrorMessage>}
         <Input
           value={city}
           onBlur={(e): void => blurHandler(e)}
@@ -300,7 +307,7 @@ const RegistrationForm: React.FC = () => {
           type="text"
           placeholder="City"
         />
-        {streetNameVisited && streetNameError && <ErrorMessage>{streetNameError}</ErrorMessage>}
+        {cityVisited && cityError && <ErrorMessage>{cityError}</ErrorMessage>}
         <Input
           value={streetName}
           onBlur={(e): void => blurHandler(e)}
@@ -309,7 +316,7 @@ const RegistrationForm: React.FC = () => {
           type="text"
           placeholder="Street"
         />
-        {postalCodeVisited && postalCodeError && <ErrorMessage>{postalCodeError}</ErrorMessage>}
+        {streetNameVisited && streetNameError && <ErrorMessage>{streetNameError}</ErrorMessage>}
         <Input
           value={postalCode}
           onBlur={(e): void => blurHandler(e)}
@@ -318,6 +325,7 @@ const RegistrationForm: React.FC = () => {
           type="text"
           placeholder="Post code"
         />
+        {postalCodeVisited && postalCodeError && <ErrorMessage>{postalCodeError}</ErrorMessage>}
         <Button
           onClick={(): Promise<void> =>
             handleRegister({
@@ -343,8 +351,13 @@ const RegistrationForm: React.FC = () => {
           Already have an account? <Link to="/login">Log in</Link>!
         </div>
       </Form>
-      <Popup active={popupActive} setActive={setPopupActive} />
-      <PopupErr active={popupErrActive} setActive={setPopupErrActive} />
+      <Popup
+        active={isSuccessPopupActive}
+        setActive={setSuccessPopupActive}
+        popupType="success"
+        message={popupMessage}
+      />
+      <Popup active={isErrorPopupActive} setActive={setErrorPopupActive} popupType="error" message={popupMessage} />
     </Container>
   );
 };

@@ -3,14 +3,14 @@ import { useSelector } from 'react-redux';
 import { useNavigate, Link } from 'react-router-dom';
 import { removeLoginError } from '../../../../store/auth/reducer';
 import Form from '../form/Form';
-import H1 from '../../titles/h1/H1';
 import Input from '../../input/Input';
 import Container from '../../container/Container';
 import Button from '../../button/Button';
 import ErrorMessage from '../../ErrorMessage/ErrorMessage';
 import { useAppDispatch } from '../../../../store';
 import { loginUser } from '../../../../store/auth/actions';
-import { ErrorMessages, IRootState } from '../form/type';
+import { ErrorMessages } from '../form/type';
+import { IRootState } from '../../../../features/types';
 import validatePassword from '../../../../utils/validation/password-validation';
 
 const LoginForm: React.FC = () => {
@@ -44,10 +44,8 @@ const LoginForm: React.FC = () => {
     const target = e.target as HTMLInputElement;
     dispatch(removeLoginError());
     setEmail(target.value);
-    const re =
-      // eslint-disable-next-line no-useless-escape
-      /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
-    if (!re.test(String(target.value).toLowerCase())) {
+    const re = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    if (!re.test(String(target.value))) {
       setEmailError(ErrorMessages.NotValidEmail);
     } else {
       setEmailError(ErrorMessages.NoErrors);
@@ -95,9 +93,8 @@ const LoginForm: React.FC = () => {
   return (
     <Container>
       <Form id="loginForm">
-        <H1 text="Login" />
+        <h1>Login</h1>
         {errorLogin && <ErrorMessage>{errorLogin}</ErrorMessage>}
-        {emailVisited && emailError && <ErrorMessage>{emailError}</ErrorMessage>}
         <Input
           value={username}
           onBlur={(e): void => blurHandler(e)}
@@ -106,7 +103,7 @@ const LoginForm: React.FC = () => {
           type="text"
           placeholder="Enter your email"
         />
-        {passwordVisited && passwordError && <ErrorMessage>{passwordError}</ErrorMessage>}
+        {emailVisited && emailError && <ErrorMessage>{emailError}</ErrorMessage>}
         <Input
           value={password}
           onBlur={(e): void => blurHandler(e)}
@@ -115,6 +112,7 @@ const LoginForm: React.FC = () => {
           type={passwordFieldType}
           placeholder="Enter your password"
         />
+        {passwordVisited && passwordError && <ErrorMessage>{passwordError}</ErrorMessage>}
         <button className="password_hide" type="button" onClick={togglePasswordVisibility}>
           {passwordFieldType === 'password' ? 'Show' : 'Hide'} Password
         </button>

@@ -1,0 +1,19 @@
+.list {
+  display: flex;
+  gap: 2em;
+  margin-bottom: 1em;
+  font-size: 0.9em;
+  font-weight: 400;
+
+  &>a:not(:last-child) {
+    position: relative;
+    width: fit-content;
+  }
+
+  &>a:not(:last-child):after {
+    position: absolute;
+    content: '/';
+    top: 0;
+    right: -1em;
+  }
+}

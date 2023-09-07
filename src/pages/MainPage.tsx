@@ -1,16 +1,18 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import Container from '../components/UI/container/Container';
-import H1 from '../components/UI/titles/h1/H1';
 
 const MainPage: React.FC = () => {
   return (
     <div className="content">
       <Container>
         <div className="main">
-          <H1 text="Main page" />
-          <h2>All pages of Sprint #2:</h2>
+          <h1>Main Page</h1>
+          <h2>All pages of Sprint #3:</h2>
           <ul>
+            <li>
+              <Link to="/catalog">Catalog Page</Link>
+            </li>
             <li>
               <Link to="/login">Login Page</Link>
             </li>

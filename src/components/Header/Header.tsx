@@ -5,6 +5,7 @@ import classes from './Header.module.css';
 import Container from '../UI/container/Container';
 import { IRootState } from '../../store';
 import { logout } from '../../store/auth/reducer';
+import Breadcrumbs from '../Breadcrumbs/Breadcrumbs';
 
 const Header: React.FC = () => {
   const dispatch = useDispatch();
@@ -24,7 +25,10 @@ const Header: React.FC = () => {
           <nav>
             <ul className={classes.nav}>
               <li>
-                <NavLink to="/">Main Page</NavLink>
+                <NavLink to="/">Main</NavLink>
+              </li>
+              <li>
+                <NavLink to="/catalog">Catalog</NavLink>
               </li>
               {isAuthenticated ? (
                 <>
@@ -53,6 +57,7 @@ const Header: React.FC = () => {
             </ul>
           </nav>
         </div>
+        <Breadcrumbs />
       </Container>
     </header>
   );

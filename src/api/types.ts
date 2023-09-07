@@ -1,3 +1,11 @@
+export enum Languages {
+  English = 'en-US',
+}
+
+export enum Settings {
+  ProductsPerPage = 10,
+}
+
 export interface ILoginRequest {
   username: string;
   password: string;

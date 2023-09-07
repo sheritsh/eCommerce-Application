@@ -1,0 +1,32 @@
+.profile__personal {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, max(180px, 15vw));
+  gap: 10px;
+}
+
+.profile__item {
+  padding: 1rem;
+  border-radius: 10px;
+  background-color: #e9e7e7;
+
+  &__title {
+    font-size: 1.3rem;
+  }
+
+  &__value {
+    margin-top: 10px;
+  }
+}
+
+@media (max-width: 900px) {
+  .profile__personal {
+    grid-template-columns: 1fr 1fr;
+    row-gap: 10px;
+  }
+}
+
+@media (max-width: 420px) {
+  .profile__personal {
+    grid-template-columns: 1fr;
+  }
+}

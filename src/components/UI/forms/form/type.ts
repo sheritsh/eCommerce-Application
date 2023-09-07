@@ -1,9 +1,8 @@
-import { AuthState } from '../../../../store/auth/reducer';
-
 export const enum ErrorMessages {
   NoErrors = '',
   EmptyEmail = 'Please enter email',
   EmptyPassword = 'Please enter password',
+  EmptyCurrentPassword = 'Please enter current password',
   EmptyFirstName = 'Please enter first name',
   EmptyLastName = 'Please enter last name',
   EmptyDateOfBirth = 'Please enter birth day',
@@ -23,9 +22,5 @@ export const enum ErrorMessages {
   NotValidDateOfBirth = 'You must be over 13 years old',
   NotValidStreetName = 'Street: must contain at least 1 character, should not include special characters, and must not start or end with a space.',
   NotValidCity = 'City: must contain at least one character',
-  NotValidPostalCode = 'The index of your country must contain 5 digits',
-}
-
-export interface IRootState {
-  auth: AuthState;
+  NotValidPostalCode = 'The postal code of your country must be valid',
 }

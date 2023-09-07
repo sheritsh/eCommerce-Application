@@ -52,6 +52,7 @@ const baseConfig = {
   output: {
     filename: 'bundle.js',
     path: path.resolve(__dirname, 'dist'),
+    publicPath: '/',
   },
   plugins: [
     new HtmlWebpackPlugin({
@@ -68,6 +69,9 @@ const baseConfig = {
       ],
     }),
   ],
+  devServer: {
+    historyApiFallback: true,
+  },
 };
 
 module.exports = ({ mode }) => {
