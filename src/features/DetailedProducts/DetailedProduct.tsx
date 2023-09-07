@@ -42,7 +42,7 @@ const DetailedProduct: React.FC<IProductsProps> = () => {
   const productData = useSelector((state: IRootState) => state.detailedProduct.detailedProductData);
 
   useEffect(() => {
-    dispatch(fetchProductDetails(productId));
+    dispatch(fetchProductDetails(productId || ''));
   }, [productId, dispatch]);
 
   const processedProductData = processProductData(productData.result);
@@ -84,10 +84,12 @@ const DetailedProduct: React.FC<IProductsProps> = () => {
             <div className={classes.main_slider}>
               <Swiper
                 modules={[Navigation, Pagination]}
-                style={{
-                  '--swiper-navigation-color': '#1D1E24',
-                  '--swiper-pagination-color': '#FEBE70',
-                }}
+                style={
+                  {
+                    '--swiper-navigation-color': '#1D1E24',
+                    '--swiper-pagination-color': '#FEBE70',
+                  } as React.CSSProperties
+                }
                 spaceBetween={40}
                 height={50}
                 slidesPerView={1}
@@ -121,14 +123,16 @@ const DetailedProduct: React.FC<IProductsProps> = () => {
                           </IconButton>
                           <Swiper
                             modules={[Zoom, Keyboard, Navigation, Pagination]}
-                            style={{
-                              '--swiper-navigation-color': '#1D1E24',
-                              '--swiper-pagination-color': '#FEBE70',
-                            }}
+                            style={
+                              {
+                                '--swiper-navigation-color': '#1D1E24',
+                                '--swiper-pagination-color': '#FEBE70',
+                              } as React.CSSProperties
+                            }
                             keyboard={{
                               enabled: true,
                             }}
-                            initialSlide={selectedImageIndex}
+                            initialSlide={selectedImageIndex || 0}
                             spaceBetween={40}
                             height={50}
                             slidesPerView={1}
@@ -136,12 +140,12 @@ const DetailedProduct: React.FC<IProductsProps> = () => {
                             zoom={true}
                             pagination={{ clickable: true }}
                           >
-                            {processedProductData.images.map(({ url }, idx) => {
+                            {processedProductData.images.map(({ urlSlide }, idx) => {
                               return (
                                 <SwiperSlide key={idx}>
                                   <div className="swiper-zoom-container">
                                     <img
-                                      src={url}
+                                      src={urlSlide}
                                       width="100%"
                                       alt={`Goods image ${idx + 1}`}
                                       onClick={(): void => handleImageClick(idx)}

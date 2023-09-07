@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router';
 import { useLocation } from 'react-router-dom';
-import SearchForm from '../features/filters/search/SearchForm';
+import SearchForm from '../features/filters/Search/SearchForm';
 import Container from '../components/UI/container/Container';
 import ProductsByParams from '../features/filters/ProductsByParams/ProductsByParams';
 import Categories from '../features/Categories/Categories';
@@ -10,13 +10,11 @@ import Filters from '../components/Filters/Filters';
 import { useAppDispatch, IRootState } from '../store';
 import { fetchProductsByParams } from '../features/filters/ProductsByParams/fetch-products-by-params';
 import Button from '../components/UI/button/Button';
-import { fetchProductsBySearch } from '../features/filters/search/fetch-products-by-search';
-import SortForm from '../features/filters/sorting/SortForm';
-import { fetchProductsBySort } from '../features/filters/sorting/fetch-products-by-sort';
+import { fetchProductsBySearch } from '../features/filters/Search/fetch-products-by-search';
+import SortForm from '../features/filters/Sorting/SortForm';
+import { fetchProductsBySort } from '../features/filters/Sorting/fetch-products-by-sort';
 import getFiltersParameters from '../utils/catalog/get-filters-parameters';
 import applyFilters from '../utils/catalog/apply-filters';
-import { fetchFiltersData } from '../features/FiltersParameters/filters-parameters-slice';
-import { fetchFiltersDataByCategory } from '../features/FiltersParameters/fetch-filters-parameters-by-category';
 
 const Catalog: React.FC = () => {
   const routerParams = useParams();
@@ -48,27 +46,11 @@ const Catalog: React.FC = () => {
     if (searchQuery) {
       dispatch(fetchProductsBySearch(searchQuery, categoryId));
     }
-    // else {
-    //   dispatch(fetchProducts());
-    // }
   }, [searchQuery]);
 
   const handleSearch = (event: React.ChangeEvent<HTMLInputElement>): void => {
     setSearchQuery(event.target.value);
   };
-
-  // Loads all products to take filter`s parameters
-
-  useEffect(() => {
-    async function fetchData() {
-      if (categoryId) {
-        await dispatch(fetchFiltersDataByCategory(categoryId, 100));
-      } else {
-        await dispatch(fetchFiltersData(100));
-      }
-    }
-    fetchData();
-  }, [categoryId, location]);
 
   const productsForFilters = useSelector((state: IRootState) => state.filters.productsForFiltersData.results);
 
@@ -78,7 +60,9 @@ const Catalog: React.FC = () => {
   const { startBrands, startColors, startSizes, startPrice } = startFilters;
 
   const [brands, setBrands] = useState(startBrands);
-
+  useEffect(() => {
+    setBrands(startBrands);
+  }, [categoryId, location]);
   const handleChangeCheckedBrand = (id: number): void => {
     const brandsStateList = brands;
     const changeCheckedBrands = brandsStateList.map((item) =>
@@ -115,11 +99,10 @@ const Catalog: React.FC = () => {
 
   useEffect(() => {
     const checkedFilters = applyFilters({ brands, colors, sizes, selectedPrice });
-    const { brandsChecked, colorsChecked, sizesChecked, priceRange } = checkedFilters;
+    const { brandsChecked, colorsChecked, sizesChecked } = checkedFilters;
     const brandQuery = brandsChecked.map((element) => `"${element}"`).join(',');
     const colorQuery = colorsChecked.map((element) => `"${element}"`).join(',');
     const sizeQuery = sizesChecked.map((element) => `"${element}"`).join(',');
-    const priceQuery = priceRange;
 
     let params = '';
 
@@ -132,12 +115,9 @@ const Catalog: React.FC = () => {
     if (brandQuery || colorQuery || sizeQuery || selectedPrice) {
       dispatch(fetchProductsByParams(params, categoryId));
     }
-    // else {
-    //   dispatch(fetchProducts());
-    // }
   }, [brands, colors, sizes, selectedPrice, categoryId]);
 
-  const handleResetFilters = () => {
+  const handleResetFilters = (): void => {
     const changeCheckedBrands = brands.map((item) => {
       return { ...item, checked: false };
     });

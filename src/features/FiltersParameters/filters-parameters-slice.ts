@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { createSlice, PayloadAction, Dispatch } from '@reduxjs/toolkit';
-import { IResult } from '../Products/types';
+import { ISelectedProduct } from '../Products/types';
 import { register } from '../../api/auth';
 import Endpoints from '../../api/endpoints';
 import { Settings } from '../../api/types';
@@ -29,7 +29,7 @@ export const filtersReducer = createSlice({
         isLoading: true,
       },
     }),
-    getFiltersDataSuccess: (state, action: PayloadAction<IResult[]>): IFiltersState => ({
+    getFiltersDataSuccess: (state, action: PayloadAction<ISelectedProduct[]>): IFiltersState => ({
       ...state,
       productsForFiltersData: {
         ...state.productsForFiltersData,

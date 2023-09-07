@@ -7,11 +7,12 @@ interface IFiltersParameters {
   startBrands: IBrand['brand'][];
   startSizes: ISize['size'][];
   startColors: IColor['color'][];
+  startPrice: number[];
 }
 
 const getFiltersParameters = (products: ISelectedProduct[]): IFiltersParameters => {
   const attributesBrand = products.map(
-    (product) => product.masterVariant.attributes.filter((attribute) => attribute.name === 'brand')[0].value,
+    (product) => product.masterVariant.attributes.filter((attribute) => attribute.name === 'brand')[0].value as string,
   );
   const attributesColorObject = products.map(
     (product) => product.masterVariant.attributes.filter((attribute) => attribute.name === 'color')[0] as IObject,

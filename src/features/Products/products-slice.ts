@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { createSlice, PayloadAction, Dispatch } from '@reduxjs/toolkit';
-import { IProductsState, IResult } from './types';
+import { IProductsState, ISelectedProduct } from './types';
 import { register } from '../../api/auth';
 import Endpoints from '../../api/endpoints';
 import { Settings } from '../../api/types';
@@ -28,7 +28,7 @@ export const productsReducer = createSlice({
         isLoading: true,
       },
     }),
-    getProductsSuccess: (state, action: PayloadAction<IResult[]>): IProductsState => ({
+    getProductsSuccess: (state, action: PayloadAction<ISelectedProduct[]>): IProductsState => ({
       ...state,
       productsData: {
         ...state.productsData,
