@@ -12,6 +12,8 @@ interface IProductProps {
 }
 
 const ProductCard: React.FC<IProductProps> = ({ product }) => {
+  if (!product.name) return null;
+
   return (
     <li className={classes.item}>
       <h3>
