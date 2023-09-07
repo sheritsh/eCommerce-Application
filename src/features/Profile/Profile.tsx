@@ -6,8 +6,11 @@ import PersonalInfo from './PersonalInfo/PersonalInfo';
 import classes from './Profile.module.scss';
 import { fetchCustomer } from './customer-slice';
 import { IRootState } from '../types';
-import Button from '../../components/UI/button/Button';
-import EditPersonalInfo from './EditPersonalInfo/EditPersonalInfo';
+import EditPersonalInfo from './PersonalInfo/EditPersonalInfo/EditPersonalInfo';
+import ENV from '../../api/env';
+import EditAddress from './Addresses/EditAddress/EditAddress';
+import AddAddress from './Addresses/newAddress/AddAddress';
+import ChangePassword from './PersonalInfo/ChangePassword/ChangePassword';
 
 const Profile: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -21,11 +24,36 @@ const Profile: React.FC = () => {
     dispatch(fetchCustomer(token));
   }, [dispatch]);
 
+  const deleteAddress = async (addressId: string): Promise<void> => {
+    const response = await fetch(`${ENV.Host}/${ENV.ProjectKey}/customers/${customer.id}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({
+        version: customer.version,
+        actions: [
+          {
+            action: 'removeAddress',
+            addressId,
+          },
+        ],
+      }),
+    });
+    if (response.ok) {
+      dispatch(fetchCustomer(token));
+    } else {
+      console.error('error1');
+    }
+  };
+
   return (
     <div className={classes.profile}>
       <div className={classes.profile__title}>
-        <h3>Personal information</h3>
+        <p className={classes.profile__title__text}>Personal information</p>
         <EditPersonalInfo />
+        <ChangePassword />
       </div>
       <PersonalInfo
         firstName={customer.firstName}
@@ -34,12 +62,16 @@ const Profile: React.FC = () => {
         email={customer.email}
       />
       <div className={classes.profile__title}>
-        <h3>Addresses</h3>
-        <Button text="Add new address" />
+        <p className={classes.profile__title__text}>Addresses</p>
+        <AddAddress />
       </div>
       {addresses
         ? addresses.map((address) => (
             <div>
+              <EditAddress addressId={address.id} />
+              <button className={classes.addressButton_delete} onClick={(): Promise<void> => deleteAddress(address.id)}>
+                delete
+              </button>
               <Addresses
                 id={address.id}
                 country={address.country}
@@ -48,12 +80,9 @@ const Profile: React.FC = () => {
                 postCode={address.postalCode}
                 customer={customer}
               />
-              <button>edit</button>
-              <button>delete</button>
             </div>
           ))
         : null}
-      <span></span>
     </div>
   );
 };

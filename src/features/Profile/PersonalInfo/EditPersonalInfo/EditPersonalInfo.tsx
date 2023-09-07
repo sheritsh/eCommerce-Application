@@ -3,16 +3,16 @@ import React, { useEffect, useState } from 'react';
 import Modal from 'reactjs-popup';
 import './EditPersonalInfo.scss';
 import { useSelector } from 'react-redux';
-import Input from '../../../components/UI/input/Input';
-import Form from '../../../components/UI/forms/form/Form';
-import Button from '../../../components/UI/button/Button';
-import { ErrorMessages } from '../../../components/UI/forms/form/type';
-import ErrorMessage from '../../../components/UI/ErrorMessage/ErrorMessage';
-import { fetchCustomer } from '../customer-slice';
-import { IRootState, useAppDispatch } from '../../../store';
-import Popup from '../../../components/UI/popup/Popup';
-import ENV from '../../../api/env';
-import { IPersonalInfo } from '../types';
+import Input from '../../../../components/UI/input/Input';
+import Form from '../../../../components/UI/forms/form/Form';
+import Button from '../../../../components/UI/button/Button';
+import { ErrorMessages } from '../../../../components/UI/forms/form/type';
+import ErrorMessage from '../../../../components/UI/ErrorMessage/ErrorMessage';
+import { fetchCustomer } from '../../customer-slice';
+import { IRootState, useAppDispatch } from '../../../../store';
+import Popup from '../../../../components/UI/popup/Popup';
+import ENV from '../../../../api/env';
+import { IPersonalInfo } from '../../types';
 
 const EditPersonalInfo: React.FC = () => {
   const [open, setOpen] = useState(false);
@@ -160,13 +160,14 @@ const EditPersonalInfo: React.FC = () => {
   };
 
   return (
-    <div>
+    <div className="edit">
       <Button text="Edit" onClick={(): void => setOpen((e) => !e)} />
       <Modal open={open} closeOnDocumentClick onClose={closeModal}>
         <div>
           <a className="close" onClick={closeModal}>
             &times;
           </a>
+          <h1>Edit Personal information</h1>
           <Form>
             <Input
               value={firstName}
