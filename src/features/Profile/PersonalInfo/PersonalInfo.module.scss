@@ -1,7 +1,7 @@
 .profile__personal {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
-  column-gap: 10px;
+  grid-template-columns: repeat(auto-fill, max(180px, 15vw));
+  gap: 10px;
 }
 
 .profile__item {
