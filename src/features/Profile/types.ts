@@ -52,3 +52,22 @@ export interface IPersonalInfo {
   dateOfBirth: string;
   email: string;
 }
+
+export interface IAddressInfo {
+  country: string;
+  city: string;
+  streetName: string;
+  postalCode: string;
+}
+
+export interface IPassword {
+  id: string;
+  version: number;
+  currentPassword: string;
+  newPassword: string;
+}
+
+export interface IAction {
+  version: number;
+  actions: object[];
+}

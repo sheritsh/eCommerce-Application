@@ -1,92 +1,83 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { IRootState } from '../store';
+import { useParams } from 'react-router';
+import { useLocation } from 'react-router-dom';
 import SearchForm from '../features/filters/search/SearchForm';
 import Container from '../components/UI/container/Container';
-import Products from '../features/Products/Products';
+import ProductsByParams from '../features/filters/ProductsByParams/ProductsByParams';
 import Categories from '../features/Categories/Categories';
 import Filters from '../components/Filters/Filters';
-import { IObject, IResult } from '../features/Products/types';
+import { useAppDispatch, IRootState } from '../store';
+import { fetchProductsByParams } from '../features/filters/ProductsByParams/fetch-products-by-params';
+import Button from '../components/UI/button/Button';
+import { fetchProductsBySearch } from '../features/filters/search/fetch-products-by-search';
 import SortForm from '../features/filters/sorting/SortForm';
+import { fetchProductsBySort } from '../features/filters/sorting/fetch-products-by-sort';
+import getFiltersParameters from '../utils/catalog/get-filters-parameters';
+import applyFilters from '../utils/catalog/apply-filters';
+import { fetchFiltersData } from '../features/FiltersParameters/filters-parameters-slice';
+import { fetchFiltersDataByCategory } from '../features/FiltersParameters/fetch-filters-parameters-by-category';
 
 const Catalog: React.FC = () => {
-  const [searchQuery, setSearchQuery] = useState('');
+  const routerParams = useParams();
+  const { categoryId } = routerParams;
+  const location = useLocation();
+  const dispatch = useAppDispatch();
+
   const [sortQuery, setSortQuery] = useState('');
+
+  const handleSort = (sortOption: string): void => {
+    setSortQuery(sortOption);
+  };
+
+  useEffect(() => {
+    let endpoint = '';
+    if (sortQuery) {
+      if (sortQuery === 'sort=name.en-US') {
+        endpoint = `?${sortQuery}`;
+      } else {
+        endpoint = `search?${sortQuery}`;
+      }
+      if (endpoint) dispatch(fetchProductsBySort(endpoint, categoryId));
+    }
+  }, [sortQuery]);
+
+  const [searchQuery, setSearchQuery] = useState('');
+
+  useEffect(() => {
+    if (searchQuery) {
+      dispatch(fetchProductsBySearch(searchQuery, categoryId));
+    }
+    // else {
+    //   dispatch(fetchProducts());
+    // }
+  }, [searchQuery]);
 
   const handleSearch = (event: React.ChangeEvent<HTMLInputElement>): void => {
     setSearchQuery(event.target.value);
   };
 
-  const products: IResult[] = useSelector((state: IRootState) => {
-    const allProducts = state.products.productsData.results;
-    return allProducts.filter((product: IResult[]) => 'masterData' in product);
-  });
+  // Loads all products to take filter`s parameters
 
-  const attributesBrand = products.map(
-    (product) =>
-      product.masterData.staged.masterVariant.attributes.filter((attribute) => attribute.name === 'brand')[0]
-        .value as string,
-  );
-  const startBrands = [...new Set(attributesBrand)].sort().map((element, index) => {
-    return {
-      id: index,
-      checked: false,
-      label: element,
-    };
-  });
+  useEffect(() => {
+    async function fetchData() {
+      if (categoryId) {
+        await dispatch(fetchFiltersDataByCategory(categoryId, 100));
+      } else {
+        await dispatch(fetchFiltersData(100));
+      }
+    }
+    fetchData();
+  }, [categoryId, location]);
+
+  const productsForFilters = useSelector((state: IRootState) => state.filters.productsForFiltersData.results);
+
+  const startFilters = getFiltersParameters(productsForFilters);
+
+  // get filter parameters
+  const { startBrands, startColors, startSizes, startPrice } = startFilters;
 
   const [brands, setBrands] = useState(startBrands);
-
-  const attributesColorObject = products.map(
-    (product) =>
-      product.masterData.staged.masterVariant.attributes.filter(
-        (attribute) => attribute.name === 'color',
-      )[0] as IObject,
-  );
-  const attributesColor = attributesColorObject.map((obj) => obj.value.key);
-
-  const startColors = [...new Set(attributesColor)].sort().map((element, index) => {
-    return {
-      id: index,
-      checked: false,
-      label: element,
-    };
-  });
-
-  const [colors, setColors] = useState(startColors);
-
-  const attributesSize = products.map(
-    (product) =>
-      product.masterData.staged.masterVariant.attributes.filter((attribute) => attribute.name === 'size')[0]
-        .value as number,
-  );
-  const startSizes = [...new Set(attributesSize)]
-    .sort((a, b) => a - b)
-    .map((element, index) => {
-      return {
-        id: index,
-        checked: false,
-        label: element,
-      };
-    });
-
-  const [sizes, setSizes] = useState(startSizes);
-
-  const prices = [
-    ...new Set(
-      products.map((product) =>
-        product.masterData.staged.masterVariant.prices[0].discounted
-          ? product.masterData.staged.masterVariant.prices[0].discounted.value.centAmount
-          : product.masterData.staged.masterVariant.prices[0].value.centAmount,
-      ),
-    ),
-  ].sort((a, b) => a - b);
-
-  const [selectedPrice, setSelectedPrice] = useState([prices[0], prices[prices.length - 1]]);
-
-  const handleChangePrice = (event?: Event, newValue?: number[]): void => {
-    setSelectedPrice(newValue as number[]);
-  };
 
   const handleChangeCheckedBrand = (id: number): void => {
     const brandsStateList = brands;
@@ -96,6 +87,7 @@ const Catalog: React.FC = () => {
     setBrands(changeCheckedBrands);
   };
 
+  const [colors, setColors] = useState(startColors);
   const handleChangeCheckedColor = (id: number): void => {
     const colorsStateList = colors;
     const changeCheckedColors = colorsStateList.map((item) =>
@@ -104,6 +96,7 @@ const Catalog: React.FC = () => {
     setColors(changeCheckedColors);
   };
 
+  const [sizes, setSizes] = useState(startSizes);
   const handleChangeCheckedSize = (id: number): void => {
     const sizesStateList = sizes;
     const changeCheckedSizes = sizesStateList.map((item) =>
@@ -112,28 +105,59 @@ const Catalog: React.FC = () => {
     setSizes(changeCheckedSizes);
   };
 
-  const applyFilters = (): void => {
-    // Brand Filter
-    const brandsChecked = brands.filter((item) => item.checked).map((item) => item.label.toLowerCase());
-
-    // Color Filter
-    const colorsChecked = colors.filter((item) => item.checked).map((item) => item.label.toLowerCase());
-
-    // Size Filter
-    const sizesChecked = sizes.filter((item) => item.checked).map((item) => item.label);
-
-    // Price Filter
-    const minPrice = selectedPrice[0];
-    const maxPrice = selectedPrice[1];
+  const [selectedPrice, setSelectedPrice] = useState([startPrice[0], startPrice[startPrice.length - 1]]);
+  useEffect(() => {
+    setSelectedPrice([startPrice[0], startPrice[startPrice.length - 1]]);
+  }, []);
+  const handleChangePrice = (event?: Event, newValue?: number[]): void => {
+    setSelectedPrice(newValue as number[]);
   };
 
   useEffect(() => {
-    applyFilters();
-  }, [brands, colors, sizes, prices]);
+    const checkedFilters = applyFilters({ brands, colors, sizes, selectedPrice });
+    const { brandsChecked, colorsChecked, sizesChecked, priceRange } = checkedFilters;
+    const brandQuery = brandsChecked.map((element) => `"${element}"`).join(',');
+    const colorQuery = colorsChecked.map((element) => `"${element}"`).join(',');
+    const sizeQuery = sizesChecked.map((element) => `"${element}"`).join(',');
+    const priceQuery = priceRange;
 
-  const handleSort = (sortOption: string): void => {
-    setSortQuery(sortOption);
+    let params = '';
+
+    if (brandQuery) params += `&filter=variants.attributes.brand:${brandQuery}`;
+    if (colorQuery) params += `&filter=variants.attributes.color.key:${colorQuery}`;
+    if (sizeQuery) params += `&filter=variants.attributes.size:${sizeQuery}`;
+    if (selectedPrice[0] && selectedPrice[1])
+      params += `&filter=variants.price.centAmount:range (${selectedPrice[0]} to ${selectedPrice[1]})`;
+
+    if (brandQuery || colorQuery || sizeQuery || selectedPrice) {
+      dispatch(fetchProductsByParams(params, categoryId));
+    }
+    // else {
+    //   dispatch(fetchProducts());
+    // }
+  }, [brands, colors, sizes, selectedPrice, categoryId]);
+
+  const handleResetFilters = () => {
+    const changeCheckedBrands = brands.map((item) => {
+      return { ...item, checked: false };
+    });
+    setBrands(changeCheckedBrands);
+    const changeCheckedColors = colors.map((item) => {
+      return { ...item, checked: false };
+    });
+    setColors(changeCheckedColors);
+    const changeCheckedSizes = sizes.map((item) => {
+      return { ...item, checked: false };
+    });
+    setSizes(changeCheckedSizes);
+    setSelectedPrice([startPrice[0], startPrice[startPrice.length - 1]]);
+    setSearchQuery('');
   };
+
+  useEffect(() => {
+    handleResetFilters();
+  }, [categoryId, location]);
+
   return (
     <div className="content">
       <Container>
@@ -149,24 +173,18 @@ const Catalog: React.FC = () => {
                 handleChangeCheckedColor={handleChangeCheckedColor}
                 sizes={sizes}
                 handleChangeCheckedSize={handleChangeCheckedSize}
-                prices={prices}
+                prices={startPrice}
                 selectedPrice={selectedPrice}
                 changePrice={handleChangePrice}
               />
+              <Button text="Reset" onClick={handleResetFilters} />
             </div>
             <div className="catalog-main">
               <div className="catalog-nav">
                 <SearchForm onSearch={handleSearch} />
                 <SortForm onSort={handleSort} />
               </div>
-              <Products
-                searchQuery={searchQuery}
-                sortQuery={sortQuery}
-                brands={brands}
-                colors={colors}
-                sizes={sizes}
-                selectedPrice={selectedPrice}
-              />
+              <ProductsByParams />
             </div>
           </div>
         </div>

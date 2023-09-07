@@ -1,7 +1,7 @@
 .profile__personal {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
-  column-gap: 10px;
+  grid-template-columns: repeat(auto-fill, max(180px, 15vw));
+  gap: 10px;
 }
 
 .profile__item {
@@ -15,5 +15,18 @@
 
   &__value {
     margin-top: 10px;
+  }
+}
+
+@media (max-width: 900px) {
+  .profile__personal {
+    grid-template-columns: 1fr 1fr;
+    row-gap: 10px;
+  }
+}
+
+@media (max-width: 420px) {
+  .profile__personal {
+    grid-template-columns: 1fr;
   }
 }

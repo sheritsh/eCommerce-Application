@@ -7,16 +7,23 @@ footer {
 
 .footer {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
 }
 
+.footer div {
+  flex-grow: 1;
+  flex-basis: 33.33%;
+}
+
 .rs_school {
-  width: min(10vw, 125px);
+  flex-basis: 15%;
+  margin: 0 auto;
 }
 
 .rs_school img {
   filter: invert(1);
+  width: min(20vw, 125px);
 }
 
 .rs_school img:active {
@@ -25,8 +32,8 @@ footer {
 
 .page_up {
   position: absolute;
-  width: min(5vw, 50px);
-  height: min(5vw, 50px);
+  width: min(10vw, 50px);
+  height: min(10vw, 50px);
   right: 1vw;
   top: 1vw;
 }
@@ -73,5 +80,11 @@ footer {
 
   .page_up:hover {
     filter: brightness(150%);
+  }
+}
+
+@media screen and (max-width: 400px) {
+  footer {
+    font-size: 12px;
   }
 }

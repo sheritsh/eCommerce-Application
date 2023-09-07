@@ -1,0 +1,55 @@
+.container {
+  display: inline-block;
+}
+
+.popup-content {
+  margin: auto;
+  background: rgb(255, 255, 255);
+  width: 35%;
+  padding: 20px;
+}
+.popup-arrow {
+  color: rgb(255, 255, 255);
+}
+[role='tooltip'].popup-content {
+  width: 200px;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 0px 3px;
+}
+
+.popup-overlay {
+  background: rgba(0, 0, 0, 0.5);
+}
+[data-popup='tooltip'].popup-overlay {
+  background: transparent;
+}
+
+.edit-form {
+  display: flex;
+  flex-direction: column;
+
+  &__item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 20px;
+  }
+}
+
+.addressButton_edit {
+  font-size: 12px;
+  background-color: #e9e7e7;
+  border: 2px solid #e9e7e7;
+  cursor: pointer;
+  transition: all .3s ease;
+
+  &:hover {
+    background-color: #cdcccc;
+    border: 2px solid #cdcccc;
+  }
+}
+
+.checkbox__container {
+  display: flex;
+  flex-direction: column;
+  row-gap: 8px;
+}

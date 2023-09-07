@@ -1,20 +1,12 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useSelector } from 'react-redux';
 import { Grid } from 'react-loader-spinner';
-import { useAppDispatch } from '../../store';
-import { fetchProducts } from './products-slice';
-import { IRootState } from '../types';
-import classes from './Products.module.scss';
-import ProductCard from './ProductCard/ProductCard';
-import { IResult } from './types';
+import { IRootState } from '../../types';
+import classes from '../../Products/Products.module.scss';
+import ProductCard from '../../Products/ProductCard/ProductCard';
 
-const Products: React.FC = () => {
+const ProductsByParams: React.FC = () => {
   const products = useSelector((state: IRootState) => state.products.productsData);
-  // const dispatch = useAppDispatch();
-
-  // useEffect(() => {
-  //   dispatch(fetchProducts());
-  // }, []);
   return (
     <>
       {products.isLoading && (
@@ -43,4 +35,4 @@ const Products: React.FC = () => {
   );
 };
 
-export default Products;
+export default ProductsByParams;

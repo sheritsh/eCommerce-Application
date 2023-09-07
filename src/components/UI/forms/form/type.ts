@@ -2,6 +2,7 @@ export const enum ErrorMessages {
   NoErrors = '',
   EmptyEmail = 'Please enter email',
   EmptyPassword = 'Please enter password',
+  EmptyCurrentPassword = 'Please enter current password',
   EmptyFirstName = 'Please enter first name',
   EmptyLastName = 'Please enter last name',
   EmptyDateOfBirth = 'Please enter birth day',

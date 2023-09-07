@@ -5,15 +5,44 @@
 
   &__title {
     display: flex;
+    flex-wrap: wrap;
 
-    h3 {
+    &__text {
       display: flex;
       align-items: center;
-      text-align: left;
+      font-size: 22px;
     }
-    
+
     button {
       margin-left: 10px;
-    }
+  }
+}
+}
+
+.addressButton_edit {
+  font-size: 12px;
+  background-color: #e9e7e7;
+  border: 2px solid #e9e7e7;
+  cursor: pointer;
+  transition: all .3s ease;
+
+  &:hover {
+    background-color: #cdcccc;
+    border: 2px solid #cdcccc;
+  }
+}
+
+.addressButton_delete {
+  font-size: 12px;
+  background-color: #e76969;
+  border: 2px solid #e76969;
+  color: #fff;
+  border-top-right-radius: 10px;
+  cursor: pointer;
+  transition: all .3s ease;
+
+  &:hover {
+    background-color: #e04141;
+    border: 2px solid #e04141;
   }
 }

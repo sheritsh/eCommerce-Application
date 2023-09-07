@@ -1,12 +1,13 @@
 import axios from 'axios';
 import { createSlice, PayloadAction, Dispatch } from '@reduxjs/toolkit';
-import { IProductsState, IResult } from './types';
+import { IResult } from '../Products/types';
 import { register } from '../../api/auth';
 import Endpoints from '../../api/endpoints';
 import { Settings } from '../../api/types';
+import { IFiltersState } from './type';
 
-const initialState: IProductsState = {
-  productsData: {
+const initialState: IFiltersState = {
+  productsForFiltersData: {
     limit: null,
     offset: null,
     count: null,
@@ -17,30 +18,30 @@ const initialState: IProductsState = {
   },
 };
 
-export const productsReducer = createSlice({
-  name: 'products',
+export const filtersReducer = createSlice({
+  name: 'filters',
   initialState,
   reducers: {
-    getProductsStart: (state): IProductsState => ({
+    getFiltersDataStart: (state): IFiltersState => ({
       ...state,
-      productsData: {
-        ...state.productsData,
+      productsForFiltersData: {
+        ...state.productsForFiltersData,
         isLoading: true,
       },
     }),
-    getProductsSuccess: (state, action: PayloadAction<IResult[]>): IProductsState => ({
+    getFiltersDataSuccess: (state, action: PayloadAction<IResult[]>): IFiltersState => ({
       ...state,
-      productsData: {
-        ...state.productsData,
+      productsForFiltersData: {
+        ...state.productsForFiltersData,
         results: action.payload,
         isLoading: false,
         error: null,
       },
     }),
-    getProductsFailure: (state, action: PayloadAction<string>): IProductsState => ({
+    getFiltersDataFailure: (state, action: PayloadAction<string>): IFiltersState => ({
       ...state,
-      productsData: {
-        ...state.productsData,
+      productsForFiltersData: {
+        ...state.productsForFiltersData,
         isLoading: false,
         error: action.payload,
       },
@@ -48,18 +49,18 @@ export const productsReducer = createSlice({
   },
 });
 
-export const { getProductsStart, getProductsSuccess, getProductsFailure } = productsReducer.actions;
+export const { getFiltersDataStart, getFiltersDataSuccess, getFiltersDataFailure } = filtersReducer.actions;
 
-export default productsReducer.reducer;
+export default filtersReducer.reducer;
 
-export const fetchProducts =
+export const fetchFiltersData =
   (limit: number = Settings.ProductsPerPage) =>
   async (dispatch: Dispatch): Promise<void> => {
     const endpoint = `${Endpoints.GET_PRODUCTS}?limit=${limit}`;
 
     const token = await register();
     try {
-      dispatch(getProductsStart());
+      dispatch(getFiltersDataStart());
       const response = await axios.get(endpoint, {
         headers: {
           'Content-Type': 'application/json',
@@ -67,9 +68,9 @@ export const fetchProducts =
         },
       });
       const products = response.data.results;
-      dispatch(getProductsSuccess(products));
+      dispatch(getFiltersDataSuccess(products));
     } catch (e: unknown) {
-      if (e instanceof Error) dispatch(getProductsFailure(e.message));
+      if (e instanceof Error) dispatch(getFiltersDataFailure(e.message));
       throw new Error('Something went wrong while fetching products');
     }
   };

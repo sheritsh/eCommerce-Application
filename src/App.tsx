@@ -18,7 +18,6 @@ const CartPage = lazy(() => import('./pages/CartPage'));
 const Footer = lazy(() => import('./components/Footer/Footer'));
 const NotFoundPage = lazy(() => import('./pages/NotFoundPage'));
 const CatalogPage = lazy(() => import('./pages/CatalogPage'));
-const CategoryPage = lazy(() => import('./pages/CategoryPage'));
 
 const App: React.FC = () => {
   const persistor = persistStore(store);
@@ -46,7 +45,7 @@ const App: React.FC = () => {
               <Route path="/catalog" element={<CatalogPage />} />
               <Route path="/catalog/:productId" element={<ProductPage />} />
               <Route path="/categories" element={<CatalogPage />} />
-              <Route path="/categories/:categoryId" element={<CategoryPage />} />
+              <Route path="/categories/:categoryId" element={<CatalogPage />} />
               <Route path="/categories/:categoryId/:productId" element={<ProductPage />} />
               <Route path="/product_page/test" element={<ProductPage />} />
               <Route path="*" element={<NotFoundPage />} />

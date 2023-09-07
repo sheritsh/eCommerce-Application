@@ -1,7 +1,8 @@
 .profile__addresses {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-  column-gap: 10px;
+  grid-template-columns: repeat(auto-fill, max(180px, 15vw));
+  gap: 10px;
+  margin-bottom: 15px;
 }
 
 .profile__item {
@@ -17,6 +18,10 @@
     margin-top: 10px;
   }
 
+  &:first-child {
+    border-top-left-radius: 0px;
+  }
+
   .default {
     font-size: 0.8rem;
     width: fit-content;
@@ -26,5 +31,27 @@
     padding: 3px;
     margin-top: 5px;
   }
+
 }
 
+@media (max-width: 900px) {
+  .profile__addresses {
+    row-gap: 10px;
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+  .postalCode {
+    grid-column-start: 2;
+    grid-column-end: 4;
+  }
+}
+
+@media (max-width: 420px) {
+  .profile__addresses {
+    grid-template-columns: 1fr;
+    border-radius: 10px;
+  }
+  .postalCode {
+    grid-column-start: 1;
+    grid-column-end: 2;
+  }
+}

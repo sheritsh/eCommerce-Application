@@ -13,7 +13,7 @@ const initialState: IDetailedProductState = {
 
 export const fetchProductDetails = createAsyncThunk('detailed-products/fetchProductDetails', async (id) => {
   const token = await register();
-  const response = await fetch(`${Endpoints.GET_PRODUCTS}/${id}`, {
+  const response = await fetch(`${Endpoints.GET_DETAILED_PRODUCT}/${id}`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',

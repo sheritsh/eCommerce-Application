@@ -44,3 +44,13 @@ nav li a {
     color: #247c52;
   }
 }
+
+@media screen and (max-width: 400px) {
+  header {
+    font-size: 12px;
+  }
+
+  .header__title a {
+    font-size: 18px;
+  }
+}
