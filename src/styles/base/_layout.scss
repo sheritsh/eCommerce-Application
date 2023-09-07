@@ -12,3 +12,13 @@
   align-items: center;
   margin-left: 4vw;
 }
+
+@media screen and (max-width: 400px) {
+
+  .catalog-main {
+    max-width: 170px;
+    margin-left: auto;
+  }
+
+
+}
