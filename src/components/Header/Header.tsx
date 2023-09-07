@@ -4,7 +4,7 @@ import { NavLink, Link } from 'react-router-dom';
 import classes from './Header.module.css';
 import Container from '../UI/container/Container';
 import { IRootState } from '../../store';
-import { logout } from '../../store/auth/reducer';
+import { logout } from '../../features/Authorization/authorization-slice';
 import Breadcrumbs from '../Breadcrumbs/Breadcrumbs';
 
 const Header: React.FC = () => {

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Container from '../../container/Container';
-import { removeLoginError } from '../../../../store/auth/reducer';
+import { removeLoginError } from '../../../../features/Authorization/authorization-slice';
 import Form from '../form/Form';
 import Input from '../../input/Input';
 import Button from '../../button/Button';
