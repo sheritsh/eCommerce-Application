@@ -17,8 +17,6 @@ const Profile: React.FC = () => {
   const customer = useSelector((state: IRootState) => state.customer.customerData).result;
   const token = useSelector((state: IRootState) => state.auth.authData.accessToken);
   const { addresses } = customer;
-  // eslint-disable-next-line no-console
-  console.log(customer.id, customer, customer.version);
 
   useEffect(() => {
     dispatch(fetchCustomer(token));
