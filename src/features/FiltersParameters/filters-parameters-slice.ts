@@ -1,9 +1,7 @@
 import axios from 'axios';
-import { createSlice, PayloadAction, Dispatch } from '@reduxjs/toolkit';
-import { ISelectedProduct } from '../Products/types';
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { register } from '../../api/auth';
 import Endpoints from '../../api/endpoints';
-import { Settings } from '../../api/types';
 import { IFiltersState } from './type';
 
 const initialState: IFiltersState = {
@@ -18,59 +16,58 @@ const initialState: IFiltersState = {
   },
 };
 
+export const fetchFiltersData = createAsyncThunk(
+  'filter-products/fetchFiltersData',
+  async (categoryId: string = '') => {
+    const endpoint = categoryId
+      ? `${Endpoints.GET_PRODUCTS_BY_CATEGORY}"${categoryId}"&limit=100`
+      : `${Endpoints.GET_PRODUCTS}?limit=100`;
+
+    const token = await register();
+    const response = await axios.get(endpoint, {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token.access_token}`,
+      },
+    });
+    return response.data.results;
+  },
+);
+
 export const filtersReducer = createSlice({
   name: 'filters',
   initialState,
-  reducers: {
-    getFiltersDataStart: (state): IFiltersState => ({
-      ...state,
-      productsForFiltersData: {
-        ...state.productsForFiltersData,
-        isLoading: true,
-      },
-    }),
-    getFiltersDataSuccess: (state, action: PayloadAction<ISelectedProduct[]>): IFiltersState => ({
-      ...state,
-      productsForFiltersData: {
-        ...state.productsForFiltersData,
-        results: action.payload,
-        isLoading: false,
-        error: null,
-      },
-    }),
-    getFiltersDataFailure: (state, action: PayloadAction<string>): IFiltersState => ({
-      ...state,
-      productsForFiltersData: {
-        ...state.productsForFiltersData,
-        isLoading: false,
-        error: action.payload,
-      },
-    }),
+  reducers: {},
+  extraReducers: (builder) => {
+    builder
+      .addCase(fetchFiltersData.pending, (state) => ({
+        ...state,
+        productsForFiltersData: {
+          ...state.productsForFiltersData,
+          isLoading: true,
+          error: null,
+        },
+      }))
+      .addCase(fetchFiltersData.fulfilled, (state, action) => {
+        return {
+          ...state,
+          productsForFiltersData: {
+            ...state.productsForFiltersData,
+            results: action.payload,
+            isLoading: false,
+            error: null,
+          },
+        };
+      })
+      .addCase(fetchFiltersData.rejected, (state, action) => ({
+        ...state,
+        productsForFiltersData: {
+          ...state.productsForFiltersData,
+          isLoading: false,
+          error: action.payload as string,
+        },
+      }));
   },
 });
 
-export const { getFiltersDataStart, getFiltersDataSuccess, getFiltersDataFailure } = filtersReducer.actions;
-
 export default filtersReducer.reducer;
-
-export const fetchFiltersData =
-  (limit: number = Settings.ProductsPerPage) =>
-  async (dispatch: Dispatch): Promise<void> => {
-    const endpoint = `${Endpoints.GET_PRODUCTS}?limit=${limit}`;
-
-    const token = await register();
-    try {
-      dispatch(getFiltersDataStart());
-      const response = await axios.get(endpoint, {
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token.access_token}`,
-        },
-      });
-      const products = response.data.results;
-      dispatch(getFiltersDataSuccess(products));
-    } catch (e: unknown) {
-      if (e instanceof Error) dispatch(getFiltersDataFailure(e.message));
-      throw new Error('Something went wrong while fetching products');
-    }
-  };
