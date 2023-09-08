@@ -6,7 +6,6 @@ import ProductsByParams from '../features/filters/ProductsByParams/ProductsByPar
 import Categories from '../features/Categories/Categories';
 import Filters from '../components/Filters/Filters';
 import { useAppDispatch } from '../store';
-import { fetchProductsBySearch } from '../features/filters/Search/fetch-products-by-search';
 import SortForm from '../features/filters/Sorting/SortForm';
 import { fetchProductsBySort } from '../features/filters/Sorting/fetch-products-by-sort';
 
@@ -33,17 +32,7 @@ const Catalog: React.FC = () => {
     }
   }, [sortQuery]);
 
-  const [searchQuery, setSearchQuery] = useState('');
 
-  useEffect(() => {
-    if (searchQuery) {
-      dispatch(fetchProductsBySearch(searchQuery, categoryId));
-    }
-  }, [searchQuery]);
-
-  const handleSearch = (event: React.ChangeEvent<HTMLInputElement>): void => {
-    setSearchQuery(event.target.value);
-  };
 
   return (
     <div className="content">
@@ -57,7 +46,7 @@ const Catalog: React.FC = () => {
             </div>
             <div className="catalog-main">
               <div className="catalog-nav">
-                <SearchForm onSearch={handleSearch} />
+                <SearchForm />
                 <SortForm onSort={handleSort} />
               </div>
               <ProductsByParams />
