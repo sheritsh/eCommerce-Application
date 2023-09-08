@@ -77,7 +77,7 @@ const Filters: React.FC = () => {
     setBrands(startBrands);
     setSizes(startSizes);
     setColors(startColors);
-    // setSelectedPrice(startPrice);
+    setSelectedPrice([startPrice[0], startPrice[startPrice.length - 1]]);
   }, [productsForFilters]);
 
   useEffect(() => {
