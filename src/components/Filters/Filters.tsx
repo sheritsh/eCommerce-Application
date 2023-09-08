@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useLocation, useParams } from 'react-router';
+import { Grid } from 'react-loader-spinner';
 import { IRootState, useAppDispatch } from '../../store';
 import BrandCheckbox from './Checkbox/BrandCheckbox/BrandCheckbox';
 import ColorCheckbox from './Checkbox/ColorCheckbox/ColorCheckbox';
@@ -93,7 +94,6 @@ const Filters: React.FC = () => {
     if (colorQuery) params += `&filter=variants.attributes.color.key:${colorQuery}`;
     if (sizeQuery) params += `&filter=variants.attributes.size:${sizeQuery}`;
     params += `&filter=variants.price.centAmount:range (${selectedPrice[0]} to ${selectedPrice[1]})`;
-
     dispatch(fetchProductsByParams(params, categoryId));
   }, [brands, colors, sizes, selectedPrice]);
 
@@ -111,7 +111,6 @@ const Filters: React.FC = () => {
     });
     setSizes(changeCheckedSizes);
     setSelectedPrice([startPrice[0], startPrice[startPrice.length - 1]]);
-    // setSearchQuery('');
   };
   useEffect(() => {
     handleResetFilters();
@@ -120,7 +119,16 @@ const Filters: React.FC = () => {
     <div className={classes.container}>
       {error && <b>{error}</b>}
       {loading ? (
-        'loading...'
+        <Grid
+          height="80"
+          width="80"
+          color="#4fa94d"
+          ariaLabel="grid-loading"
+          radius="12.5"
+          wrapperStyle={{}}
+          wrapperClass="spinner"
+          visible={true}
+        />
       ) : (
         <>
           <div className={classes.filter}>
