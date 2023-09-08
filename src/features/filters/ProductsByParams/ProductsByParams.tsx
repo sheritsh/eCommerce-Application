@@ -1,11 +1,18 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { Grid } from 'react-loader-spinner';
 import { IRootState } from '../../types';
 import classes from '../../Products/Products.module.scss';
 import ProductCard from '../../Products/ProductCard/ProductCard';
+import { useAppDispatch } from '../../../store';
+import { fetchProducts } from '../../Products/products-slice';
+import { Settings } from '../../../api/types';
 
 const ProductsByParams: React.FC = () => {
+  const dispatch = useAppDispatch();
+  useEffect(() => {
+    dispatch(fetchProducts(Settings.ProductsPerPage));
+  }, []);
   const products = useSelector((state: IRootState) => state.products.productsData);
   return (
     <>

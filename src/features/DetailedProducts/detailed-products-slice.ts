@@ -11,19 +11,22 @@ const initialState: IDetailedProductState = {
   },
 };
 
-export const fetchProductDetails = createAsyncThunk('detailed-products/fetchProductDetails', async (id) => {
-  const token = await register();
-  const response = await fetch(`${Endpoints.GET_DETAILED_PRODUCT}/${id}`, {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${token.access_token}`,
-    },
-  });
-  const data = await response.json();
+export const fetchProductDetails = createAsyncThunk(
+  'detailed-products/fetchProductDetails',
+  async (id: string = '') => {
+    const token = await register();
+    const response = await fetch(`${Endpoints.GET_DETAILED_PRODUCT}/${id}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token.access_token}`,
+      },
+    });
+    const data = await response.json();
 
-  return data;
-});
+    return data;
+  },
+);
 
 export const detailedProductReducer = createSlice({
   name: 'detailedProduct',

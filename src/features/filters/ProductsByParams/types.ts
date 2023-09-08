@@ -1,12 +1,12 @@
 import { Languages } from '../../../api/types';
-import { ICategory, IPrice, IImage } from '../../Products/types';
+import { ICategory, IPrice, IImage, ISelectedProduct } from '../../Products/types';
 
 export interface IProductsByCategoryIdData {
   limit: number | null;
   offset: number | null;
   count: number | null;
   total: number | null;
-  results: IResult[];
+  results: ISelectedProduct[];
   isLoading: boolean;
   error: string | null;
 }

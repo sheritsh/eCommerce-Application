@@ -1,14 +1,13 @@
 import React, { useState, useEffect, FormEvent } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate, Link } from 'react-router-dom';
-import { removeLoginError } from '../../../../store/auth/reducer';
+import { removeLoginError, loginUser } from '../../../../features/Authorization/authorization-slice';
 import Form from '../form/Form';
 import Input from '../../input/Input';
 import Container from '../../container/Container';
 import Button from '../../button/Button';
 import ErrorMessage from '../../ErrorMessage/ErrorMessage';
 import { useAppDispatch } from '../../../../store';
-import { loginUser } from '../../../../store/auth/actions';
 import { ErrorMessages } from '../form/type';
 import { IRootState } from '../../../../features/types';
 import validatePassword from '../../../../utils/validation/password-validation';

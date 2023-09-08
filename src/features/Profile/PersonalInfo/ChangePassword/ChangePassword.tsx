@@ -10,7 +10,7 @@ import ErrorMessage from '../../../../components/UI/ErrorMessage/ErrorMessage';
 import { ErrorMessages } from '../../../../components/UI/forms/form/type';
 import { useAppDispatch } from '../../../../store';
 import validatePassword from '../../../../utils/validation/password-validation';
-import { removeLoginError } from '../../../../store/auth/reducer';
+import { removeLoginError } from '../../../Authorization/authorization-slice';
 import ENV from '../../../../api/env';
 import { register } from '../../../../api/auth';
 import { IPassword } from '../../types';

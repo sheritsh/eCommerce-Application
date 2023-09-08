@@ -6,7 +6,7 @@ import { persistStore } from 'redux-persist';
 import { PersistGate } from 'redux-persist/integration/react';
 import AuthRoute from './components/Routing/AuthRoute';
 import { store } from './store';
-import TestPage from './pages/TestPage';
+// import TestPage from './pages/TestPage';
 import ProductPage from './pages/ProductPage';
 
 const Header = lazy(() => import('./components/Header/Header'));
@@ -49,7 +49,7 @@ const App: React.FC = () => {
               <Route path="/categories/:categoryId/:productId" element={<ProductPage />} />
               <Route path="/product_page/test" element={<ProductPage />} />
               <Route path="*" element={<NotFoundPage />} />
-              <Route path="/test" element={<TestPage />} />
+              {/* <Route path="/test" element={<TestPage />} /> */}
               <Route
                 path="/login"
                 element={

@@ -1,6 +1,3 @@
-import { Languages } from '../../api/types';
-import { IAttribute } from '../DetailedProducts/types';
-
 interface INumber {
   name: 'size';
   value: number;
@@ -56,95 +53,95 @@ export interface ICategory {
   id: string;
 }
 
-interface IVariant {
-  id: number;
-  prices: number[];
-  images: string[];
-  attributes: string[];
-  assets: string[];
-}
+// interface IVariant {
+//   id: number;
+//   prices: number[];
+//   images: string[];
+//   attributes: string[];
+//   assets: string[];
+// }
 
-export interface IResult {
-  id: string;
-  version: number;
-  versionModifiedAt: string;
-  lastMessageSequenceNumber: number;
-  createdAt: string;
-  lastModifiedAt: string;
-  lastModifiedBy: {
-    isPlatformClient: boolean;
-  };
-  createdBy: {
-    isPlatformClient: boolean;
-    user: {
-      typeId: string;
-      id: string;
-    };
-  };
-  productType: {
-    typeId: string;
-    id: string;
-  };
-  masterData: {
-    current: {
-      name: {
-        [Languages.English]: string;
-      };
-      categories: ICategory[];
-      categoryOrderHints: object;
-      slug: {
-        [Languages.English]: string;
-      };
-      metaTitle: {
-        [Languages.English]: string;
-      };
-      metaDescription: {
-        [Languages.English]: string;
-      };
-      masterVariant: {
-        id: number;
-        prices: number[];
-        images: string[];
-        attributes: string[];
-        assets: string[];
-      };
-      variants: IVariant[];
-      searchKeywords: object;
-    };
-    staged: {
-      name: {
-        [Languages.English]: string;
-      };
-      description: {
-        [Languages.English]: string;
-      };
-      categories: ICategory[];
-      categoryOrderHints: object;
-      slug: {
-        [Languages.English]: string;
-      };
-      metaTitle: {
-        [Languages.English]: string;
-      };
-      metaDescription: {
-        [Languages.English]: string;
-      };
-      masterVariant: {
-        id: number;
-        prices: IPrice[];
-        images: IImage[];
-        attributes: Attribute[];
-        assets: string[];
-      };
-      variants: string[];
-      searchKeywords: object;
-    };
-    published: boolean;
-    hasStagedChanges: boolean;
-  };
-  priceMode: string;
-  lastVariantId: number;
-}
+// export interface IResult {
+//   id: string;
+//   version: number;
+//   versionModifiedAt: string;
+//   lastMessageSequenceNumber: number;
+//   createdAt: string;
+//   lastModifiedAt: string;
+//   lastModifiedBy: {
+//     isPlatformClient: boolean;
+//   };
+//   createdBy: {
+//     isPlatformClient: boolean;
+//     user: {
+//       typeId: string;
+//       id: string;
+//     };
+//   };
+//   productType: {
+//     typeId: string;
+//     id: string;
+//   };
+//   masterData: {
+//     current: {
+//       name: {
+//         [Languages.English]: string;
+//       };
+//       categories: ICategory[];
+//       categoryOrderHints: object;
+//       slug: {
+//         [Languages.English]: string;
+//       };
+//       metaTitle: {
+//         [Languages.English]: string;
+//       };
+//       metaDescription: {
+//         [Languages.English]: string;
+//       };
+//       masterVariant: {
+//         id: number;
+//         prices: number[];
+//         images: string[];
+//         attributes: string[];
+//         assets: string[];
+//       };
+//       variants: IVariant[];
+//       searchKeywords: object;
+//     };
+//     staged: {
+//       name: {
+//         [Languages.English]: string;
+//       };
+//       description: {
+//         [Languages.English]: string;
+//       };
+//       categories: ICategory[];
+//       categoryOrderHints: object;
+//       slug: {
+//         [Languages.English]: string;
+//       };
+//       metaTitle: {
+//         [Languages.English]: string;
+//       };
+//       metaDescription: {
+//         [Languages.English]: string;
+//       };
+//       masterVariant: {
+//         id: number;
+//         prices: IPrice[];
+//         images: IImage[];
+//         attributes: Attribute[];
+//         assets: string[];
+//       };
+//       variants: string[];
+//       searchKeywords: object;
+//     };
+//     published: boolean;
+//     hasStagedChanges: boolean;
+//   };
+//   priceMode: string;
+//   lastVariantId: number;
+// }
 
 export interface IProductsData {
   limit: number | null;

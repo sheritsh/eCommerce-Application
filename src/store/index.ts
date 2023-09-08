@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import logger from 'redux-logger';
 import { persistReducer, FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
-import authReducerObj from './auth/reducer';
+import authReducerDefault from '../features/Authorization/authorization-slice';
 import productsReducerDefault from '../features/Products/products-slice';
 import categoriesReducerDefault from '../features/Categories/categories-slice';
 import detailedProductReducerDefault from '../features/DetailedProducts/detailed-products-slice';
@@ -16,7 +16,7 @@ const persistConfig = {
 };
 
 export const rootReducers = combineReducers({
-  auth: authReducerObj,
+  auth: authReducerDefault,
   products: productsReducerDefault,
   categories: categoriesReducerDefault,
   detailedProduct: detailedProductReducerDefault,
