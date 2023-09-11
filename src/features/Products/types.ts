@@ -1,3 +1,14 @@
+import { IBrand } from '../../components/Filters/Checkbox/BrandCheckbox/types';
+import { IColor } from '../../components/Filters/Checkbox/ColorCheckbox/types';
+import { ISize } from '../../components/Filters/Checkbox/SizeCheckbox/types';
+
+export interface IFiltersParameters {
+  brands: IBrand['brand'][];
+  sizes: ISize['size'][];
+  colors: IColor['color'][];
+  price: number[];
+}
+
 interface INumber {
   name: 'size';
   value: number;
@@ -151,6 +162,7 @@ export interface IProductsData {
   results: ISelectedProduct[];
   isLoading: boolean;
   error: string | null;
+  filtersData: IFiltersParameters;
 }
 
 export interface IProductsState {

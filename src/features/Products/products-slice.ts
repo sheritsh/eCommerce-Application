@@ -14,6 +14,12 @@ const initialState: IProductsState = {
     results: [],
     isLoading: false,
     error: null,
+    filtersData: {
+      brands: [],
+      sizes: [],
+      colors: [],
+      price: [],
+    },
   },
 };
 

@@ -3,7 +3,7 @@ export enum Languages {
 }
 
 export enum Settings {
-  ProductsPerPage = 10,
+  ProductsPerPage = 2,
 }
 
 export interface ILoginRequest {
