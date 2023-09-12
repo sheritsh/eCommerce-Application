@@ -16,7 +16,6 @@ import {
   checkSizes,
   setPrice,
 } from '../../features/FiltersParameters/filters-parameters-slice';
-import { fetchProductsByParams } from '../../features/filters/ProductsByParams/fetch-products-by-params';
 import Button from '../UI/button/Button';
 import checkItem from '../../utils/catalog/check-items';
 import { IBrand } from './Checkbox/BrandCheckbox/types';
@@ -80,30 +79,6 @@ const Filters: React.FC = () => {
   const handleChangePrice = (event?: Event, newValue?: number[]): void => {
     dispatch(setPrice(newValue as number[]));
   };
-
-  useEffect(() => {
-    const brandQuery = brands
-      ?.filter((brand) => brand.checked)
-      .map((element) => `"${element.label}"`)
-      .join(',');
-    const colorQuery = colors
-      ?.filter((color) => color.checked)
-      .map((element) => `"${element.label}"`)
-      .join(',');
-    const sizeQuery = sizes
-      ?.filter((size) => size.checked)
-      .map((element) => `"${element.label}"`)
-      .join(',');
-
-    let params = '';
-
-    if (brandQuery) params += `&filter=variants.attributes.brand:${brandQuery}`;
-    if (colorQuery) params += `&filter=variants.attributes.color.key:${colorQuery}`;
-    if (sizeQuery) params += `&filter=variants.attributes.size:${sizeQuery}`;
-    if (price[0] && price[price.length - 1])
-      params += `&filter=variants.price.centAmount:range (${price[0]} to ${price[1]})`;
-    dispatch(fetchProductsByParams({ params, categoryId }));
-  }, [brands, colors, sizes, price]);
 
   const handleResetFilters = (): void => {
     dispatch(checkBrands(resetFilter(brands)));

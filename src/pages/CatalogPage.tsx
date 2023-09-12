@@ -5,7 +5,7 @@ import ProductsByParams from '../features/filters/ProductsByParams/ProductsByPar
 import Categories from '../features/Categories/Categories';
 import Filters from '../components/Filters/Filters';
 import SortForm from '../features/filters/Sorting/SortForm';
-import PaginationBlock from '../components/Pagination/Pagination';
+import PaginationBlock from '../features/Pagination/Pagination';
 
 const Catalog: React.FC = () => {
   return (

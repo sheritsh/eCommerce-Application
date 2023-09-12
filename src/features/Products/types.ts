@@ -160,6 +160,7 @@ export interface IProductsData {
   count: number | null;
   total: number | null;
   results: ISelectedProduct[];
+  allResults: ISelectedProduct[];
   isLoading: boolean;
   error: string | null;
   filtersData: IFiltersParameters;

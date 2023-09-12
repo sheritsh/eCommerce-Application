@@ -12,6 +12,7 @@ const initialState: IProductsState = {
     count: null,
     total: null,
     results: [],
+    allResults: [],
     isLoading: false,
     error: null,
     filtersData: {
@@ -51,10 +52,41 @@ export const productsReducer = createSlice({
         error: action.payload,
       },
     }),
+    getAllProductsStart: (state): IProductsState => ({
+      ...state,
+      productsData: {
+        ...state.productsData,
+        isLoading: true,
+      },
+    }),
+    getAllProductsSuccess: (state, action: PayloadAction<ISelectedProduct[]>): IProductsState => ({
+      ...state,
+      productsData: {
+        ...state.productsData,
+        allResults: action.payload,
+        isLoading: false,
+        error: null,
+      },
+    }),
+    getAllProductsFailure: (state, action: PayloadAction<string>): IProductsState => ({
+      ...state,
+      productsData: {
+        ...state.productsData,
+        isLoading: false,
+        error: action.payload,
+      },
+    }),
   },
 });
 
-export const { getProductsStart, getProductsSuccess, getProductsFailure } = productsReducer.actions;
+export const {
+  getProductsStart,
+  getProductsSuccess,
+  getProductsFailure,
+  getAllProductsStart,
+  getAllProductsSuccess,
+  getAllProductsFailure,
+} = productsReducer.actions;
 
 export default productsReducer.reducer;
 
