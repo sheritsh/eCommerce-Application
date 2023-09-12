@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { Splide, SplideSlide } from '@splidejs/react-splide';
 import Container from '../components/UI/container/Container';
 import slides from '../assets/data/main-slider';
+import Brands from '../components/Brands/Brands';
 
 const MainPage: React.FC = () => {
   return (
@@ -26,6 +27,7 @@ const MainPage: React.FC = () => {
                 ))
               : null}
           </Splide>
+          <Brands />
           <h2>All pages of Sprint #3:</h2>
           <ul>
             <li>
