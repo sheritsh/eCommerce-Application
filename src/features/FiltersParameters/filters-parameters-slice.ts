@@ -16,6 +16,7 @@ const initialState: IFiltersState = {
     count: null,
     total: null,
     results: [],
+    allResults: [],
     isLoading: false,
     error: null,
     filtersData: {

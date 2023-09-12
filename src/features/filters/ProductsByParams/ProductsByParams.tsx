@@ -10,11 +10,15 @@ import { IBrand } from '../../../components/Filters/Checkbox/BrandCheckbox/types
 import { IColor } from '../../../components/Filters/Checkbox/ColorCheckbox/types';
 import { ISize } from '../../../components/Filters/Checkbox/SizeCheckbox/types';
 import { setPage } from '../../Pagination/pagination-slice';
+import { fetchProductsBySearch, setError, setSearchQuery } from '../Search/products-by-search-slice';
 
 const ProductsByParams: React.FC = () => {
   const dispatch = useAppDispatch();
   const routerParams = useParams();
   const { categoryId } = routerParams;
+  // get search string
+  const searchQuery = useSelector((state: IRootState) => state.search.searchQuery);
+
   // get filter parameters
   const actualFilters = useSelector((state: IRootState) => state.filters.productsForFiltersData.filtersData);
   const {
@@ -34,8 +38,9 @@ const ProductsByParams: React.FC = () => {
 
   let params = '';
 
+  // When filters change send new request
   useEffect(() => {
-    // Same code in Filter component.
+    // Filters logic
     const brandQuery = brands
       ?.filter((brand) => brand.checked)
       .map((element) => `"${element.label}"`)
@@ -55,14 +60,40 @@ const ProductsByParams: React.FC = () => {
     if (price[0] && price[price.length - 1])
       params += `&filter=variants.price.centAmount:range (${price[0]} to ${price[1]})`;
     params += `&offset=${offset}`;
-    // To dispay products
+    // Dispay products by params
     dispatch(fetchProductsByParams({ params, categoryId, offset }));
+    // Reset search value
+    dispatch(setSearchQuery(''));
   }, [page, brands, colors, sizes, price]);
+
+  // Display products by search
+  useEffect(() => {
+    if (searchQuery.length >= 4) {
+      dispatch(fetchProductsBySearch({ params: searchQuery, categoryId }));
+      dispatch(setError(false));
+    } else if (searchQuery.length > 0 && searchQuery.length < 4) {
+      dispatch(setError(true));
+    } else {
+      dispatch(setError(true));
+      // Dispay products by params
+      dispatch(fetchProductsByParams({ params, categoryId, offset }));
+    }
+  }, [searchQuery]);
+
   useEffect(() => {
     dispatch(setPage(1));
-    // To count pages in pagination
+    dispatch(setSearchQuery(''));
+    // Count pages in pagination for filters
     dispatch(fetchProductsByParams({ params, categoryId, limit: 100 }));
   }, [categoryId, brands, colors, sizes, price]);
+
+  useEffect(() => {
+    dispatch(setPage(1));
+
+    // Count pages in pagination for serach
+    if (searchQuery.length >= 4) dispatch(fetchProductsBySearch({ params: searchQuery, categoryId, limit: 100 }));
+  }, [searchQuery]);
+
   const products = useSelector((state: IRootState) => state.products.productsData);
   return (
     <>

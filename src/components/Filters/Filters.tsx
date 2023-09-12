@@ -22,6 +22,7 @@ import { IBrand } from './Checkbox/BrandCheckbox/types';
 import { IColor } from './Checkbox/ColorCheckbox/types';
 import { ISize } from './Checkbox/SizeCheckbox/types';
 import resetFilter from '../../utils/catalog/reset-filter';
+import { setSearchQuery } from '../../features/filters/Search/products-by-search-slice';
 
 const Filters: React.FC = () => {
   const location = useLocation();
@@ -85,12 +86,14 @@ const Filters: React.FC = () => {
     dispatch(checkColors(resetFilter(colors)));
     dispatch(checkSizes(resetFilter(sizes)));
     dispatch(setPrice(startPrice));
+    dispatch(setSearchQuery(''));
   };
 
   useEffect(() => {
     handleResetFilters();
     setStartPrice([0, 0]);
     setLoading(true);
+    dispatch(setSearchQuery(''));
     if (categoryId) {
       dispatch(fetchFiltersData(categoryId));
     } else {
@@ -98,10 +101,11 @@ const Filters: React.FC = () => {
     }
     setLoading(false);
   }, [categoryId, location]);
+
   return (
     <div className={classes.container}>
       {error && <b>{error}</b>}
-      {loading ? (
+      {loading || !brands.length || !sizes.length || !colors.length ? (
         <Grid
           height="80"
           width="80"
