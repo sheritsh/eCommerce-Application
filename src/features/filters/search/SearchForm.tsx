@@ -1,28 +1,19 @@
-import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router';
+import React from 'react';
+import { useSelector } from 'react-redux';
 import TextField from '@mui/material/TextField';
-import { useAppDispatch } from '../../../store';
-import { fetchProductsBySearch } from './fetch-products-by-search';
+import { useAppDispatch, IRootState } from '../../../store';
+import { setSearchQuery } from './products-by-search-slice';
 import classes from './SearchForm.module.scss';
 
 const SearchForm: React.FC = () => {
   const dispatch = useAppDispatch();
-  const params = useParams();
-  const { categoryId } = params;
-  const [searchQuery, setSearchQuery] = useState('');
+  const searchQuery = useSelector((state: IRootState) => state.search.searchQuery);
+
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
     const value = event.target.value as string;
-    setSearchQuery(value);
+    dispatch(setSearchQuery(value));
   };
-  const [error, setError] = useState(true);
-  useEffect(() => {
-    if (searchQuery.length > 4) {
-      dispatch(fetchProductsBySearch(searchQuery, categoryId));
-      setError(false);
-    } else {
-      setError(true);
-    }
-  }, [searchQuery]);
+  const error = useSelector((state: IRootState) => state.search.error);
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
@@ -41,7 +32,7 @@ const SearchForm: React.FC = () => {
           onChange={handleInputChange}
         />
       </form>
-      {error ? <p>Enter at least 5 characters to start search...</p> : <p></p>}
+      {error ? <p>Enter at least 4 characters to start search...</p> : <p></p>}
     </div>
   );
 };

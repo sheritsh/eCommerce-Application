@@ -14,6 +14,13 @@
   margin-left: 4vw;
 }
 
+.catalog-main {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+  align-items: center;
+}
+
 @media screen and (max-width: 400px) {
 
   .catalog-main {
