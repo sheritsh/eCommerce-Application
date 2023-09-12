@@ -8,12 +8,21 @@ import ColorCheckbox from './Checkbox/ColorCheckbox/ColorCheckbox';
 import PriceSlider from './PriceSlider/PriceSlider';
 import SizeCheckbox from './Checkbox/SizeCheckbox/SizeCheckbox';
 import classes from './Filters.module.scss';
-import { IPrice } from './PriceSlider/types';
-import { fetchFiltersData } from '../../features/FiltersParameters/filters-parameters-slice';
-import { fetchProductsByParams } from '../../features/filters/ProductsByParams/fetch-products-by-params';
-import getFiltersParameters from '../../utils/catalog/get-filters-parameters';
-import applyFilters from '../../utils/catalog/apply-filters';
+import {
+  fetchFiltersData,
+  getFiltersData,
+  checkBrands,
+  checkColors,
+  checkSizes,
+  setPrice,
+} from '../../features/FiltersParameters/filters-parameters-slice';
 import Button from '../UI/button/Button';
+import checkItem from '../../utils/catalog/check-items';
+import { IBrand } from './Checkbox/BrandCheckbox/types';
+import { IColor } from './Checkbox/ColorCheckbox/types';
+import { ISize } from './Checkbox/SizeCheckbox/types';
+import resetFilter from '../../utils/catalog/reset-filter';
+import { setSearchQuery } from '../../features/filters/Search/products-by-search-slice';
 
 const Filters: React.FC = () => {
   const location = useLocation();
@@ -24,101 +33,79 @@ const Filters: React.FC = () => {
   const dispatch = useAppDispatch();
   const [loading, setLoading] = useState(false);
   const error = useSelector((state: IRootState) => state.filters.productsForFiltersData.error);
+
+  const productsForFilters = useSelector((state: IRootState) => state.filters.productsForFiltersData.results);
+
   useEffect(() => {
+    dispatch(getFiltersData(productsForFilters));
+  }, [productsForFilters]);
+
+  const startFilters = useSelector((state: IRootState) => state.filters.productsForFiltersData.filtersData);
+
+  // get filter parameters
+  const {
+    brands,
+    colors,
+    sizes,
+    price,
+  }: {
+    brands: IBrand['brand'][];
+    colors: IColor['color'][];
+    sizes: ISize['size'][];
+    price: number[];
+  } = startFilters;
+
+  const [startPrice, setStartPrice] = useState([0, 0]);
+
+  // Set min & max price for slider
+  useEffect(() => {
+    if (price[0] && startPrice[0] === 0 && startPrice[startPrice.length - 1] === 0) setStartPrice(price);
+  }, [price]);
+
+  const handleChangeCheckedBrand = (id: number): void => {
+    const checkedBrands = checkItem(brands, id);
+    dispatch(checkBrands(checkedBrands));
+  };
+
+  const handleChangeCheckedColor = (id: number): void => {
+    const checkedColors = checkItem(colors, id);
+    dispatch(checkColors(checkedColors));
+  };
+
+  const handleChangeCheckedSize = (id: number): void => {
+    const checkedSizes = checkItem(sizes, id);
+    dispatch(checkSizes(checkedSizes));
+  };
+
+  const handleChangePrice = (event?: Event, newValue?: number[]): void => {
+    dispatch(setPrice(newValue as number[]));
+  };
+
+  const handleResetFilters = (): void => {
+    dispatch(checkBrands(resetFilter(brands)));
+    dispatch(checkColors(resetFilter(colors)));
+    dispatch(checkSizes(resetFilter(sizes)));
+    dispatch(setPrice(startPrice));
+    dispatch(setSearchQuery(''));
+  };
+
+  useEffect(() => {
+    handleResetFilters();
+    setStartPrice([0, 0]);
     setLoading(true);
+    dispatch(setSearchQuery(''));
     if (categoryId) {
       dispatch(fetchFiltersData(categoryId));
     } else {
       dispatch(fetchFiltersData(''));
     }
     setLoading(false);
-  }, [categoryId]);
-
-  const productsForFilters = useSelector((state: IRootState) => state.filters.productsForFiltersData.results);
-
-  const startFilters = getFiltersParameters(productsForFilters);
-
-  // get filter parameters
-  const { startBrands, startColors, startSizes, startPrice } = startFilters;
-
-  const [brands, setBrands] = useState(startBrands);
-
-  const handleChangeCheckedBrand = (id: number): void => {
-    const brandsStateList = brands;
-    const changeCheckedBrands = brandsStateList.map((item) =>
-      item.id === id ? { ...item, checked: !item.checked } : item,
-    );
-    setBrands(changeCheckedBrands);
-  };
-
-  const [colors, setColors] = useState(startColors);
-  const handleChangeCheckedColor = (id: number): void => {
-    const colorsStateList = colors;
-    const changeCheckedColors = colorsStateList.map((item) =>
-      item.id === id ? { ...item, checked: !item.checked } : item,
-    );
-    setColors(changeCheckedColors);
-  };
-
-  const [sizes, setSizes] = useState(startSizes);
-  const handleChangeCheckedSize = (id: number): void => {
-    const sizesStateList = sizes;
-    const changeCheckedSizes = sizesStateList.map((item) =>
-      item.id === id ? { ...item, checked: !item.checked } : item,
-    );
-    setSizes(changeCheckedSizes);
-  };
-
-  const [selectedPrice, setSelectedPrice] = useState([startPrice[0], startPrice[startPrice.length - 1]]);
-  const handleChangePrice = (event?: Event, newValue?: number[]): void => {
-    setSelectedPrice(newValue as number[]);
-  };
-
-  useEffect(() => {
-    setBrands(startBrands);
-    setSizes(startSizes);
-    setColors(startColors);
-    setSelectedPrice([startPrice[0], startPrice[startPrice.length - 1]]);
-  }, [productsForFilters]);
-
-  useEffect(() => {
-    const checkedFilters = applyFilters({ brands, colors, sizes, selectedPrice });
-    const { brandsChecked, colorsChecked, sizesChecked } = checkedFilters;
-    const brandQuery = brandsChecked.map((element) => `"${element}"`).join(',');
-    const colorQuery = colorsChecked.map((element) => `"${element}"`).join(',');
-    const sizeQuery = sizesChecked.map((element) => `"${element}"`).join(',');
-
-    let params = '';
-
-    if (brandQuery) params += `&filter=variants.attributes.brand:${brandQuery}`;
-    if (colorQuery) params += `&filter=variants.attributes.color.key:${colorQuery}`;
-    if (sizeQuery) params += `&filter=variants.attributes.size:${sizeQuery}`;
-    params += `&filter=variants.price.centAmount:range (${selectedPrice[0]} to ${selectedPrice[1]})`;
-    dispatch(fetchProductsByParams(params, categoryId));
-  }, [brands, colors, sizes, selectedPrice]);
-
-  const handleResetFilters = (): void => {
-    const changeCheckedBrands = brands.map((item) => {
-      return { ...item, checked: false };
-    });
-    setBrands(changeCheckedBrands);
-    const changeCheckedColors = colors.map((item) => {
-      return { ...item, checked: false };
-    });
-    setColors(changeCheckedColors);
-    const changeCheckedSizes = sizes.map((item) => {
-      return { ...item, checked: false };
-    });
-    setSizes(changeCheckedSizes);
-    setSelectedPrice([startPrice[0], startPrice[startPrice.length - 1]]);
-  };
-  useEffect(() => {
-    handleResetFilters();
   }, [categoryId, location]);
+
   return (
     <div className={classes.container}>
       {error && <b>{error}</b>}
-      {loading ? (
+      {loading || !brands.length || !sizes.length || !colors.length ? (
         <Grid
           height="80"
           width="80"
@@ -133,27 +120,33 @@ const Filters: React.FC = () => {
         <>
           <div className={classes.filter}>
             <h4 className={classes.title}>Brands</h4>
-            {brands.map((brand, index) => (
-              <BrandCheckbox key={index} brand={brand} handleChangeCheckedBrand={handleChangeCheckedBrand} />
-            ))}
+            {brands?.length &&
+              brands.map((brand: IBrand['brand']) => (
+                <BrandCheckbox key={brand.id} brand={brand} handleChangeCheckedBrand={handleChangeCheckedBrand} />
+              ))}
           </div>
           <div className={classes.filter}>
             <h4 className={classes.title}>Colors</h4>
-            {colors.map((color, index) => (
-              <ColorCheckbox key={index} color={color} handleChangeCheckedColor={handleChangeCheckedColor} />
-            ))}
+            {colors?.length &&
+              colors.map((color: IColor['color']) => (
+                <ColorCheckbox key={color.id} color={color} handleChangeCheckedColor={handleChangeCheckedColor} />
+              ))}
           </div>
           <div className={classes.filter}>
             <h4 className={classes.title}>Sizes</h4>
-            {sizes.map((size, index) => (
-              <SizeCheckbox key={index} size={size} handleChangeCheckedSize={handleChangeCheckedSize} />
-            ))}
+            {sizes?.length &&
+              sizes.map((size: ISize['size']) => (
+                <SizeCheckbox key={size.id} size={size} handleChangeCheckedSize={handleChangeCheckedSize} />
+              ))}
           </div>
           <div className={classes.filter}>
             <h4 className={classes.title}>Price</h4>
             <PriceSlider
-              price={{ min: startPrice[0], max: startPrice[startPrice.length - 1] } as IPrice['price']}
-              value={selectedPrice}
+              price={{
+                min: startPrice.length ? startPrice[0] : 0,
+                max: startPrice.length ? startPrice[startPrice.length - 1] : 0,
+              }}
+              value={price.length ? price : []}
               changePrice={handleChangePrice}
             />
           </div>

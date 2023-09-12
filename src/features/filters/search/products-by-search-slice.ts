@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { Dispatch } from '@reduxjs/toolkit';
+import { Dispatch, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { register } from '../../../api/auth';
 import Endpoints from '../../../api/endpoints';
 import {
@@ -12,24 +12,33 @@ import {
 } from '../../Products/products-slice';
 import { Settings } from '../../../api/types';
 
-interface IFiltersArguments {
+interface ISearchState {
+  searchQuery: string;
+  error: boolean;
+}
+
+const initialState: ISearchState = {
+  searchQuery: '',
+  error: true,
+};
+
+interface ISearchArguments {
   params: string;
   categoryId?: string;
   limit?: number;
   offset?: number;
 }
 
-export const fetchProductsByParams =
-  ({ params, categoryId = '', limit = Settings.ProductsPerPage }: IFiltersArguments) =>
+export const fetchProductsBySearch =
+  ({ params, categoryId = '', limit = Settings.ProductsPerPage }: ISearchArguments) =>
   async (dispatch: Dispatch): Promise<void> => {
     let endpoint;
     if (!categoryId) {
-      endpoint = `${Endpoints.GET_PRODUCTS_BY_PARAMS}${params}&limit=${limit}`;
+      endpoint = `${Endpoints.GET_SEARCH}"${params}&limit=${limit}"`;
     } else {
-      endpoint = `${Endpoints.GET_PRODUCTS_BY_PARAMS}&filter=categories.id:"${categoryId}"${params}&limit=${limit}`;
+      endpoint = `${Endpoints.GET_SEARCH}"${params}"&filter=categories.id:"${categoryId}"&limit=${limit}`;
     }
     const token = await register();
-
     if (limit === Settings.ProductsPerPage) {
       try {
         dispatch(getProductsStart());
@@ -43,7 +52,7 @@ export const fetchProductsByParams =
         dispatch(getProductsSuccess(products));
       } catch (e: unknown) {
         if (e instanceof Error) dispatch(getProductsFailure(e.message));
-        throw new Error('Something went wrong while fetching products');
+        throw new Error('Something went wrong while searching products');
       }
     } else {
       try {
@@ -58,7 +67,26 @@ export const fetchProductsByParams =
         dispatch(getAllProductsSuccess(products));
       } catch (e: unknown) {
         if (e instanceof Error) dispatch(getAllProductsFailure(e.message));
-        throw new Error('Something went wrong while fetching products');
+        throw new Error('Something went wrong while searching products');
       }
     }
   };
+
+export const SearchReducer = createSlice({
+  name: 'search',
+  initialState,
+  reducers: {
+    setSearchQuery: (state, action: PayloadAction<string>): ISearchState => ({
+      ...state,
+      searchQuery: action.payload,
+    }),
+    setError: (state, action: PayloadAction<boolean>): ISearchState => ({
+      ...state,
+      error: action.payload,
+    }),
+  },
+});
+
+export const { setSearchQuery, setError } = SearchReducer.actions;
+
+export default SearchReducer.reducer;
