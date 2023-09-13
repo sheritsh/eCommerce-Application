@@ -48,16 +48,22 @@ const SortForm: React.FC = () => {
   }, [sortQuery]);
 
   return (
-    <div>
+    <>
       <Button
         id="basic-button"
         aria-controls={open ? 'basic-menu' : undefined}
         aria-haspopup="true"
         aria-expanded={open ? 'true' : undefined}
         onClick={handleClick}
-        style={{ color: 'black', border: '1px solid black', margin: '0 0 0 15px', padding: '20px' }}
+        style={{
+          color: 'black',
+          border: 'none',
+          marginLeft: 'auto',
+          padding: '1em 3.5em',
+          background: '#E5E5E5',
+        }}
       >
-        Sort
+        Sort by:
       </Button>
       <Menu
         id="basic-menu"
@@ -81,7 +87,7 @@ const SortForm: React.FC = () => {
           &nbsp;By price DESC
         </MenuItem>
       </Menu>
-    </div>
+    </>
   );
 };
 

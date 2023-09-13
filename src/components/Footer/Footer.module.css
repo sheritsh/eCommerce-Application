@@ -47,6 +47,9 @@ footer {
 }
 
 .authors ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5em;
   margin-top: 1vh;
 }
 

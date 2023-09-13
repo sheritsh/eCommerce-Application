@@ -1,24 +1,29 @@
 .catalog-wrapper {
   display: flex;
+  gap: 1em;
+  justify-content: space-between;
 }
 
 .filters-wrapper {
-  width: 30%;
-  margin-top: 1em;
+  width: 20%;
+  background: $white-color;
+  background: linear-gradient(180deg, rgba(255,255,255,1) 0%, rgba(229,229,229,1) 15%);
+  padding: 0 1.5em 1em;
 }
 
 .catalog-nav {
   display: flex;
-  align-items: center;
+  justify-content: center;
   align-items: flex-start;
-  margin-left: 4vw;
+  width: 100%;
 }
 
 .catalog-main {
   display: flex;
   flex-direction: column;
-  gap: 1em;
+  gap: 2em;
   align-items: center;
+  width: calc(80% - 1em);
 }
 
 @media screen and (max-width: 400px) {

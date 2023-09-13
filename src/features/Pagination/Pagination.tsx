@@ -19,7 +19,7 @@ const PaginationBlock: React.FC = () => {
 
   return (
     <Stack spacing={2}>
-      <Pagination count={pagesCount} page={page} variant="outlined" color="primary" onChange={handleChange} />
+      <Pagination count={pagesCount} page={page} variant="outlined" size="large" onChange={handleChange} />
     </Stack>
   );
 };

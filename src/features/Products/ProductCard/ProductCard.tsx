@@ -46,11 +46,11 @@ const ProductCard: React.FC<IProductProps> = ({ product }) => {
         />
       </a>
       <Button type="button" text="Add to cart" />
-      <p>
+      <div className={classes.description}>
         <a href={`catalog/${product.id}`} title={product.name[Languages.English]} className={classes.link}>
           {truncateString(product.description[Languages.English], 200)}
         </a>
-      </p>
+      </div>
     </li>
   );
 };

@@ -29,6 +29,7 @@ const SearchForm: React.FC = () => {
           placeholder="Enter product name"
           variant="outlined"
           value={searchQuery}
+          color="success"
           onChange={handleInputChange}
         />
       </form>
