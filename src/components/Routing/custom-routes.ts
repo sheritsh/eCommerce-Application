@@ -5,6 +5,7 @@ const customRoutes = [
   { path: '/categories/:categoryId', breadcrumb: CategoryBreadcrumb } as object,
   { path: '/categories/:categoryId/:productId', breadcrumb: ProductPageBreadcrumb } as object,
   { path: '/catalog/:productId', breadcrumb: ProductPageBreadcrumb } as object,
+  { path: '/', breadcrumb: null } as object,
 ];
 
 export default customRoutes;
