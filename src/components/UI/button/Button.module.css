@@ -1,13 +1,15 @@
 .button {
-  background-color: #fdbf70;;
-  color: #1d1e25;
+  background-color: #FF652e;
+  color: white;
   font-weight: 700;
   border: none;
   border-radius: 4px;
   font-size: 1rem;
-  padding: 0.5rem 1rem;
+  padding: 1rem 1.5rem;
   cursor: pointer;
   text-transform: uppercase;
+  width: fit-content;
+  margin: 1.5em 0 0;
   &:hover,
   &:focus {
     opacity: 0.8;

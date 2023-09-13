@@ -149,8 +149,10 @@ const Filters: React.FC = () => {
               value={price.length ? price : []}
               changePrice={handleChangePrice}
             />
+            <div className={classes.button}>
+              <Button text="Reset filters" onClick={handleResetFilters} />
+            </div>
           </div>
-          <Button text="Reset" onClick={handleResetFilters} />
         </>
       )}
     </div>

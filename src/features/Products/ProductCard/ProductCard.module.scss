@@ -1,15 +1,16 @@
 .item {
-  max-width: 25%;
+  width: calc((100% - 4em) / 3);
   display: flex;
   flex-direction: column;
   align-items: center;
   background-color: white;
   padding: 1.5em;
+  height: 43em;
+  overflow: hidden;
   transition: all 0.5s ease-in;
 
   &:hover {
     cursor: pointer;
-    transform: scale(1.1);
     box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.4), -2px -2px 4px rgba(0, 0, 0, 0.4);
     transition: all 0.5s ease-out;
   }
@@ -56,4 +57,8 @@
 .image {
   width: 100%;
   object-fit: cover;
+}
+
+.description {
+  margin-top: 2em;
 }
