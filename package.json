@@ -85,6 +85,7 @@
     "@mui/material": "^5.14.7",
     "@mui/styled-engine-sc": "^5.14.6",
     "@reduxjs/toolkit": "^1.9.5",
+    "@splidejs/react-splide": "^0.7.12",
     "@types/node-fetch": "^2.6.4",
     "@types/redux-logger": "^3.0.9",
     "axios": "^1.4.0",
