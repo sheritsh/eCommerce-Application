@@ -1,5 +1,5 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { Languages } from '../../../api/types';
 import formatPrice from '../../../utils/catalog/format-price';
 import truncateString from '../../../utils/catalog/truncate-string';
