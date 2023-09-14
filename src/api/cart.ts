@@ -1,4 +1,4 @@
-import { createAsyncThunk } from '@reduxjs/toolkit';
+// import { createAsyncThunk } from '@reduxjs/toolkit';
 import Endpoints from './endpoints';
 
 const createBody = {

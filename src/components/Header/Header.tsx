@@ -1,7 +1,8 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { NavLink, Link } from 'react-router-dom';
-import classes from './Header.module.css';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import classes from './Header.module.scss';
 import Container from '../UI/container/Container';
 import { IRootState } from '../../store';
 import { logout } from '../../features/Authorization/authorization-slice';
@@ -36,7 +37,12 @@ const Header: React.FC = () => {
                     <NavLink to="/profile">Profile</NavLink>
                   </li>
                   <li>
-                    <NavLink to="/shopping-cart">Cart</NavLink>
+                    <NavLink to="/shopping-cart">
+                      <div className={classes.cart}>
+                        <ShoppingCartIcon fontSize="large" />
+                        <span>0</span>
+                      </div>
+                    </NavLink>
                   </li>
                   <li>
                     <Link to="/" onClick={handleLogout}>
