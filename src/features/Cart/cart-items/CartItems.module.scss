@@ -1,0 +1,24 @@
+.cart_item {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.classes.card_img {}
+
+.card_content {}
+
+.card_prices {
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.card_change_val {
+  width: auto;
+}
+
+.quantitiy_counters {
+  width: 50%;
+  display: flex;
+}

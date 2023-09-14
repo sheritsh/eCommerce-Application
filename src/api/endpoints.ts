@@ -10,6 +10,7 @@ const Endpoints = {
   GET_SEARCH: `${ENV.Host}/${ENV.ProjectKey}/product-projections/search?staged=true&limit=${Settings.ProductsPerPage}&text.${Languages.English}=`,
   GET_SORT: `${ENV.Host}/${ENV.ProjectKey}/product-projections/`,
   GET_CATEGORIES: `${ENV.Host}/${ENV.ProjectKey}/categories`,
+  GET_CARTS: `${ENV.Host}/${ENV.ProjectKey}/me/carts/`,
   // GET_PRODUCTS_BY_CATEGORY_FILTER: `${ENV.Host}/${ENV.ProjectKey}/product-projections/search?`,
 };
 //
