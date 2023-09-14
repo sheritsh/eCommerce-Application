@@ -5,13 +5,29 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import { useSelector } from 'react-redux';
 import classes from '../Cart.module.scss';
-import { IRootState } from '../../../store';
+import { IRootState, useAppDispatch } from '../../../store';
+import { fetchPromocodeData, fetchPromocodeDataRemove } from '../cart-slice';
 
 const CartSidebar: React.FC = () => {
-  const [promoCode, setPromoCode] = useState('');
+  const dispatch = useAppDispatch();
+  const [promocode, setPromoCode] = useState('');
+  const [isActive, setActive] = useState(false);
 
-  const handleApply = (): void => {
-    // dispatch action when use promo
+  const cartId = useSelector((state: IRootState) => state.cart.cartData.cartId);
+  const cartVersion = useSelector((state: IRootState) => state.cart.cartData.actualCartVer);
+  const promocodeId = useSelector(
+    (state: IRootState) => state.cart?.promocodeAnswer?.data?.discountCodes[0]?.discountCode?.id,
+  );
+
+  const handleApply = (e): void => {
+    dispatch(fetchPromocodeData({ promocode, cartId, cartVersion }));
+    setActive(true);
+  };
+
+  const handleRemove = (e): void => {
+    console.log(promocodeId);
+    dispatch(fetchPromocodeDataRemove({ promocodeId, cartId, cartVersion }));
+    setActive(false);
   };
 
   const totalCartPrice = useSelector((state: IRootState) => state.cart.cartData.cartAmount);
@@ -20,18 +36,28 @@ const CartSidebar: React.FC = () => {
     <Card>
       <CardContent>
         <h2 className={classes.total_title}>Total</h2>
-        <div className={classes.total_price}>Price: ${totalCartPrice}</div>
+        {!isActive ? (
+          <div className={classes.total_price}>Price: ${totalCartPrice}</div>
+        ) : (
+          <div className={classes.total_price}>
+            Price: <span>${totalCartPrice}</span> ${totalCartPrice}
+          </div>
+        )}
+
         <div>
           <TextField
             label="Promo Code"
             variant="outlined"
-            value={promoCode}
+            value={promocode}
             onChange={(e): void => setPromoCode(e.target.value)}
             className={classes.input_promo}
           />
           <div className={classes.promo_btn}>
-            <Button variant="contained" disabled color="secondary" onClick={handleApply}>
+            <Button variant="contained" color="primary" onClick={(e): void => handleApply(e)}>
               Apply
+            </Button>
+            <Button variant="contained" color="secondary" disabled={!isActive} onClick={(e): void => handleRemove(e)}>
+              Remove
             </Button>
           </div>
         </div>

@@ -19,17 +19,15 @@ const Header: React.FC = () => {
 
   const accessToken = useSelector((state: IRootState) => state.auth.authData.accessToken);
 
-  if (accessToken) {
-    useEffect(() => {
-      async function initializeApp(): Promise<void> {
-        const hasCart = await getHasCart(accessToken);
-        if (!hasCart) {
-          await createCart(accessToken);
-        }
+  useEffect(() => {
+    async function initializeApp(): Promise<void> {
+      const hasCart = await getHasCart(accessToken);
+      if (!hasCart) {
+        createCart(accessToken);
       }
-      initializeApp();
-    }, [accessToken]);
-  }
+    }
+    if (accessToken) initializeApp();
+  }, [accessToken]);
 
   return (
     <header>

@@ -1,4 +1,3 @@
-// import { useState } from 'react';
 import createClient from './client';
 import { ILoginRequest, ILoginResponse, IRegisterResponce } from './types';
 
