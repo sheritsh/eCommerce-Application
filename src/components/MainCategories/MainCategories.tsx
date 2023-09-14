@@ -14,7 +14,7 @@ const MainCategories: React.FC = () => {
     <Box sx={{ width: '100%', height: 'auto', overflowY: 'none' }}>
       <ImageList variant="masonry" cols={2} gap={8}>
         {categories.map((item) => (
-          <Link to="#">
+          <Link key={item.title} to="#">
             <ImageListItem key={item.img}>
               <img
                 src={`${item.img}?w=248&fit=crop&auto=format`}

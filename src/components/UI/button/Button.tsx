@@ -6,11 +6,12 @@ interface ButtonProps {
   text?: string;
   onClick?: (event: React.MouseEvent<HTMLButtonElement>) => Promise<void> | void;
   disabled?: boolean;
+  backgroundColor?: string;
 }
 
-const Button: React.FC<ButtonProps> = ({ text, onClick, disabled, type = 'button' }) => {
+const Button: React.FC<ButtonProps> = ({ text, onClick, disabled, type = 'button', backgroundColor }) => {
   return (
-    <button type={type} onClick={onClick} disabled={disabled} className={classes.button}>
+    <button style={{ backgroundColor }} type={type} onClick={onClick} disabled={disabled} className={classes.button}>
       {text}
     </button>
   );
