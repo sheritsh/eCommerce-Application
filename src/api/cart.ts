@@ -1,4 +1,3 @@
-import { createAsyncThunk } from '@reduxjs/toolkit';
 import Endpoints from './endpoints';
 
 const createBody = {
@@ -43,7 +42,7 @@ export const getHasCart = async (accessToken: string | null): Promise<boolean> =
     }
     const data = await response.json();
 
-    if (!data.results) {
+    if (!data.results[0]) {
       return false;
     }
 
@@ -98,6 +97,45 @@ export const deleteMyCart = (accessToken: string | null, id: string, version: nu
     })
     .catch((error) => {
       // CART NOT FOUND
+      console.error('Error:', error);
+    });
+};
+
+export const addItemToCart = (
+  accessToken: string | null,
+  cartId: string,
+  itemId: string,
+  amount: number = 1,
+  version: number = 1,
+): void => {
+  fetch(`${Endpoints.GET_CARTS}${cartId}`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${accessToken}`,
+    },
+    body: JSON.stringify({
+      version,
+      actions: [
+        {
+          action: 'addLineItem',
+          productId: itemId,
+          variantId: 1,
+          quantity: amount,
+        },
+      ],
+    }),
+  })
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+      return response.json();
+    })
+    .then((data) => {
+      console.error('Successful added:', data);
+    })
+    .catch((error) => {
       console.error('Error:', error);
     });
 };
