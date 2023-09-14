@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
@@ -15,9 +15,9 @@ const CartItems: React.FC = () => {
 
   return (
     <>
-      {lineItems.map((item) => {
+      {lineItems.map((item, index) => {
         const { name, price, quantity } = item;
-        const { centAmount, currencyCode } = price.value;
+        const { centAmount } = price.value;
         const { images } = item.variant;
         let discountedCentAmount = null;
         // console.error(images[0]);
@@ -26,15 +26,9 @@ const CartItems: React.FC = () => {
           discountedCentAmount = price.discounted.value.centAmount;
         }
 
-        const [quantityCounter, setQuantityCounter] = React.useState(quantity);
-
-        const handleQuantityChange = (newQuantity): void => {
-          setQuantityCounter(newQuantity);
-          // actions onchange good amount
-        };
 
         return (
-          <Card>
+          <Card key={index}>
             <CardContent>
               <div className={classes.cart_item}>
                 <div className={classes.card_img}>
@@ -42,16 +36,16 @@ const CartItems: React.FC = () => {
                 </div>
                 <div className={classes.card_content}>
                   <Typography variant="h6">{name['en-US']}</Typography>
-                  <div>Количество: {quantity}</div>
+                  <div>Quantity: {quantity}</div>
                 </div>
                 <div className={classes.card_prices}>
                   <div>{discountedCentAmount ? `$${discountedCentAmount / 100}` : null}</div>
                   <div>${centAmount / 100}</div>
                 </div>
                 <div className={classes.card_change_val}>
-                  <QuantityCounter initialValue={quantityCounter} onChange={handleQuantityChange} />
+                  <QuantityCounter initialValue={quantity} />
                   <Typography variant="body1" color="textSecondary" style={{ cursor: 'pointer' }}>
-                    Удалить
+                    Remove
                   </Typography>
                 </div>
               </div>

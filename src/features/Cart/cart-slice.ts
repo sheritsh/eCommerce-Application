@@ -1,20 +1,26 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk, MiddlewareAPI, Dispatch, AnyAction } from '@reduxjs/toolkit';
+import { createCart, createCartAsync, getHasCart } from '../../api/cart';
 import Endpoints from '../../api/endpoints';
 import { ICartState } from './types';
 
 export const fetchCartItems = createAsyncThunk('cart/fetchCartItems', async (accessToken: string | null) => {
-  const response = await fetch(`${Endpoints.GET_CARTS}`, {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${accessToken}`,
-    },
-  });
-  if (!response.ok) {
-    throw new Error(`HTTP error! Status: ${response.status} ${response}`);
+  const hasCart = await getHasCart(accessToken);
+  if (hasCart) {
+    const response = await fetch(`${Endpoints.GET_CARTS}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status} ${response}`);
+    }
+    const data = await response.json();
+    return data.results[0];
   }
-  const data = await response.json();
-  return data.results[0];
+  createCart(accessToken);
+  // const cart = await fetchCartItems(accessToken);
 });
 
 const initialState: ICartState = {
@@ -32,9 +38,18 @@ const initialState: ICartState = {
 export const CartReducer = createSlice({
   name: 'cart',
   initialState,
-  reducers: {},
+  reducers: {
+    setActualCartVer: (state, action) => {
+      const { version } = action.payload;
+      state.cartData = {
+        ...state.cartData,
+        actualCartVer: version,
+      };
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(fetchCartItems.fulfilled, (state, action) => {
+      if (!action.payload) return state;
       const { id, version, lineItems } = action.payload;
       const {
         totalPrice: { centAmount },
@@ -65,6 +80,6 @@ export const CartReducer = createSlice({
   },
 });
 
-// export const { } = CartReducer.actions;
+export const { setActualCartVer } = CartReducer.actions;
 
 export default CartReducer.reducer;

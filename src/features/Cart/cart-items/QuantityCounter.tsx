@@ -7,21 +7,20 @@ import classes from './CartItems.module.scss';
 
 interface QuantityCounterProps {
   initialValue: number;
-  onChange: (value: number) => void;
 }
 
-const QuantityCounter: React.FC<QuantityCounterProps> = ({ initialValue, onChange }) => {
+const QuantityCounter: React.FC<QuantityCounterProps> = ({ initialValue }) => {
   const [quantity, setQuantity] = useState(initialValue);
 
   const handleIncrement = (): void => {
-    setQuantity(quantity + 1);
-    onChange(quantity + 1);
+    if (quantity < 99) {
+      setQuantity(quantity + 1);
+    }
   };
 
   const handleDecrement = (): void => {
     if (quantity > 1) {
       setQuantity(quantity - 1);
-      onChange(quantity - 1);
     }
   };
 
@@ -33,11 +32,13 @@ const QuantityCounter: React.FC<QuantityCounterProps> = ({ initialValue, onChang
       <TextField
         type="number"
         value={quantity}
-        inputProps={{ min: 1 }}
+        inputProps={{
+          readOnly: true,
+          min: 1,
+        }}
         onChange={(e): void => {
           const newQuantity = parseInt(e.target.value, 10) || 1;
           setQuantity(newQuantity);
-          onChange(newQuantity);
         }}
       />
       <IconButton aria-label="increment" onClick={handleIncrement}>
