@@ -8,7 +8,6 @@ import Button from '../../../components/UI/button/Button';
 import { ISelectedProduct } from '../types';
 import { addItemToCart } from '../../../api/cart';
 import { IRootState } from '../../../store';
-import { setActualCartVer } from '../../Cart/cart-slice';
 
 interface IProductProps {
   product: ISelectedProduct;
@@ -20,12 +19,10 @@ const ProductCard: React.FC<IProductProps> = ({ product }) => {
 
   const accessToken = useSelector((state: IRootState) => state.auth.authData.accessToken);
   const cartId = useSelector((state: IRootState) => state.cart.cartData.cartId);
-  let cartVer = useSelector((state: IRootState) => state.cart.cartData.actualCartVer);
-  const dispatch = useDispatch();
+  const cartVer = useSelector((state: IRootState) => state.cart.cartData.actualCartVer);
 
   const handleAddToCart = (): void => {
     addItemToCart(accessToken, cartId, product.id, 1, cartVer);
-    dispatch(setActualCartVer(cartVer));
   };
 
   return (
