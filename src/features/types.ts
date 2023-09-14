@@ -3,6 +3,7 @@ import { ICategoriesState } from './Categories/types';
 import { IProductsState } from './Products/types';
 import { IDetailedProductState } from './DetailedProducts/types';
 import { ICustomerState } from './Profile/types';
+import { ICartState } from './Cart/types';
 
 export interface IRootState {
   auth: AuthState;
@@ -12,4 +13,5 @@ export interface IRootState {
   // productsByBrand: IProductsByBrandState;
   detailedProduct: IDetailedProductState;
   customer: ICustomerState;
+  cart: ICartState;
 }

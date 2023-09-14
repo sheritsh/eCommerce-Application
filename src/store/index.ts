@@ -10,7 +10,8 @@ import detailedProductReducerDefault from '../features/DetailedProducts/detailed
 import customerReducer from '../features/Profile/customer-slice';
 import filtersReducerDefault from '../features/FiltersParameters/filters-parameters-slice';
 import PaginationReducerDefault from '../features/Pagination/pagination-slice';
-import SearchReducerDefault from '../features/filters/Search/products-by-search-slice';
+import SearchReducerDefault from '../features/filters/search/products-by-search-slice';
+import CartReducerDefault from '../features/Cart/cart-slice';
 
 const persistConfig = {
   key: 'root',
@@ -26,6 +27,7 @@ export const rootReducers = combineReducers({
   filters: filtersReducerDefault,
   pagination: PaginationReducerDefault,
   search: SearchReducerDefault,
+  cart: CartReducerDefault,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducers);

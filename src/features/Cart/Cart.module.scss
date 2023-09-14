@@ -1,0 +1,50 @@
+.cart_page {
+  display: flex;
+  // justify-content: space-between;
+  // height: 150vh;
+}
+
+.cart_list {
+  width: 55%;
+}
+
+.cart_list div {
+  margin: 1.5rem auto;
+}
+
+.cart_item {
+  display: flex;
+}
+
+.cart_sidebar {
+  margin-top: 6rem;
+  margin-left: 1.5rem;
+  width: 25vw;
+}
+
+h1 {
+  text-align: left;
+  margin: 2rem 0 2rem 2rem;
+}
+
+h2 {
+  margin: 1rem;
+}
+
+.total_title {
+  font-size: 28px;
+  font-weight: 700;
+}
+
+.input_promo {
+  margin-bottom: 1rem !important;
+}
+
+.total_price {
+  font-size: 24px;
+  margin-bottom: 1rem;
+}
+
+.promo_btn {
+  margin-bottom: 1rem;
+}
