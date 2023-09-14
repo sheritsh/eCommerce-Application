@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { NavLink, Link } from 'react-router-dom';
 import classes from './Header.module.css';
@@ -6,6 +6,7 @@ import Container from '../UI/container/Container';
 import { IRootState } from '../../store';
 import { logout } from '../../features/Authorization/authorization-slice';
 import Breadcrumbs from '../Breadcrumbs/Breadcrumbs';
+import { createCart, getHasCart } from '../../api/cart';
 
 const Header: React.FC = () => {
   const dispatch = useDispatch();
@@ -14,6 +15,19 @@ const Header: React.FC = () => {
   const handleLogout = (): void => {
     dispatch(logout());
   };
+
+  const accessToken = useSelector((state: IRootState) => state.auth.authData.accessToken);
+
+  useEffect(() => {
+    async function initializeApp(): Promise<void> {
+      const hasCart = await getHasCart(accessToken);
+      if (!hasCart) {
+        await createCart(accessToken);
+      }
+    }
+
+    initializeApp();
+  }, [accessToken]);
 
   return (
     <header>

@@ -10,13 +10,13 @@ import classes from './Cart.module.scss';
 const Cart: React.FC = () => {
   const accessToken = useSelector((state: IRootState) => state.auth.authData.accessToken);
   // const state = useSelector((state: IRootState) => state.cart.cartData.cartId);
-  const hasCart = useSelector((state: IRootState) => !!state.cart.cartData.cartId);
+  // const hasCart = useSelector((state: IRootState) => !!state.cart.cartData.cartId);
 
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(fetchCartItems(accessToken));
-  }, [dispatch]);
+  }, [accessToken]);
 
   // getMyCart(accessToken);
   // createCart(accessToken);

@@ -1,10 +1,14 @@
 import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Languages } from '../../../api/types';
 import formatPrice from '../../../utils/catalog/format-price';
 import truncateString from '../../../utils/catalog/truncate-string';
 import classes from './ProductCard.module.scss';
 import Button from '../../../components/UI/button/Button';
 import { ISelectedProduct } from '../types';
+import { addItemToCart } from '../../../api/cart';
+import { IRootState } from '../../../store';
+import { setActualCartVer } from '../../Cart/cart-slice';
 
 interface IProductProps {
   product: ISelectedProduct;
@@ -13,6 +17,16 @@ interface IProductProps {
 
 const ProductCard: React.FC<IProductProps> = ({ product }) => {
   if (!product.name) return null;
+
+  const accessToken = useSelector((state: IRootState) => state.auth.authData.accessToken);
+  const cartId = useSelector((state: IRootState) => state.cart.cartData.cartId);
+  let cartVer = useSelector((state: IRootState) => state.cart.cartData.actualCartVer);
+  const dispatch = useDispatch();
+
+  const handleAddToCart = (): void => {
+    addItemToCart(accessToken, cartId, product.id, 1, cartVer);
+    dispatch(setActualCartVer(cartVer));
+  };
 
   return (
     <li className={classes.item}>
@@ -45,7 +59,7 @@ const ProductCard: React.FC<IProductProps> = ({ product }) => {
           className={classes.image}
         />
       </a>
-      <Button type="button" text="Add to cart" />
+      <Button type="button" text="Add to cart" onClick={handleAddToCart} />
       <div className={classes.description}>
         <a href={`catalog/${product.id}`} title={product.name[Languages.English]} className={classes.link}>
           {truncateString(product.description[Languages.English], 200)}
