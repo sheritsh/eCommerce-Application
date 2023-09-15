@@ -46,18 +46,18 @@ const Header: React.FC = () => {
               <li>
                 <NavLink to="/catalog">Catalog</NavLink>
               </li>
+              <li>
+                <NavLink to="/shopping-cart">
+                  <div className={classes.cart}>
+                    <ShoppingCartIcon fontSize="large" />
+                    <span>{count || 0}</span>
+                  </div>
+                </NavLink>
+              </li>
               {isAuthenticated ? (
                 <>
                   <li>
                     <NavLink to="/profile">Profile</NavLink>
-                  </li>
-                  <li>
-                    <NavLink to="/shopping-cart">
-                      <div className={classes.cart}>
-                        <ShoppingCartIcon fontSize="large" />
-                        <span>{count || 0}</span>
-                      </div>
-                    </NavLink>
                   </li>
                   <li>
                     <Link to="/" onClick={handleLogout}>

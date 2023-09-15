@@ -78,7 +78,7 @@ const App: React.FC = () => {
               <Route
                 path="/shopping-cart"
                 element={
-                  <AuthRoute isPrivate>
+                  <AuthRoute isGuest>
                     <CartPage />
                   </AuthRoute>
                 }

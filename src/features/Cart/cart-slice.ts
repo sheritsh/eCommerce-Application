@@ -3,16 +3,19 @@ import { createSlice, createAsyncThunk, MiddlewareAPI, Dispatch, AnyAction } fro
 import { createCart, createCartAsync, getHasCart } from '../../api/cart';
 import Endpoints from '../../api/endpoints';
 import { ICartState, IApllyPromocode, IRemovePromocode } from './types';
-import { login } from '../../api/auth';
+import { login, register, anonymousSession } from '../../api/auth';
+import { IRegisterResponce } from '../../api/types';
 
 export const fetchCartItems = createAsyncThunk('cart/fetchCartItems', async (accessToken: string | null) => {
-  const hasCart = await getHasCart(accessToken);
+  const token = accessToken || (await anonymousSession()).access_token;
+  const hasCart = await getHasCart(token);
+
   if (hasCart) {
     const response = await fetch(`${Endpoints.GET_CARTS}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${accessToken}`,
+        Authorization: `Bearer ${token}`,
       },
     });
     if (!response.ok) {
@@ -21,7 +24,7 @@ export const fetchCartItems = createAsyncThunk('cart/fetchCartItems', async (acc
     const data = await response.json();
     return data.results[0];
   }
-  createCart(accessToken);
+  createCart(token);
   // const cart = await fetchCartItems(accessToken);
   return null;
 });
