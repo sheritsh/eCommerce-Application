@@ -11,40 +11,40 @@ import { fetchPromocodeData, fetchPromocodeDataRemove } from '../cart-slice';
 const CartSidebar: React.FC = () => {
   const dispatch = useAppDispatch();
   const [promocode, setPromoCode] = useState('');
-  const [isActive, setActive] = useState(false);
 
   const cartId = useSelector((state: IRootState) => state.cart.cartData.cartId);
   const cartVersion = useSelector((state: IRootState) => state.cart.cartData.actualCartVer);
-  const promocodeId = useSelector(
-    (state: IRootState) => state.cart?.promocodeAnswer?.data?.discountCodes[0]?.discountCode?.id,
-  );
+  const promocodeId = useSelector((state: IRootState) => state.cart?.promocodeId);
+  const isPromocodeApplied = useSelector((state: IRootState) => state.cart?.isPromocodeActive);
 
   const handleApply = (e): void => {
     dispatch(fetchPromocodeData({ promocode, cartId, cartVersion }));
-    setActive(true);
   };
 
   const handleRemove = (e): void => {
     console.log(promocodeId);
     dispatch(fetchPromocodeDataRemove({ promocodeId, cartId, cartVersion }));
-    setActive(false);
   };
 
   const totalCartPrice = useSelector((state: IRootState) => state.cart.cartData.cartAmount);
+  const fullCartPrice = useSelector((state: IRootState) => state.cart.fullPrice);
+  const error = useSelector((state: IRootState) => state.cart.error);
+  const errorMessage = error === 'Request failed with status code 400' ? 'The discount code was not found.' : error;
 
   return (
     <Card>
       <CardContent>
         <h2 className={classes.total_title}>Total</h2>
-        {!isActive ? (
+        {!isPromocodeApplied ? (
           <div className={classes.total_price}>Price: ${totalCartPrice}</div>
         ) : (
           <div className={classes.total_price}>
-            Price: <span>${totalCartPrice}</span> ${totalCartPrice}
+            Price: <span>${fullCartPrice}</span> ${totalCartPrice}
           </div>
         )}
 
         <div>
+          <div className={classes.error}>{errorMessage}</div>
           <TextField
             label="Promo Code"
             variant="outlined"
@@ -54,9 +54,14 @@ const CartSidebar: React.FC = () => {
           />
           <div className={classes.promo_btn}>
             <Button variant="contained" color="primary" onClick={(e): void => handleApply(e)}>
-              Apply
+              Apply promocode
             </Button>
-            <Button variant="contained" color="secondary" disabled={!isActive} onClick={(e): void => handleRemove(e)}>
+            <Button
+              variant="contained"
+              color="secondary"
+              disabled={!isPromocodeApplied}
+              onClick={(e): void => handleRemove(e)}
+            >
               Remove
             </Button>
           </div>

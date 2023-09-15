@@ -8,7 +8,8 @@ export interface ICartState {
   isLoaded: boolean;
   status: null | string;
   error: null | string;
-  promocodeAnswer: any;
+  isPromocodeActive: boolean;
+  fullPrice: number;
 }
 
 export interface IApllyPromocode {
@@ -25,4 +26,6 @@ export interface IRemovePromocode {
   cartVersion: number;
   username: string;
   password: string;
+  isPromocodeActive: boolean;
+  fullPrice: number;
 }

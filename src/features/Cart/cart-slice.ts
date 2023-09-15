@@ -57,7 +57,7 @@ export const fetchPromocodeData = createAsyncThunk(
         },
       },
     );
-    return response;
+    return response.data;
   },
 );
 
@@ -95,7 +95,7 @@ export const fetchPromocodeDataRemove = createAsyncThunk(
         },
       },
     );
-    return response;
+    return response.data;
   },
 );
 
@@ -109,7 +109,9 @@ const initialState: ICartState = {
   isLoaded: false,
   status: null,
   error: null,
-  promocodeAnswer: null,
+  isPromocodeActive: false,
+  promocodeId: '',
+  fullPrice: 0,
 };
 
 // setPrice: (state, action: PayloadAction<number[]>): IFiltersState => ({
@@ -153,6 +155,7 @@ export const CartReducer = createSlice({
           actualCartVer: version,
           cartAmount: centAmount / 100,
           cartItems: lineItems,
+          isPromocodeActive: false,
         },
         isLoaded: true,
         status: 'succeeded',
@@ -194,6 +197,9 @@ export const CartReducer = createSlice({
           isLoaded: true,
           status: 'succeeded',
           error: null,
+          isPromocodeActive: true,
+          fullPrice: state.cartData.cartAmount,
+          promocodeId: action.payload.discountCodes[0]?.discountCode?.id,
         };
       })
       .addCase(fetchPromocodeData.rejected, (state, action) => ({
@@ -228,6 +234,9 @@ export const CartReducer = createSlice({
           isLoaded: true,
           status: 'succeeded',
           error: null,
+          isPromocodeActive: false,
+          promocodeId: '',
+          fullPrice: 0,
         };
       })
       .addCase(fetchPromocodeDataRemove.rejected, (state, action) => ({
