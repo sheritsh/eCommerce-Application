@@ -29,7 +29,7 @@ const CartSidebar: React.FC = () => {
   const fullCartPrice = useSelector((state: IRootState) => state.cart.fullPrice);
   const error = useSelector((state: IRootState) => state.cart.error);
   const errorMessage = error === 'Request failed with status code 400' ? 'The discount code was not found.' : error;
-  const errorWhileUnauthorized = 'Please Sign up to apply promocode';
+  const errorWhileUnauthorized = 'Please Sign in / Sign up to apply promocode';
   const isCustomerAutorized = useSelector((state: IRootState) => state.auth.authData.accessToken);
 
   return (
