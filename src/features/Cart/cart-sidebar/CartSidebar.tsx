@@ -22,7 +22,6 @@ const CartSidebar: React.FC = () => {
   };
 
   const handleRemove = (e): void => {
-    console.log(promocodeId);
     dispatch(fetchPromocodeDataRemove({ promocodeId, cartId, cartVersion }));
   };
 
@@ -30,6 +29,8 @@ const CartSidebar: React.FC = () => {
   const fullCartPrice = useSelector((state: IRootState) => state.cart.fullPrice);
   const error = useSelector((state: IRootState) => state.cart.error);
   const errorMessage = error === 'Request failed with status code 400' ? 'The discount code was not found.' : error;
+  const errorWhileUnauthorized = 'Please Sign up to apply promocode';
+  const isCustomerAutorized = useSelector((state: IRootState) => state.auth.authData.accessToken);
 
   return (
     <Card>
@@ -44,7 +45,7 @@ const CartSidebar: React.FC = () => {
         )}
 
         <div>
-          <div className={classes.error}>{errorMessage}</div>
+          <div className={classes.error}>{isCustomerAutorized ? errorMessage : errorWhileUnauthorized}</div>
           <TextField
             label="Promo Code"
             variant="outlined"
@@ -53,7 +54,12 @@ const CartSidebar: React.FC = () => {
             className={classes.input_promo}
           />
           <div className={classes.promo_btn}>
-            <Button variant="contained" color="primary" onClick={(e): void => handleApply(e)}>
+            <Button
+              variant="contained"
+              color="primary"
+              disabled={!isCustomerAutorized}
+              onClick={(e): void => handleApply(e)}
+            >
               Apply promocode
             </Button>
             <Button
