@@ -5,33 +5,60 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import { useSelector } from 'react-redux';
 import classes from '../Cart.module.scss';
-import { IRootState } from '../../../store';
+import { IRootState, useAppDispatch } from '../../../store';
+import { fetchPromocodeData, fetchPromocodeDataRemove } from '../cart-slice';
 
 const CartSidebar: React.FC = () => {
-  const [promoCode, setPromoCode] = useState('');
+  const dispatch = useAppDispatch();
+  const [promocode, setPromoCode] = useState('');
+
+  const cartId = useSelector((state: IRootState) => state.cart.cartData.cartId);
+  const cartVersion = useSelector((state: IRootState) => state.cart.cartData.actualCartVer);
+  const promocodeId = useSelector((state: IRootState) => state.cart?.promocodeId);
+  const isPromocodeApplied = useSelector((state: IRootState) => state.cart?.isPromocodeActive);
 
   const handleApply = (): void => {
-    // dispatch action when use promo
+    dispatch(fetchPromocodeData({ promocode, cartId, cartVersion }));
+  };
+
+  const handleRemove = (): void => {
+    dispatch(fetchPromocodeDataRemove({ promocodeId, cartId, cartVersion }));
   };
 
   const totalCartPrice = useSelector((state: IRootState) => state.cart.cartData.cartAmount);
+  const fullCartPrice = useSelector((state: IRootState) => state.cart.fullPrice);
+  const error = useSelector((state: IRootState) => state.cart.error);
+  const errorMessage = error === 'Request failed with status code 400' ? 'The discount code was not found.' : error;
+  const errorWhileUnauthorized = 'Please Sign in / Sign up to apply promocode';
+  const isCustomerAutorized = useSelector((state: IRootState) => state.auth.authData.accessToken);
 
   return (
     <Card>
       <CardContent>
         <h2 className={classes.total_title}>Total</h2>
-        <div className={classes.total_price}>Price: ${totalCartPrice}</div>
+        {!isPromocodeApplied ? (
+          <div className={classes.total_price}>Price: ${totalCartPrice}</div>
+        ) : (
+          <div className={classes.total_price}>
+            Price: <span>${fullCartPrice}</span> ${totalCartPrice}
+          </div>
+        )}
+
         <div>
+          <div className={classes.error}>{isCustomerAutorized ? errorMessage : errorWhileUnauthorized}</div>
           <TextField
             label="Promo Code"
             variant="outlined"
-            value={promoCode}
+            value={promocode}
             onChange={(e): void => setPromoCode(e.target.value)}
             className={classes.input_promo}
           />
           <div className={classes.promo_btn}>
-            <Button variant="contained" disabled color="secondary" onClick={handleApply}>
-              Apply
+            <Button variant="contained" color="primary" disabled={!isCustomerAutorized} onClick={handleApply}>
+              Apply promocode
+            </Button>
+            <Button variant="contained" color="secondary" disabled={!isPromocodeApplied} onClick={handleRemove}>
+              Remove
             </Button>
           </div>
         </div>

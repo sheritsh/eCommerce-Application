@@ -43,8 +43,21 @@ h2 {
 .total_price {
   font-size: 24px;
   margin-bottom: 1rem;
+
+  & > span {
+    text-decoration: line-through;
+    color: #e5e5e5;
+  }
 }
 
 .promo_btn {
+  display: flex;
+  gap: 1em;
+  justify-content: center;
   margin-bottom: 1rem;
+}
+
+.error {
+  margin: 0.5em auto 1em;
+  color: red;
 }

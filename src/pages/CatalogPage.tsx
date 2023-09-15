@@ -1,5 +1,5 @@
 import React from 'react';
-import SearchForm from '../features/filters/search/SearchForm';
+import SearchForm from '../features/filters/Search/SearchForm';
 import Container from '../components/UI/container/Container';
 import ProductsByParams from '../features/filters/ProductsByParams/ProductsByParams';
 import Categories from '../features/Categories/Categories';

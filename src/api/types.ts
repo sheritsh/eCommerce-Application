@@ -41,3 +41,20 @@ export interface IRegisterRequest {
   dateOfBirth: string;
   addresses: [{ country: string; city: string; streetName: string; postalCode: string }];
 }
+
+export type PasswordAuthMiddlewareOptions = {
+  host: string;
+  projectKey: string;
+  credentials: {
+    clientId: string;
+    clientSecret: string;
+    user: {
+      username: string;
+      password: string;
+    };
+  };
+  scopes?: Array<string>;
+  tokenCache?: TokenCache;
+  oauthUri?: string;
+  fetch?: any;
+};

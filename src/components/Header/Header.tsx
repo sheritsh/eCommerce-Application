@@ -19,17 +19,17 @@ const Header: React.FC = () => {
 
   const accessToken = useSelector((state: IRootState) => state.auth.authData.accessToken);
 
-  if (accessToken) {
-    useEffect(() => {
-      async function initializeApp(): Promise<void> {
-        const hasCart = await getHasCart(accessToken);
-        if (!hasCart) {
-          await createCart(accessToken);
-        }
+  useEffect(() => {
+    async function initializeApp(): Promise<void> {
+      const hasCart = await getHasCart(accessToken);
+      if (!hasCart) {
+        createCart(accessToken);
       }
-      initializeApp();
-    }, [accessToken]);
-  }
+    }
+    if (accessToken) initializeApp();
+  }, [accessToken]);
+
+  const count = useSelector((state: IRootState) => state.cart.cartData.cartItems.length);
 
   return (
     <header>
@@ -46,18 +46,18 @@ const Header: React.FC = () => {
               <li>
                 <NavLink to="/catalog">Catalog</NavLink>
               </li>
+              <li>
+                <NavLink to="/shopping-cart">
+                  <div className={classes.cart}>
+                    <ShoppingCartIcon fontSize="large" />
+                    <span>{count || 0}</span>
+                  </div>
+                </NavLink>
+              </li>
               {isAuthenticated ? (
                 <>
                   <li>
                     <NavLink to="/profile">Profile</NavLink>
-                  </li>
-                  <li>
-                    <NavLink to="/shopping-cart">
-                      <div className={classes.cart}>
-                        <ShoppingCartIcon fontSize="large" />
-                        <span>0</span>
-                      </div>
-                    </NavLink>
                   </li>
                   <li>
                     <Link to="/" onClick={handleLogout}>
