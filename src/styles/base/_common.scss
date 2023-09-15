@@ -24,9 +24,21 @@ body {
 
 .content {
   min-height: 70vh;
-  padding: 2rem;
+  padding: 2em;
   background-color: $white-color;
   overflow: hidden;
+
+  @media (max-width: 1280px) {
+    & {
+      padding: 1.5em;
+    }
+  }
+
+  @media (max-width: 768px) {
+    & {
+      padding: 1em;
+    }
+  }
 }
 
 .active {
@@ -38,15 +50,55 @@ h1 {
   font-weight: bold;
   text-align: center;
   margin-bottom: min(5vh, 1.5em);
+
+  @media (max-width: 1280px) {
+    & {
+      font-size: 2rem;
+      margin-bottom: 1em;
+    }
+  }
+
+  @media (max-width: 768px) {
+    & {
+      font-size: 1.7rem;
+      margin-bottom: 0.8em;
+    }
+  }
 }
 
 h3 {
   text-align: center;
   font-size: 1.5em;
   font-weight: normal;
+
+  @media (max-width: 1280px) {
+    & {
+      font-size: 1.2rem;
+      margin-bottom: 0.8em;
+    }
+  }
+
+  @media (max-width: 768px) {
+    & {
+      font-size: 1rem;
+      margin-bottom: 0.6em;
+    }
+  }
 }
 
 h4 {
   font-size: 1.5em;
   font-weight: 700;
+
+  @media (max-width: 1280px) {
+    & {
+      font-size: 1.3rem;
+    }
+  }
+
+  @media (max-width: 768px) {
+    & {
+      font-size: 1rem;
+    }
+  }
 }
