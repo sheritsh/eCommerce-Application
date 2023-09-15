@@ -6,7 +6,7 @@ import { ICartState, IApllyPromocode, IRemovePromocode } from './types';
 import { login, register, anonymousSession } from '../../api/auth';
 import { IRegisterResponce } from '../../api/types';
 
-export const fetchCartItems = createAsyncThunk('cart/fetchCartItems', async (accessToken: string | null) => {
+export const fetchCartItems = createAsyncThunk('cart/fetchCartItems', async (accessToken: string = '') => {
   const token = accessToken || (await anonymousSession()).access_token;
   const hasCart = await getHasCart(token);
 

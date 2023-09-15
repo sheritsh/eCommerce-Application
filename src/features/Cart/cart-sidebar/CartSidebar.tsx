@@ -17,11 +17,11 @@ const CartSidebar: React.FC = () => {
   const promocodeId = useSelector((state: IRootState) => state.cart?.promocodeId);
   const isPromocodeApplied = useSelector((state: IRootState) => state.cart?.isPromocodeActive);
 
-  const handleApply = (e): void => {
+  const handleApply = (): void => {
     dispatch(fetchPromocodeData({ promocode, cartId, cartVersion }));
   };
 
-  const handleRemove = (e): void => {
+  const handleRemove = (): void => {
     dispatch(fetchPromocodeDataRemove({ promocodeId, cartId, cartVersion }));
   };
 
@@ -54,20 +54,10 @@ const CartSidebar: React.FC = () => {
             className={classes.input_promo}
           />
           <div className={classes.promo_btn}>
-            <Button
-              variant="contained"
-              color="primary"
-              disabled={!isCustomerAutorized}
-              onClick={(e): void => handleApply(e)}
-            >
+            <Button variant="contained" color="primary" disabled={!isCustomerAutorized} onClick={handleApply}>
               Apply promocode
             </Button>
-            <Button
-              variant="contained"
-              color="secondary"
-              disabled={!isPromocodeApplied}
-              onClick={(e): void => handleRemove(e)}
-            >
+            <Button variant="contained" color="secondary" disabled={!isPromocodeApplied} onClick={handleRemove}>
               Remove
             </Button>
           </div>
