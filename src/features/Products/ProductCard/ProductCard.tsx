@@ -25,6 +25,15 @@ const ProductCard: React.FC<IProductProps> = ({ product }) => {
     addItemToCart(accessToken, cartId, product.id, 1, cartVer);
   };
 
+  const handleRemoveFromCart = (): void => {
+    // Write action to remove product from cart
+  };
+
+  const productsInCart = useSelector((state: IRootState) => state.cart.cartData.cartItems);
+  const isProductInCart = (id: string): boolean => {
+    return productsInCart.filter((item: ISelectedProduct) => item.productId === id).length > 0;
+  };
+
   return (
     <li className={classes.item}>
       <h3>
@@ -56,7 +65,11 @@ const ProductCard: React.FC<IProductProps> = ({ product }) => {
           className={classes.image}
         />
       </a>
-      <Button type="button" text="Add to cart" onClick={handleAddToCart} />
+      {isProductInCart(product.id) ? (
+        <Button type="button" text="Remove from cart" backgroundColor="#247C52" onClick={handleRemoveFromCart} />
+      ) : (
+        <Button type="button" text="Add to cart" onClick={handleAddToCart} />
+      )}
       <div className={classes.description}>
         <a href={`catalog/${product.id}`} title={product.name[Languages.English]} className={classes.link}>
           {truncateString(product.description[Languages.English], 200)}
