@@ -29,6 +29,8 @@ const Header: React.FC = () => {
     if (accessToken) initializeApp();
   }, [accessToken]);
 
+  const count = useSelector((state: IRootState) => state.cart.cartData.cartItems.length);
+
   return (
     <header>
       <Container>
@@ -53,7 +55,7 @@ const Header: React.FC = () => {
                     <NavLink to="/shopping-cart">
                       <div className={classes.cart}>
                         <ShoppingCartIcon fontSize="large" />
-                        <span>0</span>
+                        <span>{count || 0}</span>
                       </div>
                     </NavLink>
                   </li>
