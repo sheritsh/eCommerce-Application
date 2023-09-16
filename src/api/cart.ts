@@ -1,3 +1,5 @@
+import { useDispatch } from 'react-redux';
+import { fetchCartItems } from '../features/Cart/cart-slice';
 import Endpoints from './endpoints';
 
 const createBody = {
@@ -80,7 +82,7 @@ export const getMyCart = (accessToken: string | null): void => {
 };
 
 export const deleteMyCart = (accessToken: string | null, id: string, version: number = 1): void => {
-  fetch(`${Endpoints.GET_CARTS}/${id}?version=${version}`, {
+  fetch(`${Endpoints.GET_CARTS}${id}?version=${version}`, {
     method: 'DELETE',
     headers: {
       Authorization: `Bearer ${accessToken}`,
@@ -108,34 +110,79 @@ export const addItemToCart = (
   amount: number = 1,
   version: number = 1,
 ): void => {
-  fetch(`${Endpoints.GET_CARTS}${cartId}`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${accessToken}`,
-    },
-    body: JSON.stringify({
-      version,
-      actions: [
-        {
-          action: 'addLineItem',
-          productId: itemId,
-          variantId: 1,
-          quantity: amount,
-        },
-      ],
-    }),
-  })
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
-      }
-      return response.json();
+  return (dispatch) => {
+    fetch(`${Endpoints.GET_CARTS}${cartId}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${accessToken}`,
+      },
+      body: JSON.stringify({
+        version,
+        actions: [
+          {
+            action: 'addLineItem',
+            productId: itemId,
+            variantId: 1,
+            quantity: amount,
+          },
+        ],
+      }),
     })
-    .then((data) => {
-      console.error('Successful added:', data);
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        return response.json();
+      })
+      .then((data) => {
+        dispatch(fetchCartItems(accessToken));
+        console.error('Successful added:', data);
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+      });
+  };
+};
+
+export const removeItemFromCart = (
+  accessToken: string | null,
+  cartId: string,
+  itemId: string,
+  amount: number = 1,
+  version: number = 1,
+): void => {
+  return (dispatch) => {
+    fetch(`${Endpoints.GET_CARTS}${cartId}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${accessToken}`,
+      },
+      body: JSON.stringify({
+        version,
+        actions: [
+          {
+            action: 'removeLineItem',
+            lineItemId: itemId,
+            variantId: 1,
+            quantity: amount,
+          },
+        ],
+      }),
     })
-    .catch((error) => {
-      console.error('Error:', error);
-    });
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        return response.json();
+      })
+      .then((data) => {
+        dispatch(fetchCartItems(accessToken));
+        console.error('Successful removed:', data);
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+      });
+  };
 };

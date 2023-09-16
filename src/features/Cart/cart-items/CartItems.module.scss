@@ -3,22 +3,85 @@
   justify-content: space-between;
   flex-wrap: wrap;
   align-items: center;
+  width: 50vw;
 }
 
-.classes.card_img {}
+.card_img {
+  overflow: hidden;
+}
 
-.card_content {}
+.card_content h6 {
+  margin-bottom: 1.5rem;
+}
+
+.card_img img {
+  transition: 2s;
+}
+
+.card_content {
+  width: 20%;
+}
 
 .card_prices {
   margin: 0 auto;
   padding: 2rem;
 }
 
-.card_change_val {
-  width: auto;
+// .card_change_val {
+//   width: 300px;
+// }
+
+.card_title {
+  display: flex;
 }
 
 .quantitiy_counters {
   width: 50%;
   display: flex;
+}
+
+.discounted_price {
+  position: relative;
+}
+
+.discounted_price::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 100%;
+  border-top: 2px solid red;
+  transform: rotate(-15deg);
+}
+
+@media screen and (max-width: 780px) {
+  .card_img img {
+    height: 20em;
+    width: 20em;
+    margin: 0 auto;
+  }
+
+  .discounted_price::before {
+    top: 50%;
+    left: 50%;
+    transform: rotate(-15deg) translateX(-50%) translateY(-500%);
+    width: 70px;
+  }
+}
+
+@media screen and (min-width: 780px) {
+  .card_img img:hover {
+    transform: scale(1.2);
+  }
+}
+
+@media screen and (max-width: 550px) {
+  .card_img img {
+    height: 10em;
+    width: 10em;
+  }
+
+  .quantitiy_counters {
+    width: 100%;
+  }
 }

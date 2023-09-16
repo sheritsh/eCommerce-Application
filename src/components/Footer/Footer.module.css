@@ -1,8 +1,11 @@
 footer {
   position: relative;
   color: white;
-  background-color: #1F2827;
+  background-color: #1f2827;
   padding: 1em;
+  min-height: 10vh;
+  display: flex;
+  align-items: center;
 }
 
 .footer {
@@ -14,6 +17,11 @@ footer {
 .footer div {
   flex-grow: 1;
   flex-basis: 33.33%;
+  margin: 0 auto;
+}
+
+.footer div:nth-child(n + 2) {
+  text-align: center;
 }
 
 .rs_school {

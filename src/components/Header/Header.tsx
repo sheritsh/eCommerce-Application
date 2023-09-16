@@ -49,7 +49,8 @@ const Header: React.FC = () => {
               <li>
                 <NavLink to="/shopping-cart">
                   <div className={classes.cart}>
-                    <ShoppingCartIcon fontSize="large" />
+                    Cart
+                    <ShoppingCartIcon fontSize="small" />
                     <span>{count || 0}</span>
                   </div>
                 </NavLink>

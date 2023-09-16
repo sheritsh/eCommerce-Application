@@ -1,5 +1,5 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Languages } from '../../../api/types';
 import formatPrice from '../../../utils/catalog/format-price';
 import truncateString from '../../../utils/catalog/truncate-string';
@@ -17,12 +17,13 @@ interface IProductProps {
 const ProductCard: React.FC<IProductProps> = ({ product }) => {
   if (!product.name) return null;
 
+  const dispatch = useDispatch();
   const accessToken = useSelector((state: IRootState) => state.auth.authData.accessToken);
   const cartId = useSelector((state: IRootState) => state.cart.cartData.cartId);
   const cartVer = useSelector((state: IRootState) => state.cart.cartData.actualCartVer);
 
   const handleAddToCart = (): void => {
-    addItemToCart(accessToken, cartId, product.id, 1, cartVer);
+    dispatch(addItemToCart(accessToken, cartId, product.id, 1, cartVer));
   };
 
   const handleRemoveFromCart = (): void => {
