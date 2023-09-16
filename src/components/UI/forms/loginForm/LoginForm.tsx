@@ -11,6 +11,7 @@ import { useAppDispatch } from '../../../../store';
 import { ErrorMessages } from '../form/type';
 import { IRootState } from '../../../../features/types';
 import validatePassword from '../../../../utils/validation/password-validation';
+import classes from './LoginForm.module.scss';
 
 const LoginForm: React.FC = () => {
   const [username, setEmail] = useState('');
@@ -70,7 +71,7 @@ const LoginForm: React.FC = () => {
       await dispatch(loginUser({ username, password }));
       navigate('/');
     } catch (error) {
-      // console.error(error);
+      throw new Error();
     }
   };
 
@@ -103,18 +104,24 @@ const LoginForm: React.FC = () => {
           placeholder="Enter your email"
         />
         {emailVisited && emailError && <ErrorMessage>{emailError}</ErrorMessage>}
-        <Input
-          value={password}
-          onBlur={(e): void => blurHandler(e)}
-          onChange={(e): void => passwordHandler(e)}
-          name="password"
-          type={passwordFieldType}
-          placeholder="Enter your password"
-        />
+        <div className={classes.password}>
+          <Input
+            value={password}
+            onBlur={(e): void => blurHandler(e)}
+            onChange={(e): void => passwordHandler(e)}
+            name="password"
+            type={passwordFieldType}
+            placeholder="Enter your password"
+          />
+          <a
+            onClick={togglePasswordVisibility}
+            className={passwordFieldType === 'password' ? classes.noEye : classes.eye}
+          ></a>
+        </div>
         {passwordVisited && passwordError && <ErrorMessage>{passwordError}</ErrorMessage>}
-        <button className="password_hide" type="button" onClick={togglePasswordVisibility}>
+        {/* <button className="password_hide" type="button" onClick={togglePasswordVisibility}>
           {passwordFieldType === 'password' ? 'Show' : 'Hide'} Password
-        </button>
+        </button> */}
         <Button
           type="button"
           onClick={(e: FormEvent): Promise<void> => sendData(e)}

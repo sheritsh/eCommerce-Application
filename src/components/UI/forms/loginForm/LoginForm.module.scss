@@ -1,0 +1,26 @@
+.password {
+  position: relative;
+}
+.eye {
+  position: absolute;
+  z-index: 100;
+  top: 11px;
+  left: 12px;
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  background: url('../../../../assets/icons/eye.svg') 0 0 no-repeat;
+  cursor: pointer;
+}
+
+.noEye {
+  position: absolute;
+  z-index: 100;
+  top: 11px;
+  left: 12px;
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  background: url('../../../../assets/icons/no-eye.svg') 0 0 no-repeat;
+  cursor: pointer;
+}
