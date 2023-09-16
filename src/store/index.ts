@@ -10,7 +10,7 @@ import detailedProductReducerDefault from '../features/DetailedProducts/detailed
 import customerReducer from '../features/Profile/customer-slice';
 import filtersReducerDefault from '../features/FiltersParameters/filters-parameters-slice';
 import PaginationReducerDefault from '../features/Pagination/pagination-slice';
-import SearchReducerDefault from '../features/filters/Search/products-by-search-slice';
+import SearchReducerDefault from '../features/filters/search/products-by-search-slice';
 import CartReducerDefault from '../features/Cart/cart-slice';
 import { createCart, getHasCart } from '../api/cart';
 

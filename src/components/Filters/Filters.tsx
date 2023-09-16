@@ -22,7 +22,7 @@ import { IBrand } from './Checkbox/BrandCheckbox/types';
 import { IColor } from './Checkbox/ColorCheckbox/types';
 import { ISize } from './Checkbox/SizeCheckbox/types';
 import resetFilter from '../../utils/catalog/reset-filter';
-import { setSearchQuery } from '../../features/filters/Search/products-by-search-slice';
+import { setSearchQuery } from '../../features/filters/search/products-by-search-slice';
 
 const Filters: React.FC = () => {
   const location = useLocation();
