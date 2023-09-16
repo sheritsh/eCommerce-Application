@@ -10,7 +10,7 @@ import { IBrand } from '../../../components/Filters/Checkbox/BrandCheckbox/types
 import { IColor } from '../../../components/Filters/Checkbox/ColorCheckbox/types';
 import { ISize } from '../../../components/Filters/Checkbox/SizeCheckbox/types';
 import { setPage } from '../../Pagination/pagination-slice';
-import { fetchProductsBySearch, setError, setSearchQuery } from '../Search/products-by-search-slice';
+import { fetchProductsBySearch, setError, setSearchQuery } from '../search/products-by-search-slice';
 
 const ProductsByParams: React.FC = () => {
   const dispatch = useAppDispatch();

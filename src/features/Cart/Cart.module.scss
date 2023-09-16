@@ -1,15 +1,17 @@
 .cart_page {
   display: flex;
-  // justify-content: space-between;
-  // height: 150vh;
 }
 
-.cart_list {
-  width: 55%;
+.empty_cart {
+  margin-top: 2rem;
 }
 
 .cart_list div {
   margin: 1.5rem auto;
+}
+
+.cart_list div:last-child {
+  margin: 0 auto;
 }
 
 .cart_item {
@@ -17,7 +19,7 @@
 }
 
 .cart_sidebar {
-  margin-top: 6rem;
+  margin: 6.4rem 0 0 1.5rem;
   margin-left: 1.5rem;
   width: 25vw;
 }
@@ -60,4 +62,27 @@ h2 {
 .error {
   margin: 0.5em auto 1em;
   color: red;
+}
+
+@media screen and (max-width: 780px) {
+  .cart_page {
+    flex-wrap: wrap;
+  }
+
+  .cart_page div {
+    flex-grow: 1;
+    flex-basis: 100%;
+  }
+
+  .cart_list div {
+    margin: 0 auto;
+  }
+
+  .cart_sidebar {
+    margin: 2rem 1rem 0;
+  }
+
+  .cart_sidebar div:first-child {
+    margin: 0 auto;
+  }
 }

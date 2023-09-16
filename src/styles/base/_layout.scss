@@ -26,12 +26,16 @@
   width: calc(80% - 1em);
 }
 
+.MuiPaper-root {
+  max-width: 80vw;
+  margin-bottom: 1rem !important;
+}
+
 @media screen and (max-width: 400px) {
 
   .catalog-main {
     max-width: 170px;
     margin-left: auto;
   }
-
 
 }
