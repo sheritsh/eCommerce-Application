@@ -44,6 +44,9 @@ const Header: React.FC = () => {
                 <NavLink to="/">Main</NavLink>
               </li>
               <li>
+                <NavLink to="/about_us">About us</NavLink>
+              </li>
+              <li>
                 <NavLink to="/catalog">Catalog</NavLink>
               </li>
               <li>

@@ -26,7 +26,6 @@ const CartItems: React.FC = () => {
           discountedCentAmount = price.discounted.value.centAmount;
         }
 
-
         return (
           <Card key={index}>
             <CardContent>
