@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import SearchForm from '../features/filters/search/SearchForm';
 import Container from '../components/UI/container/Container';
 import ProductsByParams from '../features/filters/ProductsByParams/ProductsByParams';
@@ -7,9 +8,10 @@ import Filters from '../components/Filters/Filters';
 import SortForm from '../features/filters/sorting/SortForm';
 import PaginationBlock from '../features/Pagination/Pagination';
 import { fetchCartItems } from '../features/Cart/cart-slice';
-import { useDispatch } from 'react-redux';
+import Popup from '../components/UI/popup/Popup';
 
 const Catalog: React.FC = () => {
+  const [isSuccessPopupActive, setSuccessPopupActive] = useState(false);
   const dispatch = useDispatch();
   if (!localStorage.getItem('anonymousToken')) {
     dispatch(fetchCartItems(null));
@@ -30,11 +32,17 @@ const Catalog: React.FC = () => {
                 <SearchForm />
                 <SortForm />
               </div>
-              <ProductsByParams />
+              <ProductsByParams popupToggle={setSuccessPopupActive} />
               <PaginationBlock />
             </div>
           </div>
         </div>
+        <Popup
+          active={isSuccessPopupActive}
+          setActive={setSuccessPopupActive}
+          popupType="info"
+          message="Product successfully added to the cart"
+        />
       </Container>
     </div>
   );

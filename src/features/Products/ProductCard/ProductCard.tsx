@@ -13,9 +13,10 @@ import { fetchCartItems } from '../../Cart/cart-slice';
 interface IProductProps {
   product: ISelectedProduct;
   key?: string;
+  addAction: unknown;
 }
 
-const ProductCard: React.FC<IProductProps> = ({ product }) => {
+const ProductCard: React.FC<IProductProps> = ({ product, addAction }) => {
   if (!product.name) return null;
 
   const dispatch = useDispatch();
@@ -27,6 +28,7 @@ const ProductCard: React.FC<IProductProps> = ({ product }) => {
 
   const handleAddToCart = (): void => {
     dispatch(addItemToCart(accessToken, cartId, product.id, 1, cartVer));
+    addAction(true);
   };
 
   const handleRemoveFromCart = (): void => {

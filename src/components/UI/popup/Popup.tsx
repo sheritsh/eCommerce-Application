@@ -19,7 +19,7 @@ const Popup: React.FC<IPopupProps> = ({ active, setActive, popupType, message })
     <div>
       <Snackbar
         open={active}
-        autoHideDuration={5000}
+        autoHideDuration={1000}
         anchorOrigin={{
           vertical: 'bottom',
           horizontal: 'center',

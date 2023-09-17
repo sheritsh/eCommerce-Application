@@ -29,7 +29,8 @@ const modalWindowStyle = {
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
-  width: 'min(50vw, 1200px)',
+  width: 'min(50vw, 1100px)',
+  minWidth: '300px',
   bgcolor: 'background.paper',
   border: '2px solid #000',
   boxShadow: 24,
@@ -140,12 +141,12 @@ const DetailedProduct: React.FC<IProductsProps> = () => {
                             zoom={true}
                             pagination={{ clickable: true }}
                           >
-                            {processedProductData.images.map(({ urlSlide }, idx) => {
+                            {processedProductData.images.map(({ url }, idx) => {
                               return (
                                 <SwiperSlide key={idx}>
                                   <div className="swiper-zoom-container">
                                     <img
-                                      src={urlSlide}
+                                      src={url}
                                       width="100%"
                                       alt={`Goods image ${idx + 1}`}
                                       onClick={(): void => handleImageClick(idx)}

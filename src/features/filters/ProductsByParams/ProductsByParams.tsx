@@ -12,7 +12,11 @@ import { ISize } from '../../../components/Filters/Checkbox/SizeCheckbox/types';
 import { setPage } from '../../Pagination/pagination-slice';
 import { fetchProductsBySearch, setError, setSearchQuery } from '../search/products-by-search-slice';
 
-const ProductsByParams: React.FC = () => {
+interface ProductsByParamsProps {
+  popupToggle: unknown;
+}
+
+const ProductsByParams: React.FC<ProductsByParamsProps> = ({ popupToggle }) => {
   const dispatch = useAppDispatch();
   const routerParams = useParams();
   const { categoryId } = routerParams;
@@ -113,7 +117,7 @@ const ProductsByParams: React.FC = () => {
       {!products.isLoading && products.results.length ? (
         <ul className={classes.list}>
           {products.results.map((result) => (
-            <ProductCard product={result} key={result.id} />
+            <ProductCard product={result} key={result.id} addAction={popupToggle} />
           ))}
         </ul>
       ) : (
