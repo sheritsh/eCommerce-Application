@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Languages } from '../../../api/types';
 import formatPrice from '../../../utils/catalog/format-price';
@@ -8,26 +8,31 @@ import Button from '../../../components/UI/button/Button';
 import { ISelectedProduct } from '../types';
 import { addItemToCart } from '../../../api/cart';
 import { IRootState } from '../../../store';
+import { fetchCartItems } from '../../Cart/cart-slice';
 
 interface IProductProps {
   product: ISelectedProduct;
   key?: string;
+  addAction: unknown;
 }
 
-const ProductCard: React.FC<IProductProps> = ({ product }) => {
+const ProductCard: React.FC<IProductProps> = ({ product, addAction }) => {
   if (!product.name) return null;
 
   const dispatch = useDispatch();
-  const accessToken = useSelector((state: IRootState) => state.auth.authData.accessToken);
-  const cartId = useSelector((state: IRootState) => state.cart.cartData.cartId);
+  const anonToken = localStorage.getItem('anonymousToken');
+  const accessToken = useSelector((state: IRootState) => state.auth.authData.accessToken) || anonToken;
+  const anonCart = localStorage.getItem('anonymousCart');
+  const cartId = useSelector((state: IRootState) => state.cart.cartData.cartId) || anonCart;
   const cartVer = useSelector((state: IRootState) => state.cart.cartData.actualCartVer);
 
   const handleAddToCart = (): void => {
     dispatch(addItemToCart(accessToken, cartId, product.id, 1, cartVer));
+    addAction(true);
   };
 
   const handleRemoveFromCart = (): void => {
-    // Write action to remove product from cart
+    window.location.href = '/shopping-cart';
   };
 
   const productsInCart = useSelector((state: IRootState) => state.cart.cartData.cartItems);
@@ -42,23 +47,24 @@ const ProductCard: React.FC<IProductProps> = ({ product }) => {
           {product.name[Languages.English]}
         </a>
       </h3>
-      {product.masterVariant.prices[0].discounted ? (
-        <div className={classes.prices}>
-          <span className={classes.discount}>
-            {formatPrice(product.masterVariant.prices[0].value.centAmount)}{' '}
-            {product.masterVariant.prices[0].value.currencyCode}
-          </span>
+      <div className={classes.prices}>
+        {product.masterVariant.prices[0].discounted ? (
+          <>
+            <span className={classes.discount}>
+              {formatPrice(product.masterVariant.prices[0].value.centAmount)}{' '}
+              {product.masterVariant.prices[0].value.currencyCode}
+            </span>
+            <span className={classes.price}>
+              {product.masterVariant.prices[0].discounted.value.centAmount}{' '}
+              {product.masterVariant.prices[0].discounted.value.currencyCode}
+            </span>
+          </>
+        ) : (
           <span className={classes.price}>
-            {formatPrice(product.masterVariant.prices[0].discounted.value.centAmount)}{' '}
-            {product.masterVariant.prices[0].discounted.value.currencyCode}
+            {product.masterVariant.prices[0].value.centAmount} {product.masterVariant.prices[0].value.currencyCode}
           </span>
-        </div>
-      ) : (
-        <span className={classes.price}>
-          {formatPrice(product.masterVariant.prices[0].value.centAmount)}{' '}
-          {product.masterVariant.prices[0].value.currencyCode}
-        </span>
-      )}
+        )}
+      </div>
       <a href={`catalog/${product.id}`} title={product.name[Languages.English]} className={classes.link}>
         <img
           src={product.masterVariant.images[0].url}
@@ -67,7 +73,7 @@ const ProductCard: React.FC<IProductProps> = ({ product }) => {
         />
       </a>
       {isProductInCart(product.id) ? (
-        <Button type="button" text="Remove from cart" backgroundColor="#247C52" onClick={handleRemoveFromCart} />
+        <Button type="button" text="Already in cart" backgroundColor="#247C52" onClick={handleRemoveFromCart} />
       ) : (
         <Button type="button" text="Add to cart" onClick={handleAddToCart} />
       )}

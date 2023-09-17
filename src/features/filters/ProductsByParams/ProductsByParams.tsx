@@ -12,7 +12,11 @@ import { ISize } from '../../../components/Filters/Checkbox/SizeCheckbox/types';
 import { setPage } from '../../Pagination/pagination-slice';
 import { fetchProductsBySearch, setError, setSearchQuery } from '../search/products-by-search-slice';
 
-const ProductsByParams: React.FC = () => {
+interface ProductsByParamsProps {
+  popupToggle: unknown;
+}
+
+const ProductsByParams: React.FC<ProductsByParamsProps> = ({ popupToggle }) => {
   const dispatch = useAppDispatch();
   const routerParams = useParams();
   const { categoryId } = routerParams;
@@ -58,7 +62,7 @@ const ProductsByParams: React.FC = () => {
     if (colorQuery) params += `&filter=variants.attributes.color.key:${colorQuery}`;
     if (sizeQuery) params += `&filter=variants.attributes.size:${sizeQuery}`;
     if (price[0] && price[price.length - 1])
-      params += `&filter=variants.price.centAmount:range (${price[0]} to ${price[1]})`;
+      params += `&filter=variants.price.centAmount:range (${price[0] * 100} to ${price[1] * 100})`;
     params += `&offset=${offset}`;
     // Dispay products by params
     dispatch(fetchProductsByParams({ params, categoryId, offset }));
@@ -113,7 +117,7 @@ const ProductsByParams: React.FC = () => {
       {!products.isLoading && products.results.length ? (
         <ul className={classes.list}>
           {products.results.map((result) => (
-            <ProductCard product={result} key={result.id} />
+            <ProductCard product={result} key={result.id} addAction={popupToggle} />
           ))}
         </ul>
       ) : (

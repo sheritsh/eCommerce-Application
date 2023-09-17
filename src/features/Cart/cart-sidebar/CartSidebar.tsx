@@ -24,6 +24,7 @@ const CartSidebar: React.FC<{ accessToken: string | null; idCart: string; versio
   const [promocode, setPromoCode] = useState('');
   const [open, setOpen] = React.useState(false);
 
+  const token = props.accessToken || localStorage.getItem('anonymousToken');
   const cartId = useSelector((state: IRootState) => state.cart.cartData.cartId);
   const cartVersion = useSelector((state: IRootState) => state.cart.cartData.actualCartVer);
   const promocodeId = useSelector((state: IRootState) => state.cart?.promocodeId);
@@ -47,8 +48,8 @@ const CartSidebar: React.FC<{ accessToken: string | null; idCart: string; versio
 
   const handleCartDelete = (): void => {
     setOpen(false);
-    deleteMyCart(props.accessToken, props.idCart, props.versionCart);
-    createCart(props.accessToken);
+    deleteMyCart(token, props.idCart, props.versionCart);
+    createCart(token);
     setTimeout(() => {
       dispatch(fetchCartItems(props.accessToken as string));
     }, 1000);

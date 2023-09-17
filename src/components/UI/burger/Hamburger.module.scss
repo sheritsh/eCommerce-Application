@@ -1,0 +1,48 @@
+.burger {
+  display: none;
+  position: relative;
+  width: 2rem;
+  height: 1rem;
+  transition: all .3s;
+  z-index: 20;
+
+  &:before {
+    content: "";
+    display: inline-block;
+    position: absolute;
+    height: 2px;
+    width: 100%;
+    background-color: black;
+    top: 0;
+    left: 0;
+  }
+
+  &:after {
+    content: "";
+    display: inline-block;
+    position: absolute;
+    height: 2px;
+    width: 100%;
+    background-color: black;
+    bottom: 0;
+    left: 0;
+  }
+
+  @media (max-width: 767px) {
+    display: inline-block;
+  }
+
+  &_active {
+    rotate: -90deg;
+  }
+}
+
+.burgerLine {
+  display: inline-block;
+  position: absolute;
+  height: 2px;
+  width: 100%;
+  background-color: black;
+  top: calc(50% - 1px);
+  left: 0;
+}

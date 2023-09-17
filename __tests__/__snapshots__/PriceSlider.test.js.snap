@@ -1,0 +1,82 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`PriceSlider renders correctly 1`] = `
+<div
+  className="slider"
+>
+  <span
+    className="MuiSlider-root MuiSlider-colorPrimary MuiSlider-sizeMedium css-u259bk-MuiSlider-root"
+    onMouseDown={[Function]}
+  >
+    <span
+      className="MuiSlider-rail css-14pt78w-MuiSlider-rail"
+    />
+    <span
+      className="MuiSlider-track css-1gv0vcd-MuiSlider-track"
+      style={
+        {
+          "left": "0%",
+          "width": "10%",
+        }
+      }
+    />
+    <span
+      className="MuiSlider-thumb MuiSlider-thumbSizeMedium MuiSlider-thumbColorPrimary MuiSlider-thumb MuiSlider-thumbSizeMedium MuiSlider-thumbColorPrimary css-eg0mwd-MuiSlider-thumb"
+      data-index={0}
+      onMouseLeave={[Function]}
+      onMouseOver={[Function]}
+      style={
+        {
+          "left": "10%",
+          "pointerEvents": undefined,
+        }
+      }
+    >
+      <input
+        aria-orientation="horizontal"
+        aria-valuemax={100}
+        aria-valuemin={0}
+        aria-valuenow={10}
+        data-index={0}
+        disabled={false}
+        max={100}
+        min={0}
+        onBlur={[Function]}
+        onChange={[Function]}
+        onFocus={[Function]}
+        step={1}
+        style={
+          {
+            "border": 0,
+            "clip": "rect(0 0 0 0)",
+            "direction": "ltr",
+            "height": "100%",
+            "margin": -1,
+            "overflow": "hidden",
+            "padding": 0,
+            "position": "absolute",
+            "whiteSpace": "nowrap",
+            "width": "100%",
+          }
+        }
+        type="range"
+        value={10}
+      />
+      <span
+        aria-hidden={true}
+        className="MuiSlider-valueLabelOpen MuiSlider-valueLabel css-nnid7-MuiSlider-valueLabel"
+      >
+        <span
+          className="MuiSlider-valueLabelCircle"
+        >
+          <span
+            className="MuiSlider-valueLabelLabel"
+          >
+            10
+          </span>
+        </span>
+      </span>
+    </span>
+  </span>
+</div>
+`;

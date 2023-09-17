@@ -1,0 +1,86 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Addresses renders correctly 1`] = `
+<div>
+  <div
+    className="profile__addresses"
+  >
+    <div
+      className="profile__item type"
+    >
+      <p
+        className="profile__item__title"
+      >
+        TYPE
+      </p>
+      <div
+        className="profile__item__value"
+      >
+        <p>
+          -
+        </p>
+        <div>
+          <p
+            className="default"
+          >
+            default billing
+          </p>
+          <p
+            className="default"
+          >
+            default shipping
+          </p>
+        </div>
+      </div>
+    </div>
+    <div
+      className="profile__item"
+    >
+      <p
+        className="profile__item__title"
+      >
+        COUNTRY
+      </p>
+      <p
+        className="profile__item__value"
+      />
+    </div>
+    <div
+      className="profile__item"
+    >
+      <p
+        className="profile__item__title"
+      >
+        CITY
+      </p>
+      <p
+        className="profile__item__value"
+      />
+    </div>
+    <div
+      className="profile__item"
+    >
+      <p
+        className="profile__item__title"
+      >
+        STREET
+      </p>
+      <p
+        className="profile__item__value"
+      />
+    </div>
+    <div
+      className="profile__item postalCode"
+    >
+      <p
+        className="profile__item__title"
+      >
+        POSTAL CODE
+      </p>
+      <p
+        className="profile__item__value"
+      />
+    </div>
+  </div>
+</div>
+`;

@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`BrandCheckbox renders correctly 1`] = `
+exports[`ColorCheckbox renders correctly 1`] = `
 <div
   className="MuiFormGroup-root css-dmmspl-MuiFormGroup-root"
 >

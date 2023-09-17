@@ -140,7 +140,7 @@ const Filters: React.FC = () => {
               ))}
           </div>
           <div className={classes.filter}>
-            <h4 className={classes.title}>Price</h4>
+            <h4 className={classes.title}>Price, USD</h4>
             <PriceSlider
               price={{
                 min: startPrice.length ? startPrice[0] : 0,
