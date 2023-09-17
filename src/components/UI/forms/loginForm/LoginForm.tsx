@@ -11,7 +11,7 @@ import { useAppDispatch } from '../../../../store';
 import { ErrorMessages } from '../form/type';
 import { IRootState } from '../../../../features/types';
 import validatePassword from '../../../../utils/validation/password-validation';
-import classes from './LoginForm.module.scss';
+import classes from '../form/Form.module.scss';
 
 const LoginForm: React.FC = () => {
   const [username, setEmail] = useState('');
@@ -119,9 +119,6 @@ const LoginForm: React.FC = () => {
           ></a>
         </div>
         {passwordVisited && passwordError && <ErrorMessage>{passwordError}</ErrorMessage>}
-        {/* <button className="password_hide" type="button" onClick={togglePasswordVisibility}>
-          {passwordFieldType === 'password' ? 'Show' : 'Hide'} Password
-        </button> */}
         <Button
           type="button"
           onClick={(e: FormEvent): Promise<void> => sendData(e)}
