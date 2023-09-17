@@ -47,23 +47,24 @@ const ProductCard: React.FC<IProductProps> = ({ product, addAction }) => {
           {product.name[Languages.English]}
         </a>
       </h3>
-      {product.masterVariant.prices[0].discounted ? (
-        <div className={classes.prices}>
-          <span className={classes.discount}>
-            {formatPrice(product.masterVariant.prices[0].value.centAmount)}{' '}
-            {product.masterVariant.prices[0].value.currencyCode}
-          </span>
+      <div className={classes.prices}>
+        {product.masterVariant.prices[0].discounted ? (
+          <>
+            <span className={classes.discount}>
+              {formatPrice(product.masterVariant.prices[0].value.centAmount)}{' '}
+              {product.masterVariant.prices[0].value.currencyCode}
+            </span>
+            <span className={classes.price}>
+              {product.masterVariant.prices[0].discounted.value.centAmount}{' '}
+              {product.masterVariant.prices[0].discounted.value.currencyCode}
+            </span>
+          </>
+        ) : (
           <span className={classes.price}>
-            {formatPrice(product.masterVariant.prices[0].discounted.value.centAmount)}{' '}
-            {product.masterVariant.prices[0].discounted.value.currencyCode}
+            {product.masterVariant.prices[0].value.centAmount} {product.masterVariant.prices[0].value.currencyCode}
           </span>
-        </div>
-      ) : (
-        <span className={classes.price}>
-          {formatPrice(product.masterVariant.prices[0].value.centAmount)}{' '}
-          {product.masterVariant.prices[0].value.currencyCode}
-        </span>
-      )}
+        )}
+      </div>
       <a href={`catalog/${product.id}`} title={product.name[Languages.English]} className={classes.link}>
         <img
           src={product.masterVariant.images[0].url}

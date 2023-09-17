@@ -1,10 +1,10 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
-import Popup from '../src/components/UI/Popup/Popup';
+import SortForm from '../src/features/filters/Sorting/SortForm'
 
-test('Popup renders correctly', () => {
+test('SortForm renders correctly', () => {
   const tree = renderer
-    .create(<Popup />)
+    .create(<SortForm />)
     .toJSON();
   expect(tree).toMatchSnapshot();
 });

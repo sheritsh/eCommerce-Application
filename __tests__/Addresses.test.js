@@ -1,10 +1,10 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
-import Popup from '../src/components/UI/Popup/Popup';
+import Addresses from '../src/features/Profile/Addresses/Addresses';
 
-test('Popup renders correctly', () => {
+test('Addresses renders correctly', () => {
   const tree = renderer
-    .create(<Popup />)
+    .create(<Addresses />)
     .toJSON();
   expect(tree).toMatchSnapshot();
 });

@@ -46,7 +46,7 @@
   @media (max-width: 768px) {
     & {
       font-size: 1.2rem;
-      font-size: 400;
+      font-weight: 400;
     }
   }
 }
@@ -54,16 +54,19 @@
 .prices {
   display: flex;
   gap: 1em;
+  margin-top: 1.5em;
 
   @media (max-width: 1280px) {
     & {
       gap: 0.7em;
+      margin-top: 1.4em;
     }
   }
 
   @media (max-width: 768px) {
     & {
       gap: 0.5em;
+      margin-top: 1.2em;
     }
   }
 }
@@ -111,18 +114,18 @@
 }
 
 .description {
-  margin-top: 1.8em;
+  margin-top: 1.6em;
 
   @media (max-width: 1280px) {
     & {
-      margin-top: 1.6em;
+      margin-top: 1.4em;
       font-size: 0.9rem;
     }
   }
 
   @media (max-width: 768px) {
     & {
-      margin-top: 1.4em;
+      margin-top: 1.2em;
       font-size: 0.8rem;
     }
   }

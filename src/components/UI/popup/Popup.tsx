@@ -26,10 +26,12 @@ const Popup: React.FC<IPopupProps> = ({ active, setActive, popupType, message })
         }}
         onClose={handleClose}
       >
-        <Alert severity={popupType} onClose={handleClose}>
-          <AlertTitle>{popupType.charAt(0).toUpperCase() + popupType.slice(1)}</AlertTitle>
-          {message}
-        </Alert>
+        <div>
+          <Alert severity={popupType} onClose={handleClose}>
+            <AlertTitle>{popupType ? popupType.charAt(0).toUpperCase() + popupType.slice(1) : ''}</AlertTitle>
+            {message}
+          </Alert>
+        </div>
       </Snackbar>
     </div>
   );

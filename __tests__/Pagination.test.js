@@ -1,10 +1,10 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
-import Popup from '../src/components/UI/Popup/Popup';
+import Pagination from '../src/features/Pagination/Pagination'
 
-test('Popup renders correctly', () => {
+test('Pagination renders correctly', () => {
   const tree = renderer
-    .create(<Popup />)
+    .create(<Pagination />)
     .toJSON();
   expect(tree).toMatchSnapshot();
 });

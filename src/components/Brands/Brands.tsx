@@ -1,3 +1,4 @@
+import React from 'react';
 import { Link } from 'react-router-dom';
 import classes from './Brands.module.scss';
 import brands from '../../assets/data/main-brands';

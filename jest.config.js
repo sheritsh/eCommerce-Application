@@ -8,6 +8,7 @@ const config = {
   verbose: true,
   collectCoverageFrom: [
     "./src/**/*.tsx",
+    "./src/**/*.ts",
     "!**/node_modules/**",
   ],
   displayName: 'eCommerce testing',

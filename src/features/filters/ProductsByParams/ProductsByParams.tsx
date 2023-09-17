@@ -62,7 +62,7 @@ const ProductsByParams: React.FC<ProductsByParamsProps> = ({ popupToggle }) => {
     if (colorQuery) params += `&filter=variants.attributes.color.key:${colorQuery}`;
     if (sizeQuery) params += `&filter=variants.attributes.size:${sizeQuery}`;
     if (price[0] && price[price.length - 1])
-      params += `&filter=variants.price.centAmount:range (${price[0]} to ${price[1]})`;
+      params += `&filter=variants.price.centAmount:range (${price[0] * 100} to ${price[1] * 100})`;
     params += `&offset=${offset}`;
     // Dispay products by params
     dispatch(fetchProductsByParams({ params, categoryId, offset }));

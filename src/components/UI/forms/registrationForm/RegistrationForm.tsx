@@ -13,6 +13,7 @@ import { IRegisterRequest } from '../../../../api/types';
 import ENV from '../../../../api/env';
 import { register } from '../../../../api/auth';
 import Popup from '../../popup/Popup';
+import classes from '../form/Form.module.scss';
 
 const RegistrationForm: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -255,18 +256,21 @@ const RegistrationForm: React.FC = () => {
           placeholder="Email"
         />
         {emailVisited && emailError && <ErrorMessage>{emailError}</ErrorMessage>}
-        <Input
-          value={password}
-          onBlur={(e): void => blurHandler(e)}
-          onChange={(e): void => passwordHandler(e)}
-          name="password"
-          type={passwordFieldType}
-          placeholder="Password"
-        />
+        <div className={classes.password}>
+          <Input
+            value={password}
+            onBlur={(e): void => blurHandler(e)}
+            onChange={(e): void => passwordHandler(e)}
+            name="password"
+            type={passwordFieldType}
+            placeholder="Password"
+          />
+          <a
+            onClick={togglePasswordVisibility}
+            className={passwordFieldType === 'password' ? classes.noEye : classes.eye}
+          ></a>
+        </div>
         {passwordVisited && passwordError && <ErrorMessage>{passwordError}</ErrorMessage>}
-        <button className="password_hide" type="button" onClick={togglePasswordVisibility}>
-          {passwordFieldType === 'password' ? 'Show' : 'Hide'} Password
-        </button>
         <Input
           value={firstName}
           onBlur={(e): void => blurHandler(e)}

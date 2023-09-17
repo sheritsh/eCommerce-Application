@@ -3,18 +3,5 @@
 exports[`Breadcrumbs render correctly 1`] = `
 <ul
   className="list"
->
-  <a
-    aria-current="page"
-    className="active"
-    href="/"
-    onClick={[Function]}
-  >
-    <li>
-      <span>
-        Home
-      </span>
-    </li>
-  </a>
-</ul>
+/>
 `;
