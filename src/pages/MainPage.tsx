@@ -22,7 +22,7 @@ const MainPage: React.FC = () => {
             {slides.length
               ? slides.map((slide) => (
                   <SplideSlide key={slide.id}>
-                    <img src={slide.url} alt={slide.alt} />
+                    <img width="100%" src={slide.url} alt={slide.alt} />
                   </SplideSlide>
                 ))
               : null}
