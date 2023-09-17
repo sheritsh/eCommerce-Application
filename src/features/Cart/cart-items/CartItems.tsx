@@ -12,7 +12,8 @@ import { addItemToCart, removeItemFromCart } from '../../../api/cart';
 
 const CartItems: React.FC = () => {
   const lineItems = useSelector((state: IRootState) => state.cart.cartData.cartItems);
-  const accessToken = useSelector((state: IRootState) => state.auth.authData.accessToken);
+  const anonToken = localStorage.getItem('anonymousToken');
+  const accessToken = useSelector((state: IRootState) => state.auth.authData.accessToken) as string || anonToken;
   const cartId = useSelector((state: IRootState) => state.cart.cartData.cartId);
   const cartVersion = useSelector((state: IRootState) => state.cart.cartData.actualCartVer);
   const dispatch = useDispatch();

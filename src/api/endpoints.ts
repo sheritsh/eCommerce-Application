@@ -11,7 +11,8 @@ const Endpoints = {
   GET_SORT: `${ENV.Host}/${ENV.ProjectKey}/product-projections/`,
   GET_CATEGORIES: `${ENV.Host}/${ENV.ProjectKey}/categories`,
   GET_CARTS: `${ENV.Host}/${ENV.ProjectKey}/me/carts/`,
+  GET_ANON_CARTS: `${ENV.Host}/${ENV.ProjectKey}/me/carts/`,
   // GET_PRODUCTS_BY_CATEGORY_FILTER: `${ENV.Host}/${ENV.ProjectKey}/product-projections/search?`,
 };
-//
+
 export default Endpoints;

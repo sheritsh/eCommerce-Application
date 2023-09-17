@@ -6,27 +6,30 @@ const createBody = {
   currency: 'USD',
 };
 
-export const createCart = (accessToken: string | null): void => {
-  fetch(`${Endpoints.GET_CARTS}`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${accessToken}`,
-    },
-    body: JSON.stringify(createBody),
-  })
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
-      }
-      return response.json();
+export const createCart = (accessToken: string | null): Promise<T> => {
+  return new Promise((resolve, reject) => {
+    fetch(`${Endpoints.GET_CARTS}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${accessToken}`,
+      },
+      body: JSON.stringify(createBody),
     })
-    .then((data) => {
-      console.error('Successful created:', data);
-    })
-    .catch((error) => {
-      console.error('Error:', error);
-    });
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        return response.json();
+      })
+      .then((data) => {
+        console.error('Successful created:', data);
+        return resolve(data);
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+      });
+  });
 };
 
 export const getHasCart = async (accessToken: string | null): Promise<boolean> => {
@@ -104,13 +107,13 @@ export const deleteMyCart = (accessToken: string | null, id: string, version: nu
 };
 
 export const addItemToCart = (
-  accessToken: string | null,
+  accessToken: string | undefined,
   cartId: string,
   itemId: string,
   amount: number = 1,
   version: number = 1,
-): void => {
-  return (dispatch) => {
+) => {
+  return (dispatch): void => {
     fetch(`${Endpoints.GET_CARTS}${cartId}`, {
       method: 'POST',
       headers: {
@@ -146,13 +149,13 @@ export const addItemToCart = (
 };
 
 export const removeItemFromCart = (
-  accessToken: string | null,
+  accessToken: string | undefined,
   cartId: string,
   itemId: string,
   amount: number = 1,
   version: number = 1,
-): void => {
-  return (dispatch) => {
+) => {
+  return (dispatch): void => {
     fetch(`${Endpoints.GET_CARTS}${cartId}`, {
       method: 'POST',
       headers: {

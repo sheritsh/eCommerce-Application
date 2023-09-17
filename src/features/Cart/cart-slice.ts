@@ -1,13 +1,14 @@
 import axios from 'axios';
-import { createSlice, createAsyncThunk, MiddlewareAPI, Dispatch, AnyAction } from '@reduxjs/toolkit';
-import { createCart, createCartAsync, getHasCart } from '../../api/cart';
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import Endpoints from '../../api/endpoints';
 import { ICartState, IApllyPromocode, IRemovePromocode } from './types';
-import { login, register, anonymousSession } from '../../api/auth';
-import { IRegisterResponce } from '../../api/types';
+import { login, anonymousSession } from '../../api/auth';
+import { createCart, getHasCart } from '../../api/cart';
 
 export const fetchCartItems = createAsyncThunk('cart/fetchCartItems', async (accessToken: string = '') => {
-  const token = accessToken || (await anonymousSession()).access_token;
+  const isGuest = !accessToken;
+  const anonToken = localStorage.getItem('anonymousToken');
+  const token = accessToken || anonToken || (await anonymousSession()).access_token;
   const hasCart = await getHasCart(token);
 
   if (hasCart) {
@@ -24,9 +25,29 @@ export const fetchCartItems = createAsyncThunk('cart/fetchCartItems', async (acc
     const data = await response.json();
     return data.results[0];
   }
-  createCart(token);
-  // const cart = await fetchCartItems(accessToken);
-  return null;
+
+  await createCart(token);
+
+  const response = await fetch(`${Endpoints.GET_CARTS}`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  if (!response.ok) {
+    throw new Error(`HTTP error! Status: ${response.status} ${response}`);
+  }
+  const data = await response.json();
+
+  if (isGuest) {
+    if (!localStorage.getItem('anonymousToken')) {
+      localStorage.setItem('anonymousToken', `${token}`);
+      localStorage.setItem('anonymousCart', data.results[0].id);
+    }
+  }
+
+  return data.results[0];
 });
 
 export const fetchPromocodeData = createAsyncThunk(
@@ -141,6 +162,10 @@ export const CartReducer = createSlice({
         actualCartVer: action.payload,
       },
     }),
+    addAnonToken: (state, action) => ({
+      ...state,
+      anonymousToken: action,
+    }),
   },
   extraReducers: (builder) => {
     builder.addCase(fetchCartItems.fulfilled, (state, action) => {
@@ -250,6 +275,6 @@ export const CartReducer = createSlice({
   },
 });
 
-export const { setActualCartVer } = CartReducer.actions;
+export const { setActualCartVer, addAnonToken } = CartReducer.actions;
 
 export default CartReducer.reducer;

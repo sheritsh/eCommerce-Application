@@ -18,8 +18,10 @@ const ProductCard: React.FC<IProductProps> = ({ product }) => {
   if (!product.name) return null;
 
   const dispatch = useDispatch();
-  const accessToken = useSelector((state: IRootState) => state.auth.authData.accessToken);
-  const cartId = useSelector((state: IRootState) => state.cart.cartData.cartId);
+  const anonToken = localStorage.getItem('anonymousToken');
+  const accessToken = useSelector((state: IRootState) => state.auth.authData.accessToken) || anonToken;
+  const anonCart = localStorage.getItem('anonymousCart');
+  const cartId = useSelector((state: IRootState) => state.cart.cartData.cartId) || anonCart;
   const cartVer = useSelector((state: IRootState) => state.cart.cartData.actualCartVer);
 
   const handleAddToCart = (): void => {
@@ -27,7 +29,7 @@ const ProductCard: React.FC<IProductProps> = ({ product }) => {
   };
 
   const handleRemoveFromCart = (): void => {
-    // Write action to remove product from cart
+    window.location.href = '/shopping-cart';
   };
 
   const productsInCart = useSelector((state: IRootState) => state.cart.cartData.cartItems);
@@ -67,7 +69,7 @@ const ProductCard: React.FC<IProductProps> = ({ product }) => {
         />
       </a>
       {isProductInCart(product.id) ? (
-        <Button type="button" text="Remove from cart" backgroundColor="#247C52" onClick={handleRemoveFromCart} />
+        <Button type="button" text="Already in cart" backgroundColor="#247C52" onClick={handleRemoveFromCart} />
       ) : (
         <Button type="button" text="Add to cart" onClick={handleAddToCart} />
       )}
