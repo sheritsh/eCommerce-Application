@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Languages } from '../../../api/types';
 import formatPrice from '../../../utils/catalog/format-price';
@@ -8,6 +8,7 @@ import Button from '../../../components/UI/button/Button';
 import { ISelectedProduct } from '../types';
 import { addItemToCart } from '../../../api/cart';
 import { IRootState } from '../../../store';
+import { fetchCartItems } from '../../Cart/cart-slice';
 
 interface IProductProps {
   product: ISelectedProduct;

@@ -6,8 +6,15 @@ import Categories from '../features/Categories/Categories';
 import Filters from '../components/Filters/Filters';
 import SortForm from '../features/filters/sorting/SortForm';
 import PaginationBlock from '../features/Pagination/Pagination';
+import { fetchCartItems } from '../features/Cart/cart-slice';
+import { useDispatch } from 'react-redux';
 
 const Catalog: React.FC = () => {
+  const dispatch = useDispatch();
+  if (!localStorage.getItem('anonymousToken')) {
+    dispatch(fetchCartItems(null));
+  }
+
   return (
     <div className="content">
       <Container>
