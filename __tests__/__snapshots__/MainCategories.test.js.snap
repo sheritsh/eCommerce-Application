@@ -1,0 +1,170 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MainCategories renders correctly 1`] = `
+<div
+  className="MuiBox-root css-17ubbg4"
+>
+  <ul
+    className="MuiImageList-root MuiImageList-masonry css-10riir9-MuiImageList-root"
+    style={
+      {
+        "columnCount": 2,
+        "columnGap": 8,
+      }
+    }
+  >
+    <a
+      href="/"
+      onClick={[Function]}
+    >
+      <li
+        className="MuiImageListItem-root MuiImageListItem-masonry css-l086p4-MuiImageListItem-root"
+        style={
+          {
+            "gridColumnEnd": undefined,
+            "gridRowEnd": undefined,
+            "height": "auto",
+            "marginBottom": 8,
+          }
+        }
+      >
+        <img
+          alt="Shoes"
+          className="MuiImageListItem-img"
+          loading="lazy"
+          src="/assets/images/categories-main/shoes.jpg?w=248&fit=crop&auto=format"
+          srcSet="/assets/images/categories-main/shoes.jpg?w=248&fit=crop&auto=format&dpr=2 2x"
+        />
+        <div
+          className="MuiImageListItemBar-root MuiImageListItemBar-positionBottom css-tdkilr-MuiImageListItemBar-root"
+        >
+          <div
+            className="MuiImageListItemBar-titleWrap MuiImageListItemBar-titleWrapBottom MuiImageListItemBar-titleWrapActionPosRight css-14q7c0c-MuiImageListItemBar-titleWrap"
+          >
+            <div
+              className="MuiImageListItemBar-title css-dasnyc-MuiImageListItemBar-title"
+            >
+              <div
+                className="title"
+              >
+                Shoes
+              </div>
+            </div>
+          </div>
+          <div
+            className="MuiImageListItemBar-actionIcon MuiImageListItemBar-actionIconActionPosRight css-mjbero-MuiImageListItemBar-actionIcon"
+          >
+            <button
+              aria-label="star Shoes"
+              className="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-1jfmqnk-MuiButtonBase-root-MuiIconButton-root"
+              disabled={false}
+              onBlur={[Function]}
+              onContextMenu={[Function]}
+              onDragLeave={[Function]}
+              onFocus={[Function]}
+              onKeyDown={[Function]}
+              onKeyUp={[Function]}
+              onMouseDown={[Function]}
+              onMouseLeave={[Function]}
+              onMouseUp={[Function]}
+              onTouchEnd={[Function]}
+              onTouchMove={[Function]}
+              onTouchStart={[Function]}
+              tabIndex={0}
+              type="button"
+            >
+              <svg
+                aria-hidden={true}
+                className="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                data-testid="StarBorderIcon"
+                focusable="false"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="m22 9.24-7.19-.62L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27 18.18 21l-1.63-7.03L22 9.24zM12 15.4l-3.76 2.27 1-4.28-3.32-2.88 4.38-.38L12 6.1l1.71 4.04 4.38.38-3.32 2.88 1 4.28L12 15.4z"
+                />
+              </svg>
+            </button>
+          </div>
+        </div>
+      </li>
+    </a>
+    <a
+      href="/"
+      onClick={[Function]}
+    >
+      <li
+        className="MuiImageListItem-root MuiImageListItem-masonry css-l086p4-MuiImageListItem-root"
+        style={
+          {
+            "gridColumnEnd": undefined,
+            "gridRowEnd": undefined,
+            "height": "auto",
+            "marginBottom": 8,
+          }
+        }
+      >
+        <img
+          alt="Clothing"
+          className="MuiImageListItem-img"
+          loading="lazy"
+          src="/assets/images/categories-main/clothing.jpg?w=248&fit=crop&auto=format"
+          srcSet="/assets/images/categories-main/clothing.jpg?w=248&fit=crop&auto=format&dpr=2 2x"
+        />
+        <div
+          className="MuiImageListItemBar-root MuiImageListItemBar-positionBottom css-tdkilr-MuiImageListItemBar-root"
+        >
+          <div
+            className="MuiImageListItemBar-titleWrap MuiImageListItemBar-titleWrapBottom MuiImageListItemBar-titleWrapActionPosRight css-14q7c0c-MuiImageListItemBar-titleWrap"
+          >
+            <div
+              className="MuiImageListItemBar-title css-dasnyc-MuiImageListItemBar-title"
+            >
+              <div
+                className="title"
+              >
+                Clothing
+              </div>
+            </div>
+          </div>
+          <div
+            className="MuiImageListItemBar-actionIcon MuiImageListItemBar-actionIconActionPosRight css-mjbero-MuiImageListItemBar-actionIcon"
+          >
+            <button
+              aria-label="star Clothing"
+              className="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-1jfmqnk-MuiButtonBase-root-MuiIconButton-root"
+              disabled={false}
+              onBlur={[Function]}
+              onContextMenu={[Function]}
+              onDragLeave={[Function]}
+              onFocus={[Function]}
+              onKeyDown={[Function]}
+              onKeyUp={[Function]}
+              onMouseDown={[Function]}
+              onMouseLeave={[Function]}
+              onMouseUp={[Function]}
+              onTouchEnd={[Function]}
+              onTouchMove={[Function]}
+              onTouchStart={[Function]}
+              tabIndex={0}
+              type="button"
+            >
+              <svg
+                aria-hidden={true}
+                className="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                data-testid="StarBorderIcon"
+                focusable="false"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="m22 9.24-7.19-.62L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27 18.18 21l-1.63-7.03L22 9.24zM12 15.4l-3.76 2.27 1-4.28-3.32-2.88 4.38-.38L12 6.1l1.71 4.04 4.38.38-3.32 2.88 1 4.28L12 15.4z"
+                />
+              </svg>
+            </button>
+          </div>
+        </div>
+      </li>
+    </a>
+  </ul>
+</div>
+`;

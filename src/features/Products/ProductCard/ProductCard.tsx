@@ -15,7 +15,7 @@ interface IProductProps {
 }
 
 const ProductCard: React.FC<IProductProps> = ({ product }) => {
-  if (!product.name) return null;
+  if (!product?.name) return null;
 
   const dispatch = useDispatch();
   const accessToken = useSelector((state: IRootState) => state.auth.authData.accessToken);

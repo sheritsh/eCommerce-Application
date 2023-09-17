@@ -1,10 +1,10 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
-import Popup from '../src/components/UI/Popup/Popup';
+import SearchForm from '../src/features/filters/Search/SearchForm'
 
-test('Popup renders correctly', () => {
+test('SearchForm renders correctly', () => {
   const tree = renderer
-    .create(<Popup />)
+    .create(<SearchForm />)
     .toJSON();
   expect(tree).toMatchSnapshot();
 });

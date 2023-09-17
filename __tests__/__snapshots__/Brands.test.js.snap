@@ -1,0 +1,73 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Brands renders correctly 1`] = `
+<ul
+  className="list"
+>
+  <li
+    className="item"
+  >
+    <a
+      href="/catalog"
+      onClick={[Function]}
+    >
+      <img
+        alt="Adidas"
+        src="/assets/images/brands-main/adidas.jpg"
+      />
+    </a>
+  </li>
+  <li
+    className="item"
+  >
+    <a
+      href="/catalog"
+      onClick={[Function]}
+    >
+      <img
+        alt="Columbia"
+        src="/assets/images/brands-main/columbia.jpg"
+      />
+    </a>
+  </li>
+  <li
+    className="item"
+  >
+    <a
+      href="/catalog"
+      onClick={[Function]}
+    >
+      <img
+        alt="Mammut"
+        src="/assets/images/brands-main/mammut.jpg"
+      />
+    </a>
+  </li>
+  <li
+    className="item"
+  >
+    <a
+      href="/catalog"
+      onClick={[Function]}
+    >
+      <img
+        alt="Salewa"
+        src="/assets/images/brands-main/salewa.jpg"
+      />
+    </a>
+  </li>
+  <li
+    className="item"
+  >
+    <a
+      href="/catalog"
+      onClick={[Function]}
+    >
+      <img
+        alt="Solomon"
+        src="/assets/images/brands-main/solomon.jpg"
+      />
+    </a>
+  </li>
+</ul>
+`;

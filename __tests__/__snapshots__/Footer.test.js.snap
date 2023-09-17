@@ -17,21 +17,21 @@ exports[`Footer renders correctly 1`] = `
         <ul>
           <li>
             <a
-              href="https://github.com/ekatrif"
+              href="ekatrif"
             >
               ekatrif
             </a>
           </li>
           <li>
             <a
-              href="https://github.com/sheritsh"
+              href="sheritsh"
             >
               sheritsh
             </a>
           </li>
           <li>
             <a
-              href="https://github.com/montek1o"
+              href="montek1o"
             >
               montek1o
             </a>
@@ -51,7 +51,7 @@ exports[`Footer renders correctly 1`] = `
         >
           <img
             alt="RS_School_logo"
-            src="../../src/assets/svg/rs_school_js.svg"
+            src="/assets/svg/rs_school_js.svg"
             width="100%"
           />
         </a>
@@ -65,7 +65,7 @@ exports[`Footer renders correctly 1`] = `
       >
         <img
           alt="page_up"
-          src="../../src/assets/svg/arrow_up.svg"
+          src="/assets/svg/arrow_up.svg"
           width="100%"
         />
       </a>

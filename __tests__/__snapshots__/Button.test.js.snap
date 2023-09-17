@@ -4,6 +4,11 @@ exports[`Button renders correctly 1`] = `
 <button
   className="button"
   disabled="true"
+  style={
+    {
+      "backgroundColor": undefined,
+    }
+  }
   type="button"
 >
   Login

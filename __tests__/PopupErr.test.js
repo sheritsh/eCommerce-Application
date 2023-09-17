@@ -1,10 +1,10 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
-import Popup from '../src/components/UI/Popup/Popup';
+import PopupErr from '../src/components/UI/Popup/PopupErr';
 
-test('Popup renders correctly', () => {
+test('PriceSlider renders correctly', () => {
   const tree = renderer
-    .create(<Popup />)
+    .create(<PopupErr />)
     .toJSON();
   expect(tree).toMatchSnapshot();
 });

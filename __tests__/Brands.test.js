@@ -1,11 +1,11 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
-import NotFoundPage from '../src/pages/NotFoundPage';
+import Brands from '../src/components/Brands/Brands';
 import { BrowserRouter } from 'react-router-dom'
 
-test('NotFoundPage renders correctly', () => {
+test('Brands renders correctly', () => {
   const tree = renderer
-    .create(<BrowserRouter><NotFoundPage /></BrowserRouter>)
+    .create(<BrowserRouter><Brands /></BrowserRouter>)
     .toJSON();
   expect(tree).toMatchSnapshot();
 });
