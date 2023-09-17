@@ -50,14 +50,13 @@ const ProductCard: React.FC<IProductProps> = ({ product }) => {
               {product.masterVariant.prices[0].value.currencyCode}
             </span>
             <span className={classes.price}>
-              {formatPrice(product.masterVariant.prices[0].discounted.value.centAmount)}{' '}
+              {product.masterVariant.prices[0].discounted.value.centAmount}{' '}
               {product.masterVariant.prices[0].discounted.value.currencyCode}
             </span>
           </>
         ) : (
           <span className={classes.price}>
-            {formatPrice(product.masterVariant.prices[0].value.centAmount)}{' '}
-            {product.masterVariant.prices[0].value.currencyCode}
+            {product.masterVariant.prices[0].value.centAmount} {product.masterVariant.prices[0].value.currencyCode}
           </span>
         )}
       </div>

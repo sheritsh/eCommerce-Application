@@ -39,7 +39,20 @@ export const productsReducer = createSlice({
       ...state,
       productsData: {
         ...state.productsData,
-        results: action.payload,
+        results: action.payload.map((product: ISelectedProduct) => {
+          if (product.masterVariant.prices[0].discounted) {
+            // eslint-disable-next-line no-param-reassign
+            product.masterVariant.prices[0].discounted.value.centAmount = +(
+              product.masterVariant.prices[0].discounted.value.centAmount / 100
+            ).toFixed(2);
+          } else {
+            // eslint-disable-next-line no-param-reassign
+            product.masterVariant.prices[0].value.centAmount = +(
+              product.masterVariant.prices[0].value.centAmount / 100
+            ).toFixed(2);
+          }
+          return product;
+        }),
         isLoading: false,
         error: null,
       },
@@ -63,7 +76,20 @@ export const productsReducer = createSlice({
       ...state,
       productsData: {
         ...state.productsData,
-        allResults: action.payload,
+        allResults: action.payload.map((product: ISelectedProduct) => {
+          if (product.masterVariant.prices[0].discounted) {
+            // eslint-disable-next-line no-param-reassign
+            product.masterVariant.prices[0].discounted.value.centAmount = +(
+              product.masterVariant.prices[0].discounted.value.centAmount / 100
+            ).toFixed(2);
+          } else {
+            // eslint-disable-next-line no-param-reassign
+            product.masterVariant.prices[0].value.centAmount = +(
+              product.masterVariant.prices[0].value.centAmount / 100
+            ).toFixed(2);
+          }
+          return product;
+        }),
         isLoading: false,
         error: null,
       },

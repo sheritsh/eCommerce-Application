@@ -1,10 +1,10 @@
 import React from 'react';
-import SearchForm from '../features/filters/search/SearchForm';
+import SearchForm from '../features/filters/Search/SearchForm';
 import Container from '../components/UI/container/Container';
 import ProductsByParams from '../features/filters/ProductsByParams/ProductsByParams';
 import Categories from '../features/Categories/Categories';
 import Filters from '../components/Filters/Filters';
-import SortForm from '../features/filters/sorting/SortForm';
+import SortForm from '../features/filters/Sorting/SortForm';
 import PaginationBlock from '../features/Pagination/Pagination';
 
 const Catalog: React.FC = () => {

@@ -10,7 +10,7 @@ import { IBrand } from '../../../components/Filters/Checkbox/BrandCheckbox/types
 import { IColor } from '../../../components/Filters/Checkbox/ColorCheckbox/types';
 import { ISize } from '../../../components/Filters/Checkbox/SizeCheckbox/types';
 import { setPage } from '../../Pagination/pagination-slice';
-import { fetchProductsBySearch, setError, setSearchQuery } from '../search/products-by-search-slice';
+import { fetchProductsBySearch, setError, setSearchQuery } from '../Search/products-by-search-slice';
 
 const ProductsByParams: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -58,7 +58,7 @@ const ProductsByParams: React.FC = () => {
     if (colorQuery) params += `&filter=variants.attributes.color.key:${colorQuery}`;
     if (sizeQuery) params += `&filter=variants.attributes.size:${sizeQuery}`;
     if (price[0] && price[price.length - 1])
-      params += `&filter=variants.price.centAmount:range (${price[0]} to ${price[1]})`;
+      params += `&filter=variants.price.centAmount:range (${price[0] * 100} to ${price[1] * 100})`;
     params += `&offset=${offset}`;
     // Dispay products by params
     dispatch(fetchProductsByParams({ params, categoryId, offset }));

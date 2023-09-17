@@ -22,7 +22,7 @@ import { IBrand } from './Checkbox/BrandCheckbox/types';
 import { IColor } from './Checkbox/ColorCheckbox/types';
 import { ISize } from './Checkbox/SizeCheckbox/types';
 import resetFilter from '../../utils/catalog/reset-filter';
-import { setSearchQuery } from '../../features/filters/search/products-by-search-slice';
+import { setSearchQuery } from '../../features/filters/Search/products-by-search-slice';
 
 const Filters: React.FC = () => {
   const location = useLocation();
@@ -140,7 +140,7 @@ const Filters: React.FC = () => {
               ))}
           </div>
           <div className={classes.filter}>
-            <h4 className={classes.title}>Price</h4>
+            <h4 className={classes.title}>Price, USD</h4>
             <PriceSlider
               price={{
                 min: startPrice.length ? startPrice[0] : 0,
