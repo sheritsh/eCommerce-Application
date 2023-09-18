@@ -69,7 +69,7 @@ export const authReducer = createSlice({
         accessToken: null,
       },
     }),
-    saveCredentials: (state, action: PayloadAction<AuthState.authData['credentials']>): AuthState => ({
+    saveCredentials: (state, action: PayloadAction<AuthState['authData']['credentials']>): AuthState => ({
       ...state,
       authData: {
         ...state.authData,
@@ -95,8 +95,6 @@ export const loginUser =
       const response = await login(data);
       dispatch(loginSuccess(response.access_token));
     } catch (e: unknown) {
-      // console.error(e);
       if (e instanceof Error) dispatch(loginFailure(e.message));
-      throw new Error('Customer account with the given credentials not found');
     }
   };

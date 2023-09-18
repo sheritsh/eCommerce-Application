@@ -1,5 +1,5 @@
 import { configureStore, combineReducers } from '@reduxjs/toolkit';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import logger from 'redux-logger';
 import { persistReducer, FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
@@ -12,7 +12,6 @@ import filtersReducerDefault from '../features/FiltersParameters/filters-paramet
 import PaginationReducerDefault from '../features/Pagination/pagination-slice';
 import SearchReducerDefault from '../features/filters/search/products-by-search-slice';
 import CartReducerDefault from '../features/Cart/cart-slice';
-import { createCart, getHasCart } from '../api/cart';
 
 const persistConfig = {
   key: 'root',

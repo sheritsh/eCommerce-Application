@@ -1,5 +1,4 @@
 import createClient from './client';
-import ENV from './env';
 import { ILoginRequest, ILoginResponse, IRegisterResponce } from './types';
 
 export const login = (params: ILoginRequest): Promise<ILoginResponse> => {

@@ -12,12 +12,12 @@ interface QuantityCounterProps {
 }
 
 const QuantityCounter: React.FC<QuantityCounterProps> = ({ initialValue, onAddItem, onRemoveItem }) => {
-  let quantity: number = initialValue;
+  const [quantity, setQuantity] = useState(initialValue);
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
 
   const handleIncrement = (): void => {
     if (quantity < 99) {
-      quantity += 1;
+      setQuantity(quantity + 1);
       setIsButtonDisabled(true);
       setTimeout(() => {
         setIsButtonDisabled(false);
@@ -27,7 +27,7 @@ const QuantityCounter: React.FC<QuantityCounterProps> = ({ initialValue, onAddIt
 
   const handleDecrement = (): void => {
     if (quantity > 1) {
-      quantity -= 1;
+      setQuantity(quantity - 1);
       setIsButtonDisabled(true);
       setTimeout(() => {
         setIsButtonDisabled(false);
@@ -39,7 +39,7 @@ const QuantityCounter: React.FC<QuantityCounterProps> = ({ initialValue, onAddIt
     <div className={classes.quantitiy_counters}>
       <IconButton
         aria-label="decrement"
-        onClick={() => {
+        onClick={(): void => {
           handleDecrement();
           if (onRemoveItem) onRemoveItem();
         }}
@@ -61,7 +61,7 @@ const QuantityCounter: React.FC<QuantityCounterProps> = ({ initialValue, onAddIt
       />
       <IconButton
         aria-label="increment"
-        onClick={() => {
+        onClick={(): void => {
           handleIncrement();
           if (onAddItem) onAddItem();
         }}
