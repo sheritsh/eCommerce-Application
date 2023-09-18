@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import SearchForm from '../features/filters/search/SearchForm';
 import Container from '../components/UI/container/Container';
 import ProductsByParams from '../features/filters/ProductsByParams/ProductsByParams';
@@ -9,10 +9,10 @@ import SortForm from '../features/filters/sorting/SortForm';
 import PaginationBlock from '../features/Pagination/Pagination';
 import { fetchCartItems } from '../features/Cart/cart-slice';
 import Popup from '../components/UI/popup/Popup';
-import { IRootState } from '../store';
+import { IRootState, useAppDispatch } from '../store';
 
 const Catalog: React.FC = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const accessToken = useSelector((state: IRootState) => state.auth.authData.accessToken);
   if (accessToken) {
     setTimeout(() => {

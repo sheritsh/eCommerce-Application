@@ -68,19 +68,15 @@ const LoginForm: React.FC = () => {
 
   const sendData = async (e: React.FormEvent): Promise<void> => {
     e.preventDefault();
-    try {
-      dispatch(resetPromocode());
-      await dispatch(loginUser({ username, password }));
-      dispatch(
-        saveCredentials({
-          login: username,
-          password,
-        }),
-      );
-      navigate('/');
-    } catch (error) {
-      throw new Error();
-    }
+    dispatch(resetPromocode());
+    await dispatch(loginUser({ username, password }));
+    dispatch(
+      saveCredentials({
+        login: username,
+        password,
+      }),
+    );
+    if (!errorLogin) navigate('/');
   };
 
   const blurHandler = (e: React.FocusEvent): void => {

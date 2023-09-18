@@ -13,7 +13,7 @@ const team: IPerson[] = [
     role: 'Team Lead, Frontend Developer',
     git: 'sheritsh',
     bio: [
-      'Graduated from Volgograd Agricultural State University.',
+      'Graduated from Volgograd Agricultural State University with honors in 2019.',
       "Worked at McDonald's for 6 years.",
       "In September '22, I quit my job and enrolled in School 21, a programming school sponsored by Sber.",
       "During the winter of '22, I registered for RS School stage 0 and successfully completed the program.",

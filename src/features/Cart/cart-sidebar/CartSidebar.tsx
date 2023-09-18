@@ -14,8 +14,7 @@ import { useTheme } from '@mui/material/styles';
 
 import classes from '../Cart.module.scss';
 import { IRootState, useAppDispatch } from '../../../store';
-import { fetchCartItems, fetchPromocodeData, fetchPromocodeDataRemove } from '../cart-slice';
-import { createCart, deleteMyCart } from '../../../api/cart';
+import { fetchCartItems, fetchPromocodeData, fetchPromocodeDataRemove, createCart, deleteMyCart } from '../cart-slice';
 
 const CartSidebar: React.FC<{ accessToken: string | null; idCart: string; versionCart: number }> = (props) => {
   const theme = useTheme();

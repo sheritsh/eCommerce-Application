@@ -1,3 +1,5 @@
+import { FetchError } from 'node-fetch';
+
 export enum Languages {
   English = 'en-US',
 }
@@ -31,6 +33,7 @@ export interface ISdkAuthOptions {
   fetch?: unknown;
   customerPasswordFlow: ({ username, password }: ILoginRequest) => Promise<ILoginResponse>;
   clientCredentialsFlow: () => Promise<IRegisterResponce>;
+  anonymousFlow: () => Promise<IRegisterResponce>;
 }
 
 export interface IRegisterRequest {
@@ -54,7 +57,7 @@ export type PasswordAuthMiddlewareOptions = {
     };
   };
   scopes?: Array<string>;
-  tokenCache?: TokenCache;
+  tokenCache?: string;
   oauthUri?: string;
-  fetch?: any;
+  fetch?: FetchError;
 };
