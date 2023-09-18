@@ -13,7 +13,7 @@ const team: IPerson[] = [
     role: 'Team Lead, Frontend Developer',
     git: 'sheritsh',
     bio: [
-      'Graduated from Volgograd Agricultural State University.',
+      'Graduated from Volgograd Agricultural State University with honors in 2019.',
       "Worked at McDonald's for 6 years.",
       "In September '22, I quit my job and enrolled in School 21, a programming school sponsored by Sber.",
       "During the winter of '22, I registered for RS School stage 0 and successfully completed the program.",
@@ -43,7 +43,14 @@ const team: IPerson[] = [
     image: '../assets/images/team/andrey.jpg',
     role: 'Frontend Developer',
     git: 'montek1o',
-    bio: [],
+    bio: [
+      'Twice incomplete higher education at the Moscow Aviation Institute.',
+      'Worked at H&M store for 5.5 years as a department manager.',
+      'Currently works as a content manager in a medical clinic.',
+      'I started studying front-end development in the summer of 2022.',
+      'I plan to continue my studies at the react course after finishing the 2nd stage',
+      'I plan to find an internship in the near future and at the same time go deeper into learning English',
+    ],
   },
 ];
 
