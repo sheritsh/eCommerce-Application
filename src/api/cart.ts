@@ -23,11 +23,10 @@ export const createCart = (accessToken: string | null): Promise<T> => {
         return response.json();
       })
       .then((data) => {
-        console.error('Successful created:', data);
         return resolve(data);
       })
       .catch((error) => {
-        console.error('Error:', error);
+        // console.error('Error:', error);
       });
   });
 };
@@ -53,7 +52,7 @@ export const getHasCart = async (accessToken: string | null): Promise<boolean> =
 
     return true;
   } catch (error) {
-    console.error('Error:', error);
+    // console.error('Error:', error);
     throw error;
   }
 };
@@ -74,13 +73,13 @@ export const getMyCart = (accessToken: string | null): void => {
     })
     .then((data) => {
       if (!data.results[0]) {
-        console.error('Empty cart');
+        // console.error('Empty cart');
         return;
       }
-      console.error('Successful answer:', data.results[0]);
+      // console.error('Successful answer:', data.results[0]);
     })
     .catch((error) => {
-      console.error('Error:', error);
+      // console.error('Error:', error);
     });
 };
 
@@ -98,11 +97,10 @@ export const deleteMyCart = (accessToken: string | null, id: string, version: nu
       return response.json();
     })
     .then((data) => {
-      console.error('Successful deleted:', data);
+      // console.error('Successful deleted:', data);
     })
     .catch((error) => {
-      // CART NOT FOUND
-      console.error('Error:', error);
+      // console.error('Error:', error);
     });
 };
 
@@ -140,10 +138,10 @@ export const addItemToCart = (
       })
       .then((data) => {
         dispatch(fetchCartItems(accessToken));
-        console.error('Successful added:', data);
+        // console.error('Successful added:', data);
       })
       .catch((error) => {
-        console.error('Error:', error);
+        // console.error('Error:', error);
       });
   };
 };
@@ -182,10 +180,10 @@ export const removeItemFromCart = (
       })
       .then((data) => {
         dispatch(fetchCartItems(accessToken));
-        console.error('Successful removed:', data);
+        // console.error('Successful removed:', data);
       })
       .catch((error) => {
-        console.error('Error:', error);
+        // console.error('Error:', error);
       });
   };
 };

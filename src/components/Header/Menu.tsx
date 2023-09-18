@@ -7,6 +7,7 @@ import { logout } from '../../features/Authorization/authorization-slice';
 import { createCart, getHasCart } from '../../api/cart';
 import classes from './Header.module.scss';
 import Hamburger from '../UI/burger/Hamburger';
+import { clearCartState } from '../../features/Cart/cart-slice';
 
 const Menu = (): JSX.Element => {
   const [open, setOpen] = useState(false);
@@ -35,6 +36,7 @@ const Menu = (): JSX.Element => {
   const count = useSelector((state: IRootState) => state.cart.cartData.cartItems.length);
 
   const handleLogout = (): void => {
+    dispatch(clearCartState());
     dispatch(logout());
   };
 

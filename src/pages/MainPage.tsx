@@ -1,9 +1,11 @@
 import React from 'react';
 import { Splide, SplideSlide } from '@splidejs/react-splide';
+import { useSelector } from 'react-redux';
 import Container from '../components/UI/container/Container';
 import slides from '../assets/data/main-slider';
 import Brands from '../components/Brands/Brands';
 import MainCategories from '../components/MainCategories/MainCategories';
+import { initializeCart, IRootState } from '../store';
 
 const MainPage: React.FC = () => {
   return (
@@ -29,27 +31,6 @@ const MainPage: React.FC = () => {
           </Splide>
           <Brands />
           <MainCategories />
-          {/* <h2>All pages of Sprint #3:</h2>
-          <ul>
-            <li>
-              <Link to="/catalog">Catalog Page</Link>
-            </li>
-            <li>
-              <Link to="/login">Login Page</Link>
-            </li>
-            <li>
-              <Link to="/registration">Registration Page</Link>
-            </li>
-            <li>
-              <Link to="/profile">Profile Page</Link>
-            </li>
-            <li>
-              <Link to="/shopping-cart">Cart Page</Link>
-            </li>
-            <li>
-              <Link to="/kakayato-eres">404 Not Found Page</Link>
-            </li>
-          </ul> */}
         </div>
       </Container>
     </div>

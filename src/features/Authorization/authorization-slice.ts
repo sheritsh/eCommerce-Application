@@ -76,7 +76,7 @@ export const loginUser =
       const response = await login(data);
       dispatch(loginSuccess(response.access_token));
     } catch (e: unknown) {
-      console.error(e);
+      // console.error(e);
       if (e instanceof Error) dispatch(loginFailure(e.message));
       throw new Error('Customer account with the given credentials not found');
     }

@@ -166,6 +166,9 @@ export const CartReducer = createSlice({
       ...state,
       anonymousToken: action,
     }),
+    clearCartState: () => ({
+      ...initialState,
+    }),
   },
   extraReducers: (builder) => {
     builder.addCase(fetchCartItems.fulfilled, (state, action) => {
@@ -275,6 +278,6 @@ export const CartReducer = createSlice({
   },
 });
 
-export const { setActualCartVer, addAnonToken } = CartReducer.actions;
+export const { setActualCartVer, addAnonToken, clearCartState } = CartReducer.actions;
 
 export default CartReducer.reducer;

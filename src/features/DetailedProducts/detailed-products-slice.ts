@@ -43,7 +43,6 @@ export const detailedProductReducer = createSlice({
         },
       }))
       .addCase(fetchProductDetails.fulfilled, (state, action) => {
-        // code for fullfiled data
         return {
           ...state,
           detailedProductData: {

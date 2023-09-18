@@ -1,5 +1,6 @@
 .detailed__main {
   display: flex;
+  // justify-content: center;
   // width: min(80%, 1440px);
   // margin: 0 auto;
 }
@@ -8,7 +9,7 @@
   width: min(55%, 600px);
 }
 
-h3 {
+.title {
   margin-bottom: 2rem;
   font-weight: 700;
 }
@@ -21,7 +22,7 @@ h3 {
 }
 
 .description {
-  margin-top: 1rem;
+  margin: 1rem 0 1rem;
   padding: 2rem 0;
   background-color: #E5E5E5;
 }
@@ -99,6 +100,7 @@ input {
 @media screen and (max-width: 600px) {
   .detailed__main {
     flex-wrap: wrap;
+    justify-content: center;
   }
 
   .main_slider {

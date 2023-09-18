@@ -24,7 +24,7 @@ const CartItems: React.FC = () => {
     <>
       {lineItems.map((item, index) => {
         const { name, price, quantity, productId, id } = item;
-        console.error(item);
+        // console.error(item);
         const { centAmount } = price.value;
         const { images } = item.variant;
         let discountedCentAmount = null;
