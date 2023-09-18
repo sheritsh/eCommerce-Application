@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
@@ -8,12 +8,12 @@ import { AnyAction } from '@reduxjs/toolkit';
 import classes from './CartItems.module.scss';
 import { IRootState } from '../../../store';
 import QuantityCounter from './QuantityCounter';
-import { addItemToCart, removeItemFromCart } from '../../../api/cart';
+import { addItemToCart, removeItemFromCart } from '../cart-slice';
 
 const CartItems: React.FC = () => {
   const lineItems = useSelector((state: IRootState) => state.cart.cartData.cartItems);
   const anonToken = localStorage.getItem('anonymousToken');
-  const accessToken = useSelector((state: IRootState) => state.auth.authData.accessToken) as string || anonToken;
+  const accessToken = (useSelector((state: IRootState) => state.auth.authData.accessToken) as string) || anonToken;
   const cartId = useSelector((state: IRootState) => state.cart.cartData.cartId);
   const cartVersion = useSelector((state: IRootState) => state.cart.cartData.actualCartVer);
   const dispatch = useDispatch();
@@ -24,7 +24,6 @@ const CartItems: React.FC = () => {
     <>
       {lineItems.map((item, index) => {
         const { name, price, quantity, productId, id } = item;
-        // console.error(item);
         const { centAmount } = price.value;
         const { images } = item.variant;
         let discountedCentAmount = null;
@@ -33,11 +32,13 @@ const CartItems: React.FC = () => {
           discountedCentAmount = price.discounted.value.centAmount;
         }
         const handleRemoveFromCart = (amount = 1): void => {
-          dispatch(removeItemFromCart(accessToken, cartId, id, amount, cartVersion) as unknown as AnyAction);
+          if (accessToken)
+            dispatch(removeItemFromCart(accessToken, cartId, id, amount, cartVersion) as unknown as AnyAction);
         };
 
         const handleAddItemToCart = (): void => {
-          dispatch(addItemToCart(accessToken, cartId, productId, 1, cartVersion) as unknown as AnyAction);
+          if (accessToken)
+            dispatch(addItemToCart(accessToken, cartId, productId, 1, cartVersion) as unknown as AnyAction);
         };
 
         return (
@@ -58,7 +59,7 @@ const CartItems: React.FC = () => {
                   </div>
                   <div className={classes.card_prices}>
                     <div>{discountedCentAmount ? `$${discountedCentAmount / 100}` : null}</div>
-                    <div className={discountedCentAmount && classes.discounted_price}>${centAmount / 100}</div>
+                    <div className={discountedCentAmount ? classes.discounted_price : ''}>${centAmount / 100}</div>
                   </div>
                   <div className={classes.card_change_val}>
                     <QuantityCounter

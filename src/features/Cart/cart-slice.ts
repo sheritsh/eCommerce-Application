@@ -1,9 +1,55 @@
 import axios from 'axios';
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk, Dispatch } from '@reduxjs/toolkit';
 import Endpoints from '../../api/endpoints';
 import { ICartState, IApllyPromocode, IRemovePromocode } from './types';
 import { login, anonymousSession } from '../../api/auth';
-import { createCart, getHasCart } from '../../api/cart';
+
+const createBody = {
+  currency: 'USD',
+};
+
+export const getHasCart = async (accessToken: string): Promise<boolean> => {
+  const response = await fetch(`${Endpoints.GET_CARTS}`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${accessToken}`,
+    },
+  });
+
+  if (!response.ok) {
+    throw new Error(`HTTP error! Status: ${response.status}`);
+  }
+  const data = await response.json();
+
+  if (!data.results[0]) {
+    return false;
+  }
+
+  return true;
+};
+
+export const createCart = (accessToken: string | null): Promise<void> => {
+  return new Promise((resolve) => {
+    fetch(`${Endpoints.GET_CARTS}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${accessToken}`,
+      },
+      body: JSON.stringify(createBody),
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        return response.json();
+      })
+      .then((data) => {
+        return resolve(data);
+      });
+  });
+};
 
 export const fetchCartItems = createAsyncThunk('cart/fetchCartItems', async (accessToken: string = '') => {
   const isGuest = !accessToken;
@@ -49,6 +95,111 @@ export const fetchCartItems = createAsyncThunk('cart/fetchCartItems', async (acc
 
   return data.results[0];
 });
+
+export const getMyCart = (accessToken: string | null): void => {
+  fetch(`${Endpoints.GET_CARTS}`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${accessToken}`,
+    },
+  }).then((response) => {
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+    return response.json();
+  });
+};
+
+export const deleteMyCart = (accessToken: string | null, id: string, version: number = 1): void => {
+  fetch(`${Endpoints.GET_CARTS}${id}?version=${version}`, {
+    method: 'DELETE',
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  }).then((response) => {
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+    return response.json();
+  });
+};
+
+export const addItemToCart = (
+  accessToken: string | undefined,
+  cartId: string,
+  itemId: string,
+  amount: number = 1,
+  version: number = 1,
+) => {
+  return (dispatch: Dispatch): void => {
+    fetch(`${Endpoints.GET_CARTS}${cartId}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${accessToken}`,
+      },
+      body: JSON.stringify({
+        version,
+        actions: [
+          {
+            action: 'addLineItem',
+            productId: itemId,
+            variantId: 1,
+            quantity: amount,
+          },
+        ],
+      }),
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        return response.json();
+      })
+      .then(() => {
+        if (accessToken) dispatch(fetchCartItems(accessToken));
+      });
+  };
+};
+
+export const removeItemFromCart = (
+  accessToken: string | undefined,
+  cartId: string,
+  itemId: string,
+  amount: number = 1,
+  version: number = 1,
+) => {
+  return (dispatch: Dispatch): void => {
+    fetch(`${Endpoints.GET_CARTS}${cartId}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${accessToken}`,
+      },
+      body: JSON.stringify({
+        version,
+        actions: [
+          {
+            action: 'removeLineItem',
+            lineItemId: itemId,
+            variantId: 1,
+            quantity: amount,
+          },
+        ],
+      }),
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        return response.json();
+      })
+      .then(() => {
+        if (accessToken) dispatch(fetchCartItems(accessToken));
+      });
+  };
+};
 
 export const fetchPromocodeData = createAsyncThunk(
   'cart/fetchPromocodeData',
@@ -125,19 +276,6 @@ const initialState: ICartState = {
   promocodeId: '',
   fullPrice: 0,
 };
-
-// setPrice: (state, action: PayloadAction<number[]>): IFiltersState => ({
-//   ...state,
-//   productsForFiltersData: {
-//     ...state.productsForFiltersData,
-//     filtersData: {
-//       ...state.productsForFiltersData.filtersData,
-//       price: action.payload,
-//     },
-//     isLoading: false,
-//     error: null,
-//   },
-// }),
 
 export const CartReducer = createSlice({
   name: 'cart',

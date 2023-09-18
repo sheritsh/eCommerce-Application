@@ -19,8 +19,8 @@ import 'swiper/css/zoom';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
-import { addItemToCart, removeItemFromCart } from '../../api/cart';
-import { ISelectedProduct } from '../Products/types';
+import { addItemToCart, removeItemFromCart } from '../Cart/cart-slice';
+import { ICartItem } from '../Cart/types';
 
 interface IProductsProps {
   categoryId?: string;
@@ -67,7 +67,7 @@ const DetailedProduct: React.FC<IProductsProps> = () => {
 
   const productsInCart = useSelector((state: IRootState) => state.cart.cartData.cartItems);
   const isProductInCart = (id: string): boolean => {
-    return productsInCart.filter((item: ISelectedProduct) => item.productId === id).length > 0;
+    return productsInCart.filter((item: ICartItem) => item.productId === id).length > 0;
   };
 
   const handleOpen = (): void => setOpen(true);
@@ -79,7 +79,6 @@ const DetailedProduct: React.FC<IProductsProps> = () => {
 
   const handleAddToCart = (): void => {
     dispatch(addItemToCart(accessToken as string, cartId as string, productData.result.id, 1, cartVer));
-    // addAction(true);
   };
 
   const handleRemoveFromCart = (): void => {
@@ -163,20 +162,23 @@ const DetailedProduct: React.FC<IProductsProps> = () => {
                             zoom={true}
                             pagination={{ clickable: true }}
                           >
-                            {processedProductData.images.map(({ url }, idx) => {
-                              return (
-                                <SwiperSlide key={idx}>
-                                  <div className="swiper-zoom-container">
-                                    <img
-                                      src={url}
-                                      width="100%"
-                                      alt={`Goods image ${idx + 1}`}
-                                      onClick={(): void => handleImageClick(idx)}
-                                    ></img>
-                                  </div>
-                                </SwiperSlide>
-                              );
-                            })}
+                            {
+                              // eslint-disable-next-line @typescript-eslint/no-shadow
+                              processedProductData.images.map(({ url }, idx) => {
+                                return (
+                                  <SwiperSlide key={idx}>
+                                    <div className="swiper-zoom-container">
+                                      <img
+                                        src={url}
+                                        width="100%"
+                                        alt={`Goods image ${idx + 1}`}
+                                        onClick={(): void => handleImageClick(idx)}
+                                      ></img>
+                                    </div>
+                                  </SwiperSlide>
+                                );
+                              })
+                            }
                           </Swiper>
                         </Box>
                       </Modal>

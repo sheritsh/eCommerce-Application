@@ -9,8 +9,6 @@ export interface IRootState {
   auth: AuthState;
   products: IProductsState;
   categories: ICategoriesState;
-  // productsByCategoryId: IProductsByCategoryIdState;
-  // productsByBrand: IProductsByBrandState;
   detailedProduct: IDetailedProductState;
   customer: ICustomerState;
   cart: ICartState;

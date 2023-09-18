@@ -1,14 +1,14 @@
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React from 'react';
+import { useSelector } from 'react-redux';
 import { Languages } from '../../../api/types';
 import formatPrice from '../../../utils/catalog/format-price';
 import truncateString from '../../../utils/catalog/truncate-string';
 import classes from './ProductCard.module.scss';
 import Button from '../../../components/UI/button/Button';
 import { ISelectedProduct } from '../types';
-import { addItemToCart } from '../../../api/cart';
-import { IRootState } from '../../../store';
-import { fetchCartItems } from '../../Cart/cart-slice';
+import { addItemToCart } from '../../Cart/cart-slice';
+import { IRootState, useAppDispatch } from '../../../store';
+import { ICartItem } from '../../Cart/types';
 
 interface IProductProps {
   product: ISelectedProduct;
@@ -16,10 +16,10 @@ interface IProductProps {
   addAction: unknown;
 }
 
-const ProductCard: React.FC<IProductProps> = ({ product, addAction }) => {
+const ProductCard: React.FC<IProductProps> = ({ product }) => {
   if (!product.name) return null;
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const anonToken = localStorage.getItem('anonymousToken');
   const accessToken = useSelector((state: IRootState) => state.auth.authData.accessToken) || anonToken;
   const anonCart = localStorage.getItem('anonymousCart');
@@ -27,7 +27,7 @@ const ProductCard: React.FC<IProductProps> = ({ product, addAction }) => {
   const cartVer = useSelector((state: IRootState) => state.cart.cartData.actualCartVer);
 
   const handleAddToCart = (): void => {
-    dispatch(addItemToCart(accessToken, cartId, product.id, 1, cartVer));
+    if (accessToken && cartId) dispatch(addItemToCart(accessToken, cartId, product.id, 1, cartVer));
   };
 
   const handleRemoveFromCart = (): void => {
@@ -36,7 +36,7 @@ const ProductCard: React.FC<IProductProps> = ({ product, addAction }) => {
 
   const productsInCart = useSelector((state: IRootState) => state.cart.cartData.cartItems);
   const isProductInCart = (id: string): boolean => {
-    return productsInCart.filter((item: ISelectedProduct) => item.productId === id).length > 0;
+    return productsInCart.filter((item: ICartItem) => item.productId === id).length > 0;
   };
 
   return (

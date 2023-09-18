@@ -1,13 +1,13 @@
 import { Typography } from '@mui/material';
 import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-// import { createCart, getMyCart, getHasCart } from '../../api/cart';
+import { useSelector } from 'react-redux';
 import Button from '@mui/material/Button';
-import { IRootState } from '../../store';
+import { IRootState } from '../types';
 import CartItems from './cart-items/CartItems';
 import CartSidebar from './cart-sidebar/CartSidebar';
 import { fetchCartItems } from './cart-slice';
 import classes from './Cart.module.scss';
+import { useAppDispatch } from '../../store';
 
 const Cart: React.FC = () => {
   const accessToken = useSelector((state: IRootState) => state.auth.authData.accessToken);
@@ -16,23 +16,12 @@ const Cart: React.FC = () => {
   const cartId = useSelector((state: IRootState) => state.cart.cartData.cartId);
   const cartVersion = useSelector((state: IRootState) => state.cart.cartData.actualCartVer);
 
-  // const state = useSelector((state: IRootState) => state.cart.cartData.cartId);
-  // const hasCart = useSelector((state: IRootState) => !!state.cart.cartData.cartId);
-
-  const dispatch = useDispatch();
-
-  // const fullPrice = useSelector((state: IRootState) => state.cart.fullPrice);
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
-    dispatch(fetchCartItems(accessToken));
+    if (accessToken) dispatch(fetchCartItems(accessToken));
   }, [accessToken]);
 
-  // getMyCart(accessToken);
-  // createCart(accessToken);
-  // getHasCart(accessToken).then((res) => {
-  //   console.error(res);
-  // });
-  // console.error(hasCart);
   return isEmpty ? (
     <>
       <div className={classes.empty_cart}>
@@ -80,10 +69,6 @@ const Cart: React.FC = () => {
       </div>
     </>
   );
-
-  // В корзине пока пусто
-  // Загляните на главную, чтобы выбрать товары или найдите нужное в поиске
-  // Перейти на главную
 };
 
 export default Cart;

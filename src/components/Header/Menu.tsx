@@ -1,19 +1,26 @@
 import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { NavLink, Link } from 'react-router-dom';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import { IRootState } from '../../store';
+import { useAppDispatch } from '../../store';
+import { IRootState } from '../../features/types';
 import { logout } from '../../features/Authorization/authorization-slice';
-import { createCart, getHasCart } from '../../api/cart';
+import {
+  createCart,
+  getHasCart,
+  resetPromocode,
+  fetchPromocodeDataRemove,
+  fetchCartItems,
+  clearCartState,
+} from '../../features/Cart/cart-slice';
 import classes from './Header.module.scss';
 import Hamburger from '../UI/burger/Hamburger';
-import { resetPromocode, fetchPromocodeDataRemove, fetchCartItems, clearCartState  } from '../../features/Cart/cart-slice';
 
 const Menu = (): JSX.Element => {
   const [open, setOpen] = useState(false);
   const isAuthenticated = useSelector((state: IRootState) => state.auth.authData.accessToken !== null);
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   if (open) {
     document.body.style.overflow = 'hidden';
@@ -23,15 +30,18 @@ const Menu = (): JSX.Element => {
 
   const accessToken = useSelector((state: IRootState) => state.auth.authData.accessToken);
 
-  useEffect(() => {
-    async function initializeApp(): Promise<void> {
+  async function initializeApp(): Promise<void> {
+    if (accessToken) {
       const hasCart = await getHasCart(accessToken);
       if (!hasCart) {
         createCart(accessToken);
       }
     }
-    if (accessToken) initializeApp();
-    dispatch(fetchCartItems(accessToken));
+  }
+
+  useEffect(() => {
+    initializeApp();
+    if (accessToken) dispatch(fetchCartItems(accessToken));
   }, [accessToken]);
 
   const count = useSelector((state: IRootState) => state.cart.cartData.cartItems.length);
