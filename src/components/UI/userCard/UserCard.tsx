@@ -1,13 +1,8 @@
+import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import classes from './UserCard.module.scss';
+import { IPerson } from '../../../assets/data/team';
 
-interface IUserCard {
-  name: string;
-  image: string;
-  role: string;
-  git: string;
-}
-
-const UserCard: React.FC<IUserCard> = ({ name, image, role, git }): JSX.Element => {
+const UserCard: React.FC<IPerson> = ({ name, image, role, git, bio }): JSX.Element => {
   return (
     <div className={classes.userCard}>
       <div>
@@ -16,15 +11,14 @@ const UserCard: React.FC<IUserCard> = ({ name, image, role, git }): JSX.Element 
         <p className={classes.userCard__role}>{role}</p>
       </div>
       <div className={classes.userCard__text}>
-        <p>Краткая биография</p>
-        <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit maxime quod odio, quis qui repellendus
-          voluptatibus! Nostrum, iure distinctio. Distinctio unde quas molestias repudiandae reprehenderit doloribus
-        </p>
-        <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit maxime quod odio, quis qui repellendus
-          voluptatibus! Nostrum, iure distinctio.
-        </p>
+        <ul>
+          {bio.map((item) => (
+            <li>
+              <KeyboardArrowRightIcon />
+              {item}
+            </li>
+          ))}
+        </ul>
         <a className={classes.userCard__git} href={`https://github.com/${git}`} target="_blank">
           {git}
         </a>

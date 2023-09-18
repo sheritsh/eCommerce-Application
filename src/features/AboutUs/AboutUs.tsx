@@ -3,6 +3,7 @@ import classes from './AboutUs.module.scss';
 import UserCard from '../../components/UI/userCard/UserCard';
 import CenterTabs from './CenterTabs';
 import FolderList from './FolderList';
+import team from '../../assets/data/team';
 
 const AboutUs: React.FC = () => {
   return (
@@ -10,24 +11,9 @@ const AboutUs: React.FC = () => {
       <div>
         <h2 className={classes.aboutUs__title}>Team Members</h2>
         <div className={classes.aboutUs__team}>
-          <UserCard
-            name={'Oleg Polovinko'}
-            image={'../assets/images/team/oleg.jpg'}
-            role={'Team Lead'}
-            git={'sheritsh'}
-          />
-          <UserCard
-            name={'Ekaterina Trifonova'}
-            image={'../assets/images/team/kate.jpg'}
-            role={'Frontend Developer'}
-            git={'ekatrif'}
-          />
-          <UserCard
-            name={'Andrey Nezhdanov'}
-            image={'../assets/images/team/andrey.jpg'}
-            role={'Frontend Developer'}
-            git={'montek1o'}
-          />
+          {team.map((person) => (
+            <UserCard name={person.name} image={person.image} role={person.role} git={person.git} bio={person.bio} />
+          ))}
         </div>
       </div>
       <div className={classes.aboutUs__contributions}>
