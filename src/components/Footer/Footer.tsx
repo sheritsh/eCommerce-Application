@@ -16,7 +16,7 @@ const Footer: React.FC = () => {
               {authors.map((author) => {
                 return (
                   <li key={author}>
-                    <a href={author}>{author}</a>
+                    <a href={`https://github.com/${author}`}>{author}</a>
                   </li>
                 );
               })}
