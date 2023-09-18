@@ -7,7 +7,12 @@ import { logout } from '../../features/Authorization/authorization-slice';
 import { createCart, getHasCart } from '../../api/cart';
 import classes from './Header.module.scss';
 import Hamburger from '../UI/burger/Hamburger';
-import { resetPromocode, fetchPromocodeDataRemove, fetchCartItems, clearCartState  } from '../../features/Cart/cart-slice';
+import {
+  resetPromocode,
+  fetchPromocodeDataRemove,
+  fetchCartItems,
+  clearCartState,
+} from '../../features/Cart/cart-slice';
 
 const Menu = (): JSX.Element => {
   const [open, setOpen] = useState(false);

@@ -43,7 +43,14 @@ const team: IPerson[] = [
     image: '../assets/images/team/andrey.jpg',
     role: 'Frontend Developer',
     git: 'montek1o',
-    bio: [],
+    bio: [
+      'Twice incomplete higher education at the Moscow Aviation Institute.',
+      'Worked at H&M store for 5.5 years as a department manager.',
+      'Currently works as a content manager in a medical clinic.',
+      'I started studying front-end development in the summer of 2022.',
+      'I plan to continue my studies at the react course after finishing the 2nd stage',
+      'I plan to find an internship in the near future and at the same time go deeper into learning English',
+    ],
   },
 ];
 

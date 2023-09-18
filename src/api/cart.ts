@@ -74,7 +74,6 @@ export const getMyCart = (accessToken: string | null): void => {
     .then((data) => {
       if (!data.results[0]) {
         // console.error('Empty cart');
-        return;
       }
       // console.error('Successful answer:', data.results[0]);
     })
