@@ -139,30 +139,30 @@ export default function CenterTabs(): JSX.Element {
         </Tabs>
       </Box>
       <CustomTabPanel value={value} index={0}>
-        Вклад Олега был в ... Lorem ipsum dolor sit amet consectetur adipisicing elit. Expedita, qui autem! Rem atque at
-        adipisci modi. Tempore vitae laborum cupiditate, quidem placeat obcaecati excepturi blanditiis molestiae
-        dignissimos explicabo totam fuga. Lorem ipsum dolor sit amet consectetur adipisicing elit. Expedita, qui autem!
-        Rem atque a adipisci modi. Tempore vitae laborum cupiditate, quidem placeat obcaecati excepturi blanditiis
-        molestiae dignissimos explicabo totam fuga. quidem placeat obcaecati excepturi blanditiis molestiae dignissimos
-        explicabo totam fuga. Lorem ipsum dolor sit amet consectetur adipisicing elit. Expedita, qui autem! Rem atque a
-        adipisci modi. Tempore vitae laborum cupiditate, quidem placeat obcaecati excepturi blanditiis molestiae
-        dignissimos explicabo.
+        As the team leader, Oleg assumed a critical role in orchestrating our e-commerce project. He oversaw the entire
+        development process and ensured that our team's efforts aligned with our objectives. Also Oleg played a pivotal
+        role in developing the core functionality of our e-commerce platform. His expertise brought to life the product
+        detail page, ensuring users can access comprehensive information about each product. Additionally, Oleg crafted
+        a robust routing system, allowing seamless navigation throughout the application. His contribution to the
+        shopping cart functionality optimized the purchasing process. Oleg's mastery of state management techniques
+        facilitated the smooth interaction between different components, enhancing the overall user experience.
       </CustomTabPanel>
       <CustomTabPanel value={value} index={1}>
-        Ekaterina, our frontend developer, has been an integral part of our Ecommerce project. Her expertise in HTML,
-        CSS, JS and React has helped us create a beautiful and user-friendly website. Ekaterina is especially good at
-        working around the clock and finding bugs in the code. Her attention to detail and dedication to the project is
-        evident in every line of code she writes.
+        Ekaterina's creative talents and technical skills were instrumental in shaping the front-end of our e-commerce
+        website. She led the design and implementation of the catalog, making product discovery an enjoyable experience.
+        Ekaterina also spearheaded the development of the dynamic homepage, where users can explore featured items. Her
+        work on intuitive filtering mechanisms empowers customers to quickly refine their product searches. Moreover,
+        Ekaterina integrated promotional code functionality, creating opportunities for cost savings and customer
+        engagement. Her dedication to user interface and experience design enriched our platform's visual appeal and
+        usability.
       </CustomTabPanel>
       <CustomTabPanel value={value} index={2}>
-        Вклад Андрея был в ... Lorem ipsum dolor sit amet consectetur adipisicing elit. Expedita, qui autem! Rem atque
-        adipisci modi. Tempore vitae laborum cupiditate, quidem placeat obcaecati excepturi blanditiis molestiae
-        dignissimos explicabo totam fuga. Lorem ipsum dolor sit amet consectetur adipisicing elit. Expedita, qui autem!
-        Rem atque a adipisci modi. Tempore vitae laborum cupiditate, quidem placeat obcaecati excepturi blanditiis
-        molestiae dignissimos explicabo totam fuga. quidem placeat obcaecati excepturi blanditiis molestiae dignissimos
-        explicabo totam fuga. Lorem ipsum dolor sit amet consectetur adipisicing elit. Expedita, qui autem! Rem atque a
-        adipisci modi. Tempore vitae laborum cupiditate, quidem placeat obcaecati excepturi blanditiis molestiae
-        dignissimos explicabo.
+        Andrey focused on user-centric features that enhance the overall functionality of our application. He designed
+        and implemented the user registration form, simplifying the onboarding process for new customers. By creating
+        user profiles, Andrey empowered users to manage their information efficiently. Additionally, he crafted the
+        "About Us" page, providing valuable insights into our company's history and mission. His contributions fostered
+        a personalized and informative user experience. Andrey's dedication to user accounts and user-facing content
+        strengthened our platform's customer-centric approach.
       </CustomTabPanel>
     </Box>
   );

@@ -21,6 +21,8 @@ const Cart: React.FC = () => {
 
   const dispatch = useDispatch();
 
+  // const fullPrice = useSelector((state: IRootState) => state.cart.fullPrice);
+
   useEffect(() => {
     dispatch(fetchCartItems(accessToken));
   }, [accessToken]);
@@ -34,12 +36,31 @@ const Cart: React.FC = () => {
   return isEmpty ? (
     <>
       <div className={classes.empty_cart}>
-        <Typography variant="h2" gutterBottom>
+        <Typography
+          variant="h2"
+          gutterBottom
+          sx={{
+            fontFamily: 'Overpass, "Helvetica Neue", Helvetica, Arial, sans-serif',
+          }}
+        >
           Nothing in your cart yet
         </Typography>
         <div>
           <a href="/catalog">
-            <Button size="large" variant="contained">
+            <Button
+              size="large"
+              variant="contained"
+              sx={{
+                backgroundColor: '#FF652e',
+                fontFamily: 'Arial',
+                '&:hover, &:focus ': {
+                  fontFamily: 'Arial',
+                  backgroundColor: '#FF652e',
+                  opacity: 0.8,
+                  transition: 'all linear 0.5s',
+                },
+              }}
+            >
               Go Shopping Now
             </Button>
           </a>

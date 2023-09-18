@@ -52,13 +52,7 @@ export const fetchCartItems = createAsyncThunk('cart/fetchCartItems', async (acc
 
 export const fetchPromocodeData = createAsyncThunk(
   'cart/fetchPromocodeData',
-  async ({
-    promocode = '',
-    cartId = '',
-    cartVersion = 0,
-    username = '3420922@gmail.com',
-    password = 'Aa12345678',
-  }: IApllyPromocode) => {
+  async ({ promocode = '', cartId = '', cartVersion = 0, username = '', password = '' }: IApllyPromocode) => {
     const token = await login({
       username,
       password,
@@ -87,13 +81,7 @@ export const fetchPromocodeData = createAsyncThunk(
 
 export const fetchPromocodeDataRemove = createAsyncThunk(
   'cart/fetchPromocodeDataRemove',
-  async ({
-    promocodeId = '',
-    cartId = '',
-    cartVersion = 0,
-    username = '3420922@gmail.com',
-    password = 'Aa12345678',
-  }: IRemovePromocode) => {
+  async ({ promocodeId = '', cartId = '', cartVersion = 0, username = '', password = '' }: IRemovePromocode) => {
     const token = await login({
       username,
       password,
@@ -169,6 +157,11 @@ export const CartReducer = createSlice({
     clearCartState: () => ({
       ...initialState,
     }),
+    resetPromocode: (state) => ({
+      ...state,
+      isPromocodeActive: false,
+      promocodeId: '',
+    }),
   },
   extraReducers: (builder) => {
     builder.addCase(fetchCartItems.fulfilled, (state, action) => {
@@ -186,11 +179,11 @@ export const CartReducer = createSlice({
           actualCartVer: version,
           cartAmount: centAmount / 100,
           cartItems: lineItems,
-          isPromocodeActive: false,
         },
         isLoaded: true,
         status: 'succeeded',
         error: null,
+        isPromocodeActive: false,
       };
     });
 
@@ -218,6 +211,7 @@ export const CartReducer = createSlice({
 
         return {
           ...state,
+          fullPrice: state.fullPrice ? state.fullPrice : state.cartData.cartAmount,
           cartData: {
             ...state.cartData,
             cartId: id,
@@ -229,7 +223,6 @@ export const CartReducer = createSlice({
           status: 'succeeded',
           error: null,
           isPromocodeActive: true,
-          fullPrice: state.cartData.cartAmount,
           promocodeId: action.payload.discountCodes[0]?.discountCode?.id,
         };
       })
@@ -278,6 +271,6 @@ export const CartReducer = createSlice({
   },
 });
 
-export const { setActualCartVer, addAnonToken, clearCartState } = CartReducer.actions;
+export const { setActualCartVer, addAnonToken, clearCartState, resetPromocode } = CartReducer.actions;
 
 export default CartReducer.reducer;

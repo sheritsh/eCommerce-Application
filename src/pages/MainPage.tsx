@@ -1,11 +1,9 @@
 import React from 'react';
 import { Splide, SplideSlide } from '@splidejs/react-splide';
-import { useSelector } from 'react-redux';
 import Container from '../components/UI/container/Container';
 import slides from '../assets/data/main-slider';
 import Brands from '../components/Brands/Brands';
 import MainCategories from '../components/MainCategories/MainCategories';
-import { initializeCart, IRootState } from '../store';
 
 const MainPage: React.FC = () => {
   return (

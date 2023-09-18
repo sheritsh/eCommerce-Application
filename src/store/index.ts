@@ -33,13 +33,6 @@ export const rootReducers = combineReducers({
 
 const persistedReducer = persistReducer(persistConfig, rootReducers);
 
-export async function initializeCart(accessToken: string): Promise<void> {
-  const hasCart = await getHasCart(accessToken);
-  if (!hasCart) {
-    await createCart(accessToken);
-  }
-}
-
 export const store = configureStore({
   reducer: persistedReducer,
   middleware: (getDefaultMiddleware) =>
