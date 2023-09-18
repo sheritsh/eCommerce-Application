@@ -9,17 +9,6 @@ import { getHasCart, createCart } from '../api/cart';
 import { IRootState } from '../store';
 
 const MainPage: React.FC = () => {
-  const accessToken = useSelector((state: IRootState) => state.auth.authData.accessToken);
-  useEffect(() => {
-    if (accessToken) {
-      (async function initializeCart(): Promise<void> {
-        const hasCart = await getHasCart(accessToken);
-        if (!hasCart) {
-          await createCart(accessToken);
-        }
-      })();
-    }
-  }, []);
   return (
     <div className="content">
       <Container>
