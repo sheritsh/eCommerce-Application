@@ -7,6 +7,7 @@ import { logout } from '../../features/Authorization/authorization-slice';
 import { createCart, getHasCart } from '../../api/cart';
 import classes from './Header.module.scss';
 import Hamburger from '../UI/burger/Hamburger';
+import { resetPromocode, fetchPromocodeDataRemove } from '../../features/Cart/cart-slice';
 
 const Menu = (): JSX.Element => {
   const [open, setOpen] = useState(false);
@@ -34,8 +35,17 @@ const Menu = (): JSX.Element => {
 
   const count = useSelector((state: IRootState) => state.cart.cartData.cartItems.length);
 
+  const cartId = useSelector((state: IRootState) => state.cart.cartData.cartId);
+  const cartVersion = useSelector((state: IRootState) => state.cart.cartData.actualCartVer);
+  const promocodeId = useSelector((state: IRootState) => state.cart?.promocodeId);
+
+  const username = useSelector((state: IRootState) => state.auth.authData.credentials.login);
+  const password = useSelector((state: IRootState) => state.auth.authData.credentials.password);
+
   const handleLogout = (): void => {
     dispatch(logout());
+    dispatch(fetchPromocodeDataRemove({ promocodeId, cartId, cartVersion, username, password }));
+    dispatch(resetPromocode());
   };
 
   return (

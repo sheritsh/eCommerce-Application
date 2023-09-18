@@ -1,7 +1,7 @@
 import React, { useState, useEffect, FormEvent } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate, Link } from 'react-router-dom';
-import { removeLoginError, loginUser } from '../../../../features/Authorization/authorization-slice';
+import { removeLoginError, loginUser, saveCredentials } from '../../../../features/Authorization/authorization-slice';
 import Form from '../form/Form';
 import Input from '../../input/Input';
 import Container from '../../container/Container';
@@ -12,6 +12,7 @@ import { ErrorMessages } from '../form/type';
 import { IRootState } from '../../../../features/types';
 import validatePassword from '../../../../utils/validation/password-validation';
 import classes from '../form/Form.module.scss';
+import { resetPromocode } from '../../../../features/Cart/cart-slice';
 
 const LoginForm: React.FC = () => {
   const [username, setEmail] = useState('');
@@ -69,7 +70,14 @@ const LoginForm: React.FC = () => {
     e.preventDefault();
     try {
       await dispatch(loginUser({ username, password }));
+      dispatch(
+        saveCredentials({
+          login: username,
+          password,
+        }),
+      );
       navigate('/');
+      dispatch(resetPromocode());
     } catch (error) {
       throw new Error();
     }

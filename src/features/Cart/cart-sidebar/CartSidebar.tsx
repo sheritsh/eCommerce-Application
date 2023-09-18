@@ -30,12 +30,15 @@ const CartSidebar: React.FC<{ accessToken: string | null; idCart: string; versio
   const promocodeId = useSelector((state: IRootState) => state.cart?.promocodeId);
   const isPromocodeApplied = useSelector((state: IRootState) => state.cart?.isPromocodeActive);
 
+  const username = useSelector((state: IRootState) => state.auth.authData.credentials.login);
+  const password = useSelector((state: IRootState) => state.auth.authData.credentials.password);
+
   const handleApply = (): void => {
-    dispatch(fetchPromocodeData({ promocode, cartId, cartVersion }));
+    dispatch(fetchPromocodeData({ promocode, cartId, cartVersion, username, password }));
   };
 
   const handleRemove = (): void => {
-    dispatch(fetchPromocodeDataRemove({ promocodeId, cartId, cartVersion }));
+    dispatch(fetchPromocodeDataRemove({ promocodeId, cartId, cartVersion, username, password }));
   };
 
   const handleClickOpen = (): void => {

@@ -21,6 +21,8 @@ const Cart: React.FC = () => {
 
   const dispatch = useDispatch();
 
+  // const fullPrice = useSelector((state: IRootState) => state.cart.fullPrice);
+
   useEffect(() => {
     dispatch(fetchCartItems(accessToken));
   }, [accessToken]);
