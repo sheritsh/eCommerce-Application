@@ -149,14 +149,10 @@ export default function CenterTabs(): JSX.Element {
         dignissimos explicabo.
       </CustomTabPanel>
       <CustomTabPanel value={value} index={1}>
-        Вклад Кати был в ... Lorem ipsum dolor sit amet consectetur adipisicing elit. Expedita, qui autem! Rem atque at
-        adipisci modi. Tempore vitae laborum cupiditate, quidem placeat obcaecati excepturi blanditiis molestiae
-        dignissimos explicabo totam fuga. Lorem ipsum dolor sit amet consectetur adipisicing elit. Expedita, qui autem!
-        Rem atque a adipisci modi. Tempore vitae laborum cupiditate, quidem placeat obcaecati excepturi blanditiis
-        molestiae dignissimos explicabo totam fuga. quidem placeat obcaecati excepturi blanditiis molestiae dignissimos
-        explicabo totam fuga. Lorem ipsum dolor sit amet consectetur adipisicing elit. Expedita, qui autem! Rem atque a
-        adipisci modi. Tempore vitae laborum cupiditate, quidem placeat obcaecati excepturi blanditiis molestiae
-        dignissimos explicabo.
+        Ekaterina, our frontend developer, has been an integral part of our Ecommerce project. Her expertise in HTML,
+        CSS, JS and React has helped us create a beautiful and user-friendly website. Ekaterina is especially good at
+        working around the clock and finding bugs in the code. Her attention to detail and dedication to the project is
+        evident in every line of code she writes.
       </CustomTabPanel>
       <CustomTabPanel value={value} index={2}>
         Вклад Андрея был в ... Lorem ipsum dolor sit amet consectetur adipisicing elit. Expedita, qui autem! Rem atque

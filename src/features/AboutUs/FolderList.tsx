@@ -4,7 +4,12 @@ import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
 import Avatar from '@mui/material/Avatar';
-import CheckIcon from '@mui/icons-material/Check';
+import CelebrationIcon from '@mui/icons-material/Celebration';
+import Diversity3Icon from '@mui/icons-material/Diversity3';
+import PermPhoneMsgIcon from '@mui/icons-material/PermPhoneMsg';
+import TelegramIcon from '@mui/icons-material/Telegram';
+import EditNoteIcon from '@mui/icons-material/EditNote';
+import AddTaskIcon from '@mui/icons-material/AddTask';
 
 export default function FolderList(): JSX.Element {
   return (
@@ -22,7 +27,7 @@ export default function FolderList(): JSX.Element {
       <ListItem sx={{ width: '49%' }}>
         <ListItemAvatar>
           <Avatar>
-            <CheckIcon />
+            <PermPhoneMsgIcon />
           </Avatar>
         </ListItemAvatar>
         <ListItemText primary="Weekly calls to discord" />
@@ -30,7 +35,7 @@ export default function FolderList(): JSX.Element {
       <ListItem sx={{ width: '49%' }}>
         <ListItemAvatar>
           <Avatar>
-            <CheckIcon />
+            <EditNoteIcon />
           </Avatar>
         </ListItemAvatar>
         <ListItemText primary="Daily chat reports on the progress of tasks" />
@@ -38,7 +43,7 @@ export default function FolderList(): JSX.Element {
       <ListItem sx={{ width: '49%' }}>
         <ListItemAvatar>
           <Avatar>
-            <CheckIcon />
+            <TelegramIcon />
           </Avatar>
         </ListItemAvatar>
         <ListItemText primary="Constant communication in telegram" />
@@ -46,7 +51,7 @@ export default function FolderList(): JSX.Element {
       <ListItem sx={{ width: '49%' }}>
         <ListItemAvatar>
           <Avatar>
-            <CheckIcon />
+            <AddTaskIcon />
           </Avatar>
         </ListItemAvatar>
         <ListItemText primary="Using the task board in Trello" />
@@ -54,7 +59,7 @@ export default function FolderList(): JSX.Element {
       <ListItem sx={{ width: '49%' }}>
         <ListItemAvatar>
           <Avatar>
-            <CheckIcon />
+            <Diversity3Icon />
           </Avatar>
         </ListItemAvatar>
         <ListItemText primary="Regular code review by mentor" />
@@ -62,7 +67,7 @@ export default function FolderList(): JSX.Element {
       <ListItem sx={{ width: '49%' }}>
         <ListItemAvatar>
           <Avatar>
-            <CheckIcon />
+            <CelebrationIcon />
           </Avatar>
         </ListItemAvatar>
         <ListItemText primary="Gifs in pull requests" />
