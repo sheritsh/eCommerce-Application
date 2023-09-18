@@ -12,7 +12,14 @@ const team: IPerson[] = [
     image: '../assets/images/team/oleg.jpg',
     role: 'Team Lead, Frontend Developer',
     git: 'sheritsh',
-    bio: [],
+    bio: [
+      'Graduated from Volgograd Agricultural State University.',
+      "Worked at McDonald's for 6 years.",
+      "In September '22, I quit my job and enrolled in School 21, a programming school sponsored by Sber.",
+      "During the winter of '22, I registered for RS School stage 0 and successfully completed the program.",
+      "In March '23, I enrolled in Stage 1 and later progressed to Stage 2.",
+      'Currently, I am nearing the completion of Stage 2 and actively seeking employment as a junior Frontend developer.',
+    ],
   },
   {
     name: 'Ekaterina Trifonova',

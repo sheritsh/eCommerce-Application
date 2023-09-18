@@ -11,8 +11,15 @@ const AboutUs: React.FC = () => {
       <div>
         <h2 className={classes.aboutUs__title}>Team Members</h2>
         <div className={classes.aboutUs__team}>
-          {team.map((person) => (
-            <UserCard name={person.name} image={person.image} role={person.role} git={person.git} bio={person.bio} />
+          {team.map((person, index) => (
+            <UserCard
+              key={index}
+              name={person.name}
+              image={person.image}
+              role={person.role}
+              git={person.git}
+              bio={person.bio}
+            />
           ))}
         </div>
       </div>

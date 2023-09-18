@@ -29,27 +29,6 @@ const MainPage: React.FC = () => {
           </Splide>
           <Brands />
           <MainCategories />
-          {/* <h2>All pages of Sprint #3:</h2>
-          <ul>
-            <li>
-              <Link to="/catalog">Catalog Page</Link>
-            </li>
-            <li>
-              <Link to="/login">Login Page</Link>
-            </li>
-            <li>
-              <Link to="/registration">Registration Page</Link>
-            </li>
-            <li>
-              <Link to="/profile">Profile Page</Link>
-            </li>
-            <li>
-              <Link to="/shopping-cart">Cart Page</Link>
-            </li>
-            <li>
-              <Link to="/kakayato-eres">404 Not Found Page</Link>
-            </li>
-          </ul> */}
         </div>
       </Container>
     </div>

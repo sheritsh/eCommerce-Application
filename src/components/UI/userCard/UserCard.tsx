@@ -12,8 +12,8 @@ const UserCard: React.FC<IPerson> = ({ name, image, role, git, bio }): JSX.Eleme
       </div>
       <div className={classes.userCard__text}>
         <ul>
-          {bio.map((item) => (
-            <li>
+          {bio.map((item, index) => (
+            <li key={index}>
               <KeyboardArrowRightIcon />
               {item}
             </li>

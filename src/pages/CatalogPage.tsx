@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import SearchForm from '../features/filters/search/SearchForm';
 import Container from '../components/UI/container/Container';
 import ProductsByParams from '../features/filters/ProductsByParams/ProductsByParams';
@@ -9,11 +9,19 @@ import SortForm from '../features/filters/sorting/SortForm';
 import PaginationBlock from '../features/Pagination/Pagination';
 import { fetchCartItems } from '../features/Cart/cart-slice';
 import Popup from '../components/UI/popup/Popup';
+import { IRootState } from '../store';
 
 const Catalog: React.FC = () => {
-  const [isSuccessPopupActive, setSuccessPopupActive] = useState(false);
   const dispatch = useDispatch();
-  if (!localStorage.getItem('anonymousToken')) {
+  const accessToken = useSelector((state: IRootState) => state.auth.authData.accessToken);
+  if (accessToken) {
+    setTimeout(() => {
+      dispatch(fetchCartItems(accessToken));
+    }, 1500);
+  }
+  const [isSuccessPopupActive, setSuccessPopupActive] = useState(false);
+
+  if (!localStorage.getItem('anonymousToken') || !accessToken) {
     dispatch(fetchCartItems(null));
   }
 

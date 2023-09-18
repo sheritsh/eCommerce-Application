@@ -33,14 +33,6 @@ export const rootReducers = combineReducers({
 
 const persistedReducer = persistReducer(persistConfig, rootReducers);
 
-async function initializeCart(): Promise<void> {
-  const accessToken = useSelector((state: IRootState) => state.auth.authData.accessToken);
-  const hasCart = await getHasCart(accessToken);
-  if (!hasCart) {
-    await createCart(accessToken);
-  }
-}
-
 export const store = configureStore({
   reducer: persistedReducer,
   middleware: (getDefaultMiddleware) =>
@@ -51,8 +43,6 @@ export const store = configureStore({
     }).concat(...(process.env.NODE_ENV !== 'production' ? [logger] : [])),
   devTools: true,
 });
-
-initializeCart();
 
 export type IRootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;

@@ -8,6 +8,10 @@ export interface AuthState {
     accessToken: string | null;
     isLoading: boolean;
     error: string | null;
+    credentials: {
+      login: string;
+      password: string;
+    };
   };
 }
 
@@ -16,6 +20,10 @@ const initialState: AuthState = {
     accessToken: null,
     isLoading: false,
     error: null,
+    credentials: {
+      login: '',
+      password: '',
+    },
   },
 };
 
@@ -61,10 +69,21 @@ export const authReducer = createSlice({
         accessToken: null,
       },
     }),
+    saveCredentials: (state, action: PayloadAction<AuthState.authData['credentials']>): AuthState => ({
+      ...state,
+      authData: {
+        ...state.authData,
+        credentials: {
+          login: action.payload.login,
+          password: action.payload.password,
+        },
+      },
+    }),
   },
 });
 
-export const { loginStart, loginSuccess, loginFailure, removeLoginError, logout } = authReducer.actions;
+export const { loginStart, loginSuccess, loginFailure, removeLoginError, logout, saveCredentials } =
+  authReducer.actions;
 
 export default authReducer.reducer;
 
@@ -76,7 +95,7 @@ export const loginUser =
       const response = await login(data);
       dispatch(loginSuccess(response.access_token));
     } catch (e: unknown) {
-      console.error(e);
+      // console.error(e);
       if (e instanceof Error) dispatch(loginFailure(e.message));
       throw new Error('Customer account with the given credentials not found');
     }

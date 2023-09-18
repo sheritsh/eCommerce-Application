@@ -28,7 +28,6 @@ const ProductCard: React.FC<IProductProps> = ({ product, addAction }) => {
 
   const handleAddToCart = (): void => {
     dispatch(addItemToCart(accessToken, cartId, product.id, 1, cartVer));
-    addAction(true);
   };
 
   const handleRemoveFromCart = (): void => {
