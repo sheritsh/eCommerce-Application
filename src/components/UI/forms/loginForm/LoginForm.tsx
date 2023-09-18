@@ -69,6 +69,7 @@ const LoginForm: React.FC = () => {
   const sendData = async (e: React.FormEvent): Promise<void> => {
     e.preventDefault();
     try {
+      dispatch(resetPromocode());
       await dispatch(loginUser({ username, password }));
       dispatch(
         saveCredentials({
@@ -77,7 +78,6 @@ const LoginForm: React.FC = () => {
         }),
       );
       navigate('/');
-      dispatch(resetPromocode());
     } catch (error) {
       throw new Error();
     }
