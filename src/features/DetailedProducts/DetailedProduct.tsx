@@ -70,6 +70,19 @@ const DetailedProduct: React.FC<IProductsProps> = () => {
     return productsInCart.filter((item: ICartItem) => item.productId === id).length > 0;
   };
 
+  const getProductId = (id: string): object | null => {
+    if (isProductInCart(id)) {
+      const product = productsInCart.filter((item: ICartItem) => item.productId === id);
+      const resObj = {};
+      resObj.productId = product[0].id;
+      resObj.quantity = product[0].quantity;
+      return resObj;
+    }
+    return null;
+  };
+
+  const curProductInCart = getProductId(productData.result.id);
+
   const handleOpen = (): void => setOpen(true);
   const handleClose = (): void => setOpen(false);
   const handleImageClick = (index: number): void => {
@@ -82,7 +95,15 @@ const DetailedProduct: React.FC<IProductsProps> = () => {
   };
 
   const handleRemoveFromCart = (): void => {
-    dispatch(removeItemFromCart(accessToken as string, cartId as string, productsInCart[0].id, 1, cartVer));
+    dispatch(
+      removeItemFromCart(
+        accessToken as string,
+        cartId as string,
+        curProductInCart.productId,
+        curProductInCart.quantity,
+        cartVer,
+      ),
+    );
   };
 
   return (
