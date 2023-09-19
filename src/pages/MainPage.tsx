@@ -21,7 +21,6 @@ const MainPage: React.FC = () => {
               rewindSpeed: 2000,
               speed: 4000,
             }}
-            type="fade"
           >
             {slides.length
               ? slides.map((slide) => (
