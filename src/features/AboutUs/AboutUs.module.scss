@@ -1,0 +1,54 @@
+.aboutUs {
+  display: flex;
+  flex-direction: column;
+  row-gap: 3rem;
+  width: 90%;
+  margin: 0 auto;
+}
+
+.aboutUs__title {
+  margin-top: 1rem;
+  font-size: 2rem;
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.aboutUs__subTitle {
+  font-size: 1.3rem;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.aboutUs__team {
+  display: flex;
+  justify-content: space-around;
+  column-gap: 25px;
+}
+
+.aboutUs__contributions {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+  padding: 30px;
+  max-width: 900px;
+  background-color: rgba(173, 173, 173, 0.145);
+}
+
+.aboutUs__collaboration {
+  max-width: 900px;
+  padding: 30px;
+  margin: 0 auto;
+}
+
+.aboutUs__logo {
+  margin: 1rem auto;
+}
+
+@media (max-width: 1100px) {
+  .aboutUs__team {
+    flex-direction: column;
+    align-items: center;
+    row-gap: 25px;
+  }
+}

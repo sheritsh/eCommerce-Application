@@ -17,7 +17,8 @@ export interface IProcessedProductData {
 }
 
 interface IFetchedImages {
-  url: string;
+  url?: string;
+  urlSlide?: string;
 }
 
 interface IUser {

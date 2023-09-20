@@ -19,6 +19,8 @@ import 'swiper/css/zoom';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
+import { addItemToCart, removeItemFromCart } from '../Cart/cart-slice';
+import { ICartItem } from '../Cart/types';
 
 interface IProductsProps {
   categoryId?: string;
@@ -29,7 +31,8 @@ const modalWindowStyle = {
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
-  width: 'min(50vw, 1200px)',
+  width: 'min(50vw, 1100px)',
+  minWidth: '300px',
   bgcolor: 'background.paper',
   border: '2px solid #000',
   boxShadow: 24,
@@ -39,10 +42,16 @@ const modalWindowStyle = {
 const DetailedProduct: React.FC<IProductsProps> = () => {
   const { productId } = useParams();
   const dispatch = useAppDispatch();
+  const anonToken = localStorage.getItem('anonymousToken');
+  const accessToken = useSelector((state: IRootState) => state.auth.authData.accessToken) || anonToken;
+  const anonCart = localStorage.getItem('anonymousCart');
+  const cartId = useSelector((state: IRootState) => state.cart.cartData.cartId) || anonCart;
+  const cartVer = useSelector((state: IRootState) => state.cart.cartData.actualCartVer);
+
   const productData = useSelector((state: IRootState) => state.detailedProduct.detailedProductData);
 
   useEffect(() => {
-    dispatch(fetchProductDetails(productId));
+    dispatch(fetchProductDetails(productId || ''));
   }, [productId, dispatch]);
 
   const processedProductData = processProductData(productData.result);
@@ -56,11 +65,45 @@ const DetailedProduct: React.FC<IProductsProps> = () => {
         ).toFixed(0)
       : null;
 
+  const productsInCart = useSelector((state: IRootState) => state.cart.cartData.cartItems);
+  const isProductInCart = (id: string): boolean => {
+    return productsInCart.filter((item: ICartItem) => item.productId === id).length > 0;
+  };
+
+  const getProductId = (id: string): object | null => {
+    if (isProductInCart(id)) {
+      const product = productsInCart.filter((item: ICartItem) => item.productId === id);
+      const resObj = {};
+      resObj.productId = product[0].id;
+      resObj.quantity = product[0].quantity;
+      return resObj;
+    }
+    return null;
+  };
+
+  const curProductInCart = getProductId(productData.result.id);
+
   const handleOpen = (): void => setOpen(true);
   const handleClose = (): void => setOpen(false);
   const handleImageClick = (index: number): void => {
     setSelectedImageIndex(index);
     handleOpen();
+  };
+
+  const handleAddToCart = (): void => {
+    dispatch(addItemToCart(accessToken as string, cartId as string, productData.result.id, 1, cartVer));
+  };
+
+  const handleRemoveFromCart = (): void => {
+    dispatch(
+      removeItemFromCart(
+        accessToken as string,
+        cartId as string,
+        curProductInCart.productId,
+        curProductInCart.quantity,
+        cartVer,
+      ),
+    );
   };
 
   return (
@@ -84,10 +127,12 @@ const DetailedProduct: React.FC<IProductsProps> = () => {
             <div className={classes.main_slider}>
               <Swiper
                 modules={[Navigation, Pagination]}
-                style={{
-                  '--swiper-navigation-color': '#1D1E24',
-                  '--swiper-pagination-color': '#FEBE70',
-                }}
+                style={
+                  {
+                    '--swiper-navigation-color': '#1D1E24',
+                    '--swiper-pagination-color': '#FEBE70',
+                  } as React.CSSProperties
+                }
                 spaceBetween={40}
                 height={50}
                 slidesPerView={1}
@@ -121,14 +166,16 @@ const DetailedProduct: React.FC<IProductsProps> = () => {
                           </IconButton>
                           <Swiper
                             modules={[Zoom, Keyboard, Navigation, Pagination]}
-                            style={{
-                              '--swiper-navigation-color': '#1D1E24',
-                              '--swiper-pagination-color': '#FEBE70',
-                            }}
+                            style={
+                              {
+                                '--swiper-navigation-color': '#1D1E24',
+                                '--swiper-pagination-color': '#FEBE70',
+                              } as React.CSSProperties
+                            }
                             keyboard={{
                               enabled: true,
                             }}
-                            initialSlide={selectedImageIndex}
+                            initialSlide={selectedImageIndex || 0}
                             spaceBetween={40}
                             height={50}
                             slidesPerView={1}
@@ -136,20 +183,23 @@ const DetailedProduct: React.FC<IProductsProps> = () => {
                             zoom={true}
                             pagination={{ clickable: true }}
                           >
-                            {processedProductData.images.map(({ url }, idx) => {
-                              return (
-                                <SwiperSlide key={idx}>
-                                  <div className="swiper-zoom-container">
-                                    <img
-                                      src={url}
-                                      width="100%"
-                                      alt={`Goods image ${idx + 1}`}
-                                      onClick={(): void => handleImageClick(idx)}
-                                    ></img>
-                                  </div>
-                                </SwiperSlide>
-                              );
-                            })}
+                            {
+                              // eslint-disable-next-line @typescript-eslint/no-shadow
+                              processedProductData.images.map(({ url }, idx) => {
+                                return (
+                                  <SwiperSlide key={idx}>
+                                    <div className="swiper-zoom-container">
+                                      <img
+                                        src={url}
+                                        width="100%"
+                                        alt={`Goods image ${idx + 1}`}
+                                        onClick={(): void => handleImageClick(idx)}
+                                      ></img>
+                                    </div>
+                                  </SwiperSlide>
+                                );
+                              })
+                            }
                           </Swiper>
                         </Box>
                       </Modal>
@@ -159,7 +209,7 @@ const DetailedProduct: React.FC<IProductsProps> = () => {
               </Swiper>
             </div>
             <div className={classes.main__main_info}>
-              <h3>{processedProductData.name}</h3>
+              <h3 className={classes.title}>{processedProductData.name}</h3>
               <div className={classes.main_info__price}>
                 Price:{' '}
                 <div
@@ -177,13 +227,21 @@ const DetailedProduct: React.FC<IProductsProps> = () => {
                 )}
               </div>
               <form className={classes.buy_form}>
-                <input type="number" min="1" max="99" defaultValue="1"></input>
-                <Button type="button" text="Add to cart" />
+                {isProductInCart(productData.result.id) ? (
+                  <Button
+                    type="button"
+                    text="Remove from cart"
+                    backgroundColor="#FF6665"
+                    onClick={handleRemoveFromCart}
+                  />
+                ) : (
+                  <Button type="button" text="Add to cart" onClick={handleAddToCart} />
+                )}
               </form>
             </div>
           </div>
           <div className={classes.description}>
-            <h3>Description</h3>
+            <h3 className={classes.title}>Description</h3>
             <div className={classes.description__text}>{processedProductData.description}</div>
           </div>
         </>

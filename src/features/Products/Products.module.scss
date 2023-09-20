@@ -2,9 +2,22 @@
   display: flex;
   justify-content: space-evenly;
   flex-wrap: wrap;
-  width: 70%;
-  gap: 3em;
-  width: 100%;
+  gap: 2em;
+  margin-bottom: 2em;
+
+  @media (max-width: 1280px) {
+    & {
+      gap: 1.7em;
+      margin-bottom: 1.7em;
+    }
+  }
+
+  @media (max-width: 768px) {
+    & {
+      gap: 1.4em;
+      margin-bottom: 1.4em;
+    }
+  }
 }
 
 .not_found {

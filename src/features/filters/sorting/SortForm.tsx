@@ -1,13 +1,26 @@
 import * as React from 'react';
+import { useEffect, useState } from 'react';
 import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import SortByAlphaIcon from '@mui/icons-material/SortByAlpha';
 import SortIcon from '@mui/icons-material/Sort';
+import { useParams } from 'react-router';
+import { fetchProductsBySort } from './fetch-products-by-sort';
+import { useAppDispatch } from '../../../store';
 
-const SortForm: React.FC<{ onSort: (sortQuery: string) => void }> = ({ onSort }) => {
+const SortForm: React.FC = () => {
+  const dispatch = useAppDispatch();
+  const params = useParams();
+  const { categoryId } = params;
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
+
+  const [sortQuery, setSortQuery] = useState('');
+
+  const handleSort = (sortOption: string): void => {
+    setSortQuery(sortOption);
+  };
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>): void => {
     setAnchorEl(event.currentTarget);
@@ -18,21 +31,39 @@ const SortForm: React.FC<{ onSort: (sortQuery: string) => void }> = ({ onSort })
   };
 
   const handleSortOptionClick = (sortOption: string): void => {
-    onSort(sortOption);
+    handleSort(sortOption);
     handleClose();
   };
 
+  useEffect(() => {
+    let endpoint = '';
+    if (sortQuery) {
+      if (sortQuery === 'sort=name.en-US') {
+        endpoint = `?${sortQuery}`;
+      } else {
+        endpoint = `search?${sortQuery}`;
+      }
+      if (endpoint) dispatch(fetchProductsBySort(endpoint, categoryId));
+    }
+  }, [sortQuery]);
+
   return (
-    <div>
+    <>
       <Button
         id="basic-button"
         aria-controls={open ? 'basic-menu' : undefined}
         aria-haspopup="true"
         aria-expanded={open ? 'true' : undefined}
         onClick={handleClick}
-        style={{ color: 'black', border: '1px solid black', margin: '0 0 0 15px', padding: '20px' }}
+        style={{
+          color: 'black',
+          border: 'none',
+          marginLeft: 'auto',
+          padding: '1em 3.5em',
+          background: '#E5E5E5',
+        }}
       >
-        Sort
+        Sort by:
       </Button>
       <Menu
         id="basic-menu"
@@ -56,7 +87,7 @@ const SortForm: React.FC<{ onSort: (sortQuery: string) => void }> = ({ onSort })
           &nbsp;By price DESC
         </MenuItem>
       </Menu>
-    </div>
+    </>
   );
 };
 

@@ -1,5 +1,13 @@
-import { Languages } from '../../api/types';
-import { IAttribute } from '../DetailedProducts/types';
+import { IBrand } from '../../components/Filters/Checkbox/BrandCheckbox/types';
+import { IColor } from '../../components/Filters/Checkbox/ColorCheckbox/types';
+import { ISize } from '../../components/Filters/Checkbox/SizeCheckbox/types';
+
+export interface IFiltersParameters {
+  brands: IBrand['brand'][];
+  sizes: ISize['size'][];
+  colors: IColor['color'][];
+  price: number[];
+}
 
 interface INumber {
   name: 'size';
@@ -56,95 +64,95 @@ export interface ICategory {
   id: string;
 }
 
-interface IVariant {
-  id: number;
-  prices: number[];
-  images: string[];
-  attributes: string[];
-  assets: string[];
-}
+// interface IVariant {
+//   id: number;
+//   prices: number[];
+//   images: string[];
+//   attributes: string[];
+//   assets: string[];
+// }
 
-export interface IResult {
-  id: string;
-  version: number;
-  versionModifiedAt: string;
-  lastMessageSequenceNumber: number;
-  createdAt: string;
-  lastModifiedAt: string;
-  lastModifiedBy: {
-    isPlatformClient: boolean;
-  };
-  createdBy: {
-    isPlatformClient: boolean;
-    user: {
-      typeId: string;
-      id: string;
-    };
-  };
-  productType: {
-    typeId: string;
-    id: string;
-  };
-  masterData: {
-    current: {
-      name: {
-        [Languages.English]: string;
-      };
-      categories: ICategory[];
-      categoryOrderHints: object;
-      slug: {
-        [Languages.English]: string;
-      };
-      metaTitle: {
-        [Languages.English]: string;
-      };
-      metaDescription: {
-        [Languages.English]: string;
-      };
-      masterVariant: {
-        id: number;
-        prices: number[];
-        images: string[];
-        attributes: string[];
-        assets: string[];
-      };
-      variants: IVariant[];
-      searchKeywords: object;
-    };
-    staged: {
-      name: {
-        [Languages.English]: string;
-      };
-      description: {
-        [Languages.English]: string;
-      };
-      categories: ICategory[];
-      categoryOrderHints: object;
-      slug: {
-        [Languages.English]: string;
-      };
-      metaTitle: {
-        [Languages.English]: string;
-      };
-      metaDescription: {
-        [Languages.English]: string;
-      };
-      masterVariant: {
-        id: number;
-        prices: IPrice[];
-        images: IImage[];
-        attributes: Attribute[];
-        assets: string[];
-      };
-      variants: string[];
-      searchKeywords: object;
-    };
-    published: boolean;
-    hasStagedChanges: boolean;
-  };
-  priceMode: string;
-  lastVariantId: number;
-}
+// export interface IResult {
+//   id: string;
+//   version: number;
+//   versionModifiedAt: string;
+//   lastMessageSequenceNumber: number;
+//   createdAt: string;
+//   lastModifiedAt: string;
+//   lastModifiedBy: {
+//     isPlatformClient: boolean;
+//   };
+//   createdBy: {
+//     isPlatformClient: boolean;
+//     user: {
+//       typeId: string;
+//       id: string;
+//     };
+//   };
+//   productType: {
+//     typeId: string;
+//     id: string;
+//   };
+//   masterData: {
+//     current: {
+//       name: {
+//         [Languages.English]: string;
+//       };
+//       categories: ICategory[];
+//       categoryOrderHints: object;
+//       slug: {
+//         [Languages.English]: string;
+//       };
+//       metaTitle: {
+//         [Languages.English]: string;
+//       };
+//       metaDescription: {
+//         [Languages.English]: string;
+//       };
+//       masterVariant: {
+//         id: number;
+//         prices: number[];
+//         images: string[];
+//         attributes: string[];
+//         assets: string[];
+//       };
+//       variants: IVariant[];
+//       searchKeywords: object;
+//     };
+//     staged: {
+//       name: {
+//         [Languages.English]: string;
+//       };
+//       description: {
+//         [Languages.English]: string;
+//       };
+//       categories: ICategory[];
+//       categoryOrderHints: object;
+//       slug: {
+//         [Languages.English]: string;
+//       };
+//       metaTitle: {
+//         [Languages.English]: string;
+//       };
+//       metaDescription: {
+//         [Languages.English]: string;
+//       };
+//       masterVariant: {
+//         id: number;
+//         prices: IPrice[];
+//         images: IImage[];
+//         attributes: Attribute[];
+//         assets: string[];
+//       };
+//       variants: string[];
+//       searchKeywords: object;
+//     };
+//     published: boolean;
+//     hasStagedChanges: boolean;
+//   };
+//   priceMode: string;
+//   lastVariantId: number;
+// }
 
 export interface IProductsData {
   limit: number | null;
@@ -152,8 +160,10 @@ export interface IProductsData {
   count: number | null;
   total: number | null;
   results: ISelectedProduct[];
+  allResults: ISelectedProduct[];
   isLoading: boolean;
   error: string | null;
+  filtersData: IFiltersParameters;
 }
 
 export interface IProductsState {

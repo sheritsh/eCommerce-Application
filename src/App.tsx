@@ -6,8 +6,9 @@ import { persistStore } from 'redux-persist';
 import { PersistGate } from 'redux-persist/integration/react';
 import AuthRoute from './components/Routing/AuthRoute';
 import { store } from './store';
-import TestPage from './pages/TestPage';
+// import TestPage from './pages/TestPage';
 import ProductPage from './pages/ProductPage';
+import AboutUsPage from './pages/AboutUsPage';
 
 const Header = lazy(() => import('./components/Header/Header'));
 const MainPage = lazy(() => import('./pages/MainPage'));
@@ -42,6 +43,7 @@ const App: React.FC = () => {
           >
             <Routes>
               <Route path="/" element={<MainPage />} />
+              <Route path="/about_us" element={<AboutUsPage />} />
               <Route path="/catalog" element={<CatalogPage />} />
               <Route path="/catalog/:productId" element={<ProductPage />} />
               <Route path="/categories" element={<CatalogPage />} />
@@ -49,7 +51,7 @@ const App: React.FC = () => {
               <Route path="/categories/:categoryId/:productId" element={<ProductPage />} />
               <Route path="/product_page/test" element={<ProductPage />} />
               <Route path="*" element={<NotFoundPage />} />
-              <Route path="/test" element={<TestPage />} />
+              {/* <Route path="/test" element={<TestPage />} /> */}
               <Route
                 path="/login"
                 element={
@@ -78,7 +80,7 @@ const App: React.FC = () => {
               <Route
                 path="/shopping-cart"
                 element={
-                  <AuthRoute isPrivate>
+                  <AuthRoute>
                     <CartPage />
                   </AuthRoute>
                 }

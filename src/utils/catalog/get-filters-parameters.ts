@@ -1,17 +1,8 @@
-import { IObject, ISelectedProduct } from '../../features/Products/types';
-import { IBrand } from '../../components/Filters/Checkbox/BrandCheckbox/types';
-import { ISize } from '../../components/Filters/Checkbox/SizeCheckbox/types';
-import { IColor } from '../../components/Filters/Checkbox/ColorCheckbox/types';
-
-interface IFiltersParameters {
-  startBrands: IBrand['brand'][];
-  startSizes: ISize['size'][];
-  startColors: IColor['color'][];
-}
+import { IObject, ISelectedProduct, IFiltersParameters } from '../../features/Products/types';
 
 const getFiltersParameters = (products: ISelectedProduct[]): IFiltersParameters => {
   const attributesBrand = products.map(
-    (product) => product.masterVariant.attributes.filter((attribute) => attribute.name === 'brand')[0].value,
+    (product) => product.masterVariant.attributes.filter((attribute) => attribute.name === 'brand')[0].value as string,
   );
   const attributesColorObject = products.map(
     (product) => product.masterVariant.attributes.filter((attribute) => attribute.name === 'color')[0] as IObject,
@@ -21,7 +12,7 @@ const getFiltersParameters = (products: ISelectedProduct[]): IFiltersParameters 
   );
   const attributesColor = attributesColorObject.map((obj) => obj.value.key);
 
-  const startBrands = [...new Set(attributesBrand)].sort().map((element, index) => {
+  const brands = [...new Set(attributesBrand)].sort().map((element, index) => {
     return {
       id: index,
       checked: false,
@@ -29,14 +20,14 @@ const getFiltersParameters = (products: ISelectedProduct[]): IFiltersParameters 
     };
   });
 
-  const startColors = [...new Set(attributesColor)].sort().map((element, index) => {
+  const colors = [...new Set(attributesColor)].sort().map((element, index) => {
     return {
       id: index,
       checked: false,
       label: element,
     };
   });
-  const startSizes = [...new Set(attributesSize)]
+  const sizes = [...new Set(attributesSize)]
     .sort((a, b) => a - b)
     .map((element, index) => {
       return {
@@ -46,7 +37,7 @@ const getFiltersParameters = (products: ISelectedProduct[]): IFiltersParameters 
       };
     });
 
-  const startPrice = [
+  const prices = [
     ...new Set(
       products.map((product) =>
         product.masterVariant.prices[0].discounted
@@ -55,7 +46,8 @@ const getFiltersParameters = (products: ISelectedProduct[]): IFiltersParameters 
       ),
     ),
   ].sort((a, b) => a - b);
-  return { startBrands, startColors, startSizes, startPrice };
+  const price = [prices[0], prices[prices.length - 1]];
+  return { brands, colors, sizes, price };
 };
 
 export default getFiltersParameters;

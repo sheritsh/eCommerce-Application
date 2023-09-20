@@ -1,17 +1,18 @@
 import React, { useState, useEffect, FormEvent } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate, Link } from 'react-router-dom';
-import { removeLoginError } from '../../../../store/auth/reducer';
+import { removeLoginError, loginUser, saveCredentials } from '../../../../features/Authorization/authorization-slice';
 import Form from '../form/Form';
 import Input from '../../input/Input';
 import Container from '../../container/Container';
 import Button from '../../button/Button';
 import ErrorMessage from '../../ErrorMessage/ErrorMessage';
 import { useAppDispatch } from '../../../../store';
-import { loginUser } from '../../../../store/auth/actions';
 import { ErrorMessages } from '../form/type';
 import { IRootState } from '../../../../features/types';
 import validatePassword from '../../../../utils/validation/password-validation';
+import classes from '../form/Form.module.scss';
+import { resetPromocode } from '../../../../features/Cart/cart-slice';
 
 const LoginForm: React.FC = () => {
   const [username, setEmail] = useState('');
@@ -67,12 +68,15 @@ const LoginForm: React.FC = () => {
 
   const sendData = async (e: React.FormEvent): Promise<void> => {
     e.preventDefault();
-    try {
-      await dispatch(loginUser({ username, password }));
-      navigate('/');
-    } catch (error) {
-      // console.error(error);
-    }
+    dispatch(resetPromocode());
+    await dispatch(loginUser({ username, password }));
+    dispatch(
+      saveCredentials({
+        login: username,
+        password,
+      }),
+    );
+    if (!errorLogin) navigate('/');
   };
 
   const blurHandler = (e: React.FocusEvent): void => {
@@ -104,18 +108,21 @@ const LoginForm: React.FC = () => {
           placeholder="Enter your email"
         />
         {emailVisited && emailError && <ErrorMessage>{emailError}</ErrorMessage>}
-        <Input
-          value={password}
-          onBlur={(e): void => blurHandler(e)}
-          onChange={(e): void => passwordHandler(e)}
-          name="password"
-          type={passwordFieldType}
-          placeholder="Enter your password"
-        />
+        <div className={classes.password}>
+          <Input
+            value={password}
+            onBlur={(e): void => blurHandler(e)}
+            onChange={(e): void => passwordHandler(e)}
+            name="password"
+            type={passwordFieldType}
+            placeholder="Enter your password"
+          />
+          <a
+            onClick={togglePasswordVisibility}
+            className={passwordFieldType === 'password' ? classes.noEye : classes.eye}
+          ></a>
+        </div>
         {passwordVisited && passwordError && <ErrorMessage>{passwordError}</ErrorMessage>}
-        <button className="password_hide" type="button" onClick={togglePasswordVisibility}>
-          {passwordFieldType === 'password' ? 'Show' : 'Hide'} Password
-        </button>
         <Button
           type="button"
           onClick={(e: FormEvent): Promise<void> => sendData(e)}

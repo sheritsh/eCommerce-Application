@@ -1,4 +1,3 @@
-// import { useState } from 'react';
 import createClient from './client';
 import { ILoginRequest, ILoginResponse, IRegisterResponce } from './types';
 
@@ -8,4 +7,8 @@ export const login = (params: ILoginRequest): Promise<ILoginResponse> => {
 
 export const register = (): Promise<IRegisterResponce> => {
   return createClient.clientCredentialsFlow();
+};
+
+export const anonymousSession = (): Promise<IRegisterResponce> => {
+  return createClient.anonymousFlow();
 };

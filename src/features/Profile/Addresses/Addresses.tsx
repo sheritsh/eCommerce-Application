@@ -1,3 +1,4 @@
+import React from 'react';
 import { ICustomer } from '../types';
 import classes from './Addresses.module.scss';
 
@@ -11,10 +12,10 @@ interface AddressesProps {
 }
 
 function addressCheckType(id: string, customer: ICustomer): string {
-  const billing = customer.billingAddressIds.find((e) => {
+  const billing = customer?.billingAddressIds.find((e) => {
     return e === id;
   });
-  const shipping = customer.shippingAddressIds.find((e) => {
+  const shipping = customer?.shippingAddressIds.find((e) => {
     return e === id;
   });
 
@@ -31,7 +32,7 @@ function addressCheckType(id: string, customer: ICustomer): string {
 }
 
 function addressCheckDefault(id: string, customer: ICustomer): JSX.Element | null {
-  if (id === customer.defaultBillingAddressId && id === customer.defaultShippingAddressId) {
+  if (id === customer?.defaultBillingAddressId && id === customer?.defaultShippingAddressId) {
     return (
       <div>
         <p className={classes.default}>default billing</p>
@@ -39,10 +40,10 @@ function addressCheckDefault(id: string, customer: ICustomer): JSX.Element | nul
       </div>
     );
   }
-  if (id === customer.defaultShippingAddressId) {
+  if (id === customer?.defaultShippingAddressId) {
     return <p className={classes.default}>default shipping</p>;
   }
-  if (id === customer.defaultBillingAddressId) {
+  if (id === customer?.defaultBillingAddressId) {
     return <p className={classes.default}>default billing</p>;
   }
   return null;

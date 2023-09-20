@@ -4,7 +4,7 @@ import Popup from '../src/components/UI/Popup/Popup';
 
 test('Popup renders correctly', () => {
   const tree = renderer
-    .create(<Popup active="true" />)
+    .create(<Popup />)
     .toJSON();
   expect(tree).toMatchSnapshot();
 });

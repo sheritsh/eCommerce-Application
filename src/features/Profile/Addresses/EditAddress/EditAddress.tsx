@@ -109,9 +109,6 @@ const EditAddress: React.FC<IProp> = ({ addressId }) => {
     const arrBilling: string[] = customer.billingAddressIds;
     const arrShipping: string[] = customer.shippingAddressIds;
 
-    // eslint-disable-next-line no-console
-    console.log(customer.billingAddressIds);
-
     if (typeAddress === 'none' && arrBilling.includes(addressId) && arrShipping.includes(addressId)) {
       action = {
         version: version + 1,
@@ -267,7 +264,7 @@ const EditAddress: React.FC<IProp> = ({ addressId }) => {
       const errorData = await response.json();
       setPopupMessage(`Oops! Error ${response.status}: ${errorData.message}`);
       setErrorPopupActive(true);
-      console.error(response.statusText);
+      // console.error(response.statusText);
     }
   };
 
