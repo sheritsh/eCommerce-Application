@@ -2,8 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { NavLink, Link } from 'react-router-dom';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import { useAppDispatch } from '../../store';
-import { IRootState } from '../../features/types';
+import { useAppDispatch, IRootState } from '../../store';
 import { logout } from '../../features/Authorization/authorization-slice';
 import {
   createCart,
@@ -15,10 +14,14 @@ import {
 } from '../../features/Cart/cart-slice';
 import classes from './Header.module.scss';
 import Hamburger from '../UI/burger/Hamburger';
+import { setCategoryId } from '../../features/filters/CategoryChange/category-change-slice';
+import { resetFilters, setPrice } from '../../features/FiltersParameters/filters-parameters-slice';
+import { setSearchQuery } from '../../features/filters/search/products-by-search-slice';
 
 const Menu = (): JSX.Element => {
   const [open, setOpen] = useState(false);
   const isAuthenticated = useSelector((state: IRootState) => state.auth.authData.accessToken !== null);
+  const searchQuery = useSelector((state: IRootState) => state.search.searchQuery);
 
   const dispatch = useAppDispatch();
 
@@ -75,7 +78,21 @@ const Menu = (): JSX.Element => {
             </NavLink>
           </li>
           <li>
-            <NavLink to="/catalog" onClick={(): void => setOpen(false)}>
+            <NavLink
+              to="/catalog"
+              onClick={(e): void => {
+                setOpen(false);
+                const locationToArray = window.location.href.split('/');
+                if (locationToArray[locationToArray.length - 1] === 'catalog') {
+                  e.preventDefault();
+                } else {
+                  dispatch(resetFilters());
+                  if (searchQuery.length) dispatch(setSearchQuery(''));
+                  dispatch(setPrice([0, 0]));
+                  dispatch(setCategoryId(''));
+                }
+              }}
+            >
               Catalog
             </NavLink>
           </li>

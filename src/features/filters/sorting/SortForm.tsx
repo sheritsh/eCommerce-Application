@@ -91,4 +91,4 @@ const SortForm: React.FC = () => {
   );
 };
 
-export default SortForm;
+export default React.memo(SortForm);
