@@ -1,0 +1,19 @@
+.list {
+  display: flex;
+  gap: 2em;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin: 2em 0;
+}
+
+.item {
+  opacity: 0.4;
+  filter: grayscale(100%);
+  transition: all 0.5s linear;
+
+  &:hover {
+    opacity: 1;
+    filter: grayscale(0%);
+    transition: all 0.5s linear;
+  }
+}

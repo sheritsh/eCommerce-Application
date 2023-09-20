@@ -1,0 +1,11 @@
+.input, select {
+  padding: 8px 12px;
+  font-size: 1rem;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  &:focus {
+    outline: none;
+    border-color: #0077cc;
+    box-shadow: 0 0 5px #0077cc;
+  }
+}

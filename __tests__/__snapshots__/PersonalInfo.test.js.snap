@@ -1,0 +1,56 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`PersonalInfo renders correctly 1`] = `
+<div
+  className="profile__personal"
+>
+  <div
+    className="profile__item"
+  >
+    <p
+      className="profile__item__title"
+    >
+      FIRST NAME
+    </p>
+    <p
+      className="profile__item__value"
+    />
+  </div>
+  <div
+    className="profile__item"
+  >
+    <p
+      className="profile__item__title"
+    >
+      LAST NAME
+    </p>
+    <p
+      className="profile__item__value"
+    />
+  </div>
+  <div
+    className="profile__item"
+  >
+    <p
+      className="profile__item__title"
+    >
+      BIRTH DATE
+    </p>
+    <p
+      className="profile__item__value"
+    />
+  </div>
+  <div
+    className="profile__item"
+  >
+    <p
+      className="profile__item__title"
+    >
+      EMAIL
+    </p>
+    <p
+      className="profile__item__value"
+    />
+  </div>
+</div>
+`;

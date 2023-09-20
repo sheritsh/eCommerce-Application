@@ -1,0 +1,38 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 2em;
+  margin: 1em 0;
+}
+
+.filter {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  // gap: 0.5em;
+  margin-top: 2em;
+
+  &:not(:last-of-type):after {
+    position: absolute;
+    bottom: -1em;
+    left: 0;
+    content: '';
+    width: 100%;
+    border-bottom: 1px solid black;
+    ;
+  }
+}
+
+.title {
+  margin-bottom: 1em;
+}
+
+.button {
+  align-self: center;
+}
+
+@media screen and (max-width: 400px) {
+  .container {
+    max-width: 10vw;
+  }
+}

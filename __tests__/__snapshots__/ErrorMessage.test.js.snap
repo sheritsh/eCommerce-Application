@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Error message renders correctly 1`] = `
+<div
+  className="error"
+>
+  Error test
+</div>
+`;

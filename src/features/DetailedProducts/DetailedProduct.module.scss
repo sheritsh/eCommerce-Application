@@ -1,0 +1,114 @@
+.detailed__main {
+  display: flex;
+  // justify-content: center;
+  // width: min(80%, 1440px);
+  // margin: 0 auto;
+}
+
+.main_slider {
+  width: min(55%, 600px);
+}
+
+.title {
+  margin-bottom: 2rem;
+  font-weight: 700;
+}
+
+.main__main_info {
+  display: flex;
+  flex-direction: column;
+  align-self: flex-start;
+  margin-left: 15px;
+}
+
+.description {
+  margin: 1rem 0 1rem;
+  padding: 2rem 0;
+  background-color: #E5E5E5;
+}
+
+.description div {
+  width: min(80%, 1440px);
+  margin: 0 auto;
+}
+
+.buy_form {
+  padding-top: 10px;
+  border-top: 3px dashed black;
+  display: flex;
+  gap: 10px;
+  height: max(5vh, 80px);
+}
+
+.buy_form button {
+  width: 100%;
+}
+
+input {
+  background-color: #E5E5E5;
+  border: none;
+  text-align: right;
+  font-size: 1.5rem;
+}
+
+.main_info__price {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  font-size: 1.5rem;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.main_info__price_reg {
+  padding: 15px;
+}
+
+.main_info__price_disc {
+  background-color: #50f587;
+  border-radius: 5px;
+  padding: 15px;
+}
+
+.old_price {
+  text-decoration: line-through;
+  position: relative;
+}
+
+.main_info__disc {
+  position: relative;
+}
+
+.disc_amount {
+  position: absolute;
+  top: -30%;
+  left: -70%;
+  background-color: #f55e50;
+  border-radius: 5px;
+  font-size: 1rem;
+  padding: 5px;
+  opacity: 0.8;
+}
+
+@media screen and (min-width: 780px) {
+  .detailed__main {
+    width: min(80%, 1440px);
+    margin: 0 auto;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .detailed__main {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .main_slider {
+    width: 100%;
+    align-self: center;
+  }
+
+  .disc_amount {
+    display: none;
+  }
+}

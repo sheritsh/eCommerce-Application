@@ -1,0 +1,10 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Input renders correctly 1`] = `
+<input
+  className="input"
+  name="email"
+  placeholder="Enter your email"
+  type="text"
+/>
+`;

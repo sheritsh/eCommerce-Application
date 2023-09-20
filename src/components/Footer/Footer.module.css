@@ -1,0 +1,102 @@
+footer {
+  position: relative;
+  color: white;
+  background-color: #1f2827;
+  padding: 1em;
+  min-height: 10vh;
+  display: flex;
+  align-items: center;
+}
+
+.footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1em;
+}
+
+.footer div {
+  flex-grow: 1;
+  flex-basis: 33.33%;
+  margin: 0 auto;
+}
+
+.footer div:nth-child(n + 2) {
+  text-align: center;
+}
+
+.rs_school {
+  flex-basis: 15%;
+  margin: 0 auto;
+}
+
+.rs_school img {
+  filter: invert(1);
+  width: min(20vw, 125px);
+}
+
+.rs_school img:active {
+  scale: 0.85;
+}
+
+.page_up {
+  position: absolute;
+  width: min(10vw, 50px);
+  height: min(10vw, 50px);
+  right: 1vw;
+  top: 1vw;
+}
+
+.page_up:active {
+  scale: 0.85;
+}
+
+.authors {
+  font-weight: bold;
+}
+
+.authors ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5em;
+  margin-top: 1vh;
+}
+
+.authors ul li a {
+  color: #b1b1b1;
+  text-decoration: none;
+}
+
+.authors ul li:active {
+  scale: 0.85;
+}
+
+.authors ul li a::before {
+  content: ' ';
+  background: url('../../assets/svg/gh.svg');
+  background-size: contain;
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  margin-right: 3px;
+}
+
+@media (min-width: 768px) {
+  .authors ul li a:hover {
+    color: #fff;
+  }
+
+  .rs_school img:hover {
+    opacity: 0.8;
+  }
+
+  .page_up:hover {
+    filter: brightness(150%);
+  }
+}
+
+@media screen and (max-width: 400px) {
+  footer {
+    font-size: 12px;
+  }
+}

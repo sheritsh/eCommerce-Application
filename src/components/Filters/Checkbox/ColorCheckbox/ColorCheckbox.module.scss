@@ -1,0 +1,16 @@
+.root:checked {
+      color: '#000';
+}
+
+.wrap {
+    width: 100%;
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-between;
+    align-items: center;
+    margin-left: 0;
+};
+
+.label {
+    font-size: .8rem,
+};
