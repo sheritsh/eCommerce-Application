@@ -2,7 +2,7 @@
 
 *Deploy*: https://touristtracks-store.netlify.app/  
 
-<center><img src="./src/assets/images/main.png" alt="Main Mage Screenshot" width="500"></center>
+<center><img src="./src/assets/images/main.png" alt="Main Mage Screenshot" width="850"></center>
 
 This tourist eCommerce Platform SPA application is created as part of the final project for the [RS School Front-end course](https://rs.school/js/).
 It offers a seamless and engaging shopping experience for users in a digital environment. With a focus on user-friendly design and advanced features, our platform replicates the real-world shopping journey, from product discovery to checkout, right at your fingertips.
