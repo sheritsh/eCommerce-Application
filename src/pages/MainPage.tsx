@@ -17,6 +17,9 @@ const MainPage: React.FC = () => {
               rewind: true,
               width: '100%',
               gap: '1rem',
+              type: 'fade',
+              rewindSpeed: 2000,
+              speed: 4000,
             }}
           >
             {slides.length

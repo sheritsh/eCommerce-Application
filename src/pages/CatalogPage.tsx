@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import SearchForm from '../features/filters/search/SearchForm';
 import Container from '../components/UI/container/Container';
@@ -14,16 +14,16 @@ import { IRootState, useAppDispatch } from '../store';
 const Catalog: React.FC = () => {
   const dispatch = useAppDispatch();
   const accessToken = useSelector((state: IRootState) => state.auth.authData.accessToken);
-  if (accessToken) {
-    setTimeout(() => {
-      dispatch(fetchCartItems(accessToken));
-    }, 1500);
-  }
   const [isSuccessPopupActive, setSuccessPopupActive] = useState(false);
 
-  if (!localStorage.getItem('anonymousToken') || !accessToken) {
-    dispatch(fetchCartItems(null));
-  }
+  useEffect(() => {
+    if (accessToken) {
+      dispatch(fetchCartItems(accessToken));
+    }
+    if (!localStorage.getItem('anonymousToken') || !accessToken) {
+      dispatch(fetchCartItems(null));
+    }
+  }, []);
 
   return (
     <div className="content">

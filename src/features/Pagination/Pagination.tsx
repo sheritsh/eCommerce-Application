@@ -17,11 +17,11 @@ const PaginationBlock: React.FC = () => {
     dispatch(setPage(value));
   };
 
-  return (
+  return pagesCount > 1 ? (
     <Stack spacing={2}>
       <Pagination count={pagesCount} page={page} variant="outlined" size="large" onChange={handleChange} />
     </Stack>
-  );
+  ) : null;
 };
 
-export default PaginationBlock;
+export default React.memo(PaginationBlock);

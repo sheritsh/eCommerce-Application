@@ -1,12 +1,10 @@
 import React, { lazy, Suspense } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import { Grid } from 'react-loader-spinner';
 import { Provider } from 'react-redux';
 import { persistStore } from 'redux-persist';
 import { PersistGate } from 'redux-persist/integration/react';
 import AuthRoute from './components/Routing/AuthRoute';
 import { store } from './store';
-// import TestPage from './pages/TestPage';
 import ProductPage from './pages/ProductPage';
 import AboutUsPage from './pages/AboutUsPage';
 
@@ -27,20 +25,7 @@ const App: React.FC = () => {
       <Provider store={store}>
         <PersistGate persistor={persistor}>
           <Header />
-          <Suspense
-            fallback={
-              <Grid
-                height="80"
-                width="80"
-                color="#4fa94d"
-                ariaLabel="grid-loading"
-                radius="12.5"
-                wrapperStyle={{}}
-                wrapperClass="spinner"
-                visible={true}
-              />
-            }
-          >
+          <Suspense fallback={null}>
             <Routes>
               <Route path="/" element={<MainPage />} />
               <Route path="/about_us" element={<AboutUsPage />} />
@@ -51,7 +36,6 @@ const App: React.FC = () => {
               <Route path="/categories/:categoryId/:productId" element={<ProductPage />} />
               <Route path="/product_page/test" element={<ProductPage />} />
               <Route path="*" element={<NotFoundPage />} />
-              {/* <Route path="/test" element={<TestPage />} /> */}
               <Route
                 path="/login"
                 element={

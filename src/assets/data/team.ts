@@ -27,7 +27,7 @@ const team: IPerson[] = [
     role: 'Frontend Developer',
     git: 'ekatrif',
     bio: [
-      'Graduated from Bauman Moscow State Technical University in 2017.',
+      'Graduated from Bauman Moscow State Technical University in 2007.',
       'Worked as a technical writer.',
       'Developed websites on CMS Wordpress, Prestashop, Modx, Tilda etc.',
       'Completed a front-end development course at the "Professional" training center in 2021.',

@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { useLocation, useParams } from 'react-router';
-import { Grid } from 'react-loader-spinner';
 import { IRootState, useAppDispatch } from '../../store';
 import BrandCheckbox from './Checkbox/BrandCheckbox/BrandCheckbox';
 import ColorCheckbox from './Checkbox/ColorCheckbox/ColorCheckbox';
@@ -10,7 +8,6 @@ import SizeCheckbox from './Checkbox/SizeCheckbox/SizeCheckbox';
 import classes from './Filters.module.scss';
 import {
   fetchFiltersData,
-  getFiltersData,
   checkBrands,
   checkColors,
   checkSizes,
@@ -25,24 +22,15 @@ import resetFilter from '../../utils/catalog/reset-filter';
 import { setSearchQuery } from '../../features/filters/search/products-by-search-slice';
 
 const Filters: React.FC = () => {
-  const location = useLocation();
-
-  const routerParams = useParams();
-  const { categoryId } = routerParams;
+  const categoryId = useSelector((state: IRootState) => state.categoryId.categoryId);
 
   const dispatch = useAppDispatch();
   const [loading, setLoading] = useState(false);
   const error = useSelector((state: IRootState) => state.filters.productsForFiltersData.error);
 
-  const productsForFilters = useSelector((state: IRootState) => state.filters.productsForFiltersData.results);
-
-  useEffect(() => {
-    dispatch(getFiltersData(productsForFilters));
-  }, [productsForFilters]);
-
+  const filtersData = useSelector((state: IRootState) => state.filters.productsForFiltersData.filtersData);
   const startFilters = useSelector((state: IRootState) => state.filters.productsForFiltersData.filtersData);
 
-  // get filter parameters
   const {
     brands,
     colors,
@@ -56,6 +44,8 @@ const Filters: React.FC = () => {
   } = startFilters;
 
   const [startPrice, setStartPrice] = useState([0, 0]);
+
+  const searchQuery = useSelector((state: IRootState) => state.search.searchQuery);
 
   // Set min & max price for slider
   useEffect(() => {
@@ -86,37 +76,22 @@ const Filters: React.FC = () => {
     dispatch(checkColors(resetFilter(colors)));
     dispatch(checkSizes(resetFilter(sizes)));
     dispatch(setPrice(startPrice));
-    dispatch(setSearchQuery(''));
+    if (searchQuery.length) dispatch(setSearchQuery(''));
   };
 
   useEffect(() => {
-    handleResetFilters();
-    setStartPrice([0, 0]);
     setLoading(true);
-    dispatch(setSearchQuery(''));
+    if (searchQuery.length > 0) dispatch(setSearchQuery(''));
     if (categoryId) {
-      dispatch(fetchFiltersData(categoryId));
-    } else {
-      dispatch(fetchFiltersData(''));
-    }
+      if (!filtersData.brands.length) dispatch(fetchFiltersData(categoryId));
+    } else if (!filtersData.brands.length) dispatch(fetchFiltersData(''));
     setLoading(false);
-  }, [categoryId, location]);
+  }, [categoryId]);
 
   return (
     <div className={classes.container}>
       {error && <b>{error}</b>}
-      {loading || !brands.length || !sizes.length || !colors.length ? (
-        <Grid
-          height="80"
-          width="80"
-          color="#4fa94d"
-          ariaLabel="grid-loading"
-          radius="12.5"
-          wrapperStyle={{}}
-          wrapperClass="spinner"
-          visible={true}
-        />
-      ) : (
+      {loading || !brands.length || !sizes.length || !colors.length ? null : (
         <>
           <div className={classes.filter}>
             <h4 className={classes.title}>Brands</h4>
@@ -159,4 +134,4 @@ const Filters: React.FC = () => {
   );
 };
 
-export default Filters;
+export default React.memo(Filters);
