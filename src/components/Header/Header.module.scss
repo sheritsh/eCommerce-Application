@@ -18,6 +18,9 @@ header {
   
   @media (max-width: 767px) {
     position: absolute;
+    z-index: 10;
+    opacity: 0;
+    visibility: hidden;
     overflow: hidden;
     top: 0;
     right: 0;
@@ -27,6 +30,8 @@ header {
   
   &_active {
     background-color: rgba(0, 0, 0, 0.4);
+    opacity: 1;
+    visibility: visible;
   }
 }
 
