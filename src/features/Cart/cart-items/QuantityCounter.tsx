@@ -44,6 +44,11 @@ const QuantityCounter: React.FC<QuantityCounterProps> = ({ initialValue, onAddIt
           if (onRemoveItem) onRemoveItem();
         }}
         disabled={isButtonDisabled}
+        sx={{
+          '&:hover, &:focus ': {
+            background: 'transparent',
+          },
+        }}
       >
         <RemoveIcon />
       </IconButton>
@@ -66,6 +71,11 @@ const QuantityCounter: React.FC<QuantityCounterProps> = ({ initialValue, onAddIt
           if (onAddItem) onAddItem();
         }}
         disabled={isButtonDisabled}
+        sx={{
+          '&:hover, &:focus ': {
+            background: 'transparent',
+          },
+        }}
       >
         <AddIcon />
       </IconButton>
