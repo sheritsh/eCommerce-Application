@@ -13,7 +13,7 @@ const categories: IMainCategory[] = [
   {
     img: '/assets/images/categories-main/clothing.jpg',
     title: 'Clothing',
-    link: 'http://localhost:8080/categories/8349580f-39e6-46c2-85dd-98d633897d70',
+    link: '/categories/8349580f-39e6-46c2-85dd-98d633897d70',
   },
 ];
 

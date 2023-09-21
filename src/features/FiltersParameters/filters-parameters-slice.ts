@@ -107,6 +107,20 @@ export const filtersReducer = createSlice({
         error: null,
       },
     }),
+    resetFilters: (state): IFiltersState => ({
+      ...state,
+      productsForFiltersData: {
+        ...state.productsForFiltersData,
+        filtersData: {
+          ...state.productsForFiltersData.filtersData,
+          brands: [],
+          colors: [],
+          sizes: [],
+        },
+        isLoading: false,
+        error: null,
+      },
+    }),
   },
   extraReducers: (builder) => {
     builder
@@ -137,6 +151,7 @@ export const filtersReducer = createSlice({
               }
               return product;
             }),
+            filtersData: getFiltersParameters(action.payload),
             isLoading: false,
             error: null,
           },
@@ -153,6 +168,6 @@ export const filtersReducer = createSlice({
   },
 });
 
-export const { getFiltersData, checkBrands, checkColors, checkSizes, setPrice } = filtersReducer.actions;
+export const { getFiltersData, checkBrands, checkColors, checkSizes, setPrice, resetFilters } = filtersReducer.actions;
 
 export default filtersReducer.reducer;

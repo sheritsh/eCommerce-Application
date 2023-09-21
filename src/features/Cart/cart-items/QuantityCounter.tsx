@@ -44,19 +44,21 @@ const QuantityCounter: React.FC<QuantityCounterProps> = ({ initialValue, onAddIt
           if (onRemoveItem) onRemoveItem();
         }}
         disabled={isButtonDisabled}
+        sx={{
+          '&:hover, &:focus ': {
+            background: 'transparent',
+          },
+        }}
       >
         <RemoveIcon />
       </IconButton>
       <TextField
+        size="small"
         type="number"
         value={quantity}
         inputProps={{
           readOnly: true,
           min: 1,
-        }}
-        onChange={(e): void => {
-          const newQuantity = parseInt(e.target.value, 10) || 1;
-          setQuantity(newQuantity);
         }}
       />
       <IconButton
@@ -66,6 +68,11 @@ const QuantityCounter: React.FC<QuantityCounterProps> = ({ initialValue, onAddIt
           if (onAddItem) onAddItem();
         }}
         disabled={isButtonDisabled}
+        sx={{
+          '&:hover, &:focus ': {
+            background: 'transparent',
+          },
+        }}
       >
         <AddIcon />
       </IconButton>

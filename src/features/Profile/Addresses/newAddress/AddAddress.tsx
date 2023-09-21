@@ -147,7 +147,6 @@ const AddAddress: React.FC = () => {
       setPopupMessage(`Oops! Error ${response.status}: ${errorData.message}`);
       setErrorPopupActive(true);
       setTimeout(() => setSuccessPopupActive(false), 1500);
-      // console.error(response.statusText);
     }
   };
 

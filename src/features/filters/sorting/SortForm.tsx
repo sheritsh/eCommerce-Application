@@ -59,7 +59,7 @@ const SortForm: React.FC = () => {
           color: 'black',
           border: 'none',
           marginLeft: 'auto',
-          padding: '1em 3.5em',
+          padding: '1em 3em',
           background: '#E5E5E5',
         }}
       >
@@ -91,4 +91,4 @@ const SortForm: React.FC = () => {
   );
 };
 
-export default SortForm;
+export default React.memo(SortForm);

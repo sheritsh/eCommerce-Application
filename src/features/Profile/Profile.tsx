@@ -41,8 +41,6 @@ const Profile: React.FC = () => {
     });
     if (response.ok) {
       dispatch(fetchCustomer(token));
-    } else {
-      console.error('error1');
     }
   };
 

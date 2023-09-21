@@ -264,7 +264,6 @@ const EditAddress: React.FC<IProp> = ({ addressId }) => {
       const errorData = await response.json();
       setPopupMessage(`Oops! Error ${response.status}: ${errorData.message}`);
       setErrorPopupActive(true);
-      // console.error(response.statusText);
     }
   };
 

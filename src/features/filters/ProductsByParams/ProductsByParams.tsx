@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { useParams } from 'react-router';
 import { Grid } from 'react-loader-spinner';
 import { IRootState, useAppDispatch } from '../../../store';
 import classes from '../../Products/Products.module.scss';
@@ -18,8 +17,7 @@ interface ProductsByParamsProps {
 
 const ProductsByParams: React.FC<ProductsByParamsProps> = ({ popupToggle }) => {
   const dispatch = useAppDispatch();
-  const routerParams = useParams();
-  const { categoryId } = routerParams;
+  const categoryId = useSelector((state: IRootState) => state.categoryId.categoryId);
   // get search string
   const searchQuery = useSelector((state: IRootState) => state.search.searchQuery);
 
@@ -44,43 +42,41 @@ const ProductsByParams: React.FC<ProductsByParamsProps> = ({ popupToggle }) => {
 
   // When filters change send new request
   useEffect(() => {
-    // Filters logic
-    const brandQuery = brands
-      ?.filter((brand) => brand.checked)
-      .map((element) => `"${element.label}"`)
-      .join(',');
-    const colorQuery = colors
-      ?.filter((color) => color.checked)
-      .map((element) => `"${element.label}"`)
-      .join(',');
-    const sizeQuery = sizes
-      ?.filter((size) => size.checked)
-      .map((element) => `"${element.label}"`)
-      .join(',');
+    if (brands.length && colors.length && sizes.length && price[0] && price[price.length - 1]) {
+      // Filters logic
+      const brandQuery = brands
+        ?.filter((brand) => brand.checked)
+        .map((element) => `"${element.label}"`)
+        .join(',');
+      const colorQuery = colors
+        ?.filter((color) => color.checked)
+        .map((element) => `"${element.label}"`)
+        .join(',');
+      const sizeQuery = sizes
+        ?.filter((size) => size.checked)
+        .map((element) => `"${element.label}"`)
+        .join(',');
 
-    if (brandQuery) params += `&filter=variants.attributes.brand:${brandQuery}`;
-    if (colorQuery) params += `&filter=variants.attributes.color.key:${colorQuery}`;
-    if (sizeQuery) params += `&filter=variants.attributes.size:${sizeQuery}`;
-    if (price[0] && price[price.length - 1])
-      params += `&filter=variants.price.centAmount:range (${price[0] * 100} to ${price[1] * 100})`;
-    params += `&offset=${offset}`;
-    // Dispay products by params
-    dispatch(fetchProductsByParams({ params, categoryId, offset }));
-    // Reset search value
-    dispatch(setSearchQuery(''));
-  }, [page, brands, colors, sizes, price]);
+      if (brandQuery) params += `&filter=variants.attributes.brand:${brandQuery}`;
+      if (colorQuery) params += `&filter=variants.attributes.color.key:${colorQuery}`;
+      if (sizeQuery) params += `&filter=variants.attributes.size:${sizeQuery}`;
+      if (price[0] && price[price.length - 1])
+        params += `&filter=variants.price.centAmount:range (${price[0] * 100} to ${price[1] * 100})`;
+      params += `&offset=${offset}`;
+      // Dispay products by params
+      dispatch(fetchProductsByParams({ params, categoryId, offset }));
+      // Reset search value
+      if (searchQuery.length) dispatch(setSearchQuery(''));
+    }
+  }, [page, categoryId, price, brands, colors, sizes]);
 
   // Display products by search
   useEffect(() => {
     if (searchQuery.length >= 4) {
       dispatch(fetchProductsBySearch({ params: searchQuery, categoryId }));
       dispatch(setError(false));
-    } else if (searchQuery.length > 0 && searchQuery.length < 4) {
-      dispatch(setError(true));
     } else {
       dispatch(setError(true));
-      // Dispay products by params
-      dispatch(fetchProductsByParams({ params, categoryId, offset }));
     }
   }, [searchQuery]);
 
@@ -89,7 +85,9 @@ const ProductsByParams: React.FC<ProductsByParamsProps> = ({ popupToggle }) => {
     dispatch(setSearchQuery(''));
     // Count pages in pagination for filters
     dispatch(fetchProductsByParams({ params, categoryId, limit: 100 }));
-  }, [categoryId, brands, colors, sizes, price]);
+  }, [categoryId, price, brands, colors, sizes]);
+
+  // While category changes remove Filters -> on click by Category
 
   useEffect(() => {
     dispatch(setPage(1));
@@ -99,6 +97,7 @@ const ProductsByParams: React.FC<ProductsByParamsProps> = ({ popupToggle }) => {
   }, [searchQuery]);
 
   const products = useSelector((state: IRootState) => state.products.productsData);
+
   return (
     <>
       {products.isLoading && (

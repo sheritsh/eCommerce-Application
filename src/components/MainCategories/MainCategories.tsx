@@ -15,12 +15,25 @@ const MainCategories: React.FC = () => {
       <ImageList variant="masonry" cols={2} gap={8}>
         {categories.map((item) => (
           <Link key={item.title} to={item.link}>
-            <ImageListItem key={item.img}>
+            <ImageListItem
+              key={item.img}
+              sx={{
+                opacity: 0.7,
+                transform: 'scale(0.95)',
+                transition: 'all linear 0.5s',
+                '&:hover, &:focus ': {
+                  cursor: 'pointer',
+                  opacity: 1,
+                  transform: 'scale(1)',
+                  transition: 'all linear 0.5s',
+                },
+              }}
+            >
               <img
                 src={`${item.img}?w=248&fit=crop&auto=format`}
                 srcSet={`${item.img}?w=248&fit=crop&auto=format&dpr=2 2x`}
                 alt={item.title}
-                loading="lazy"
+                loading="eager"
               />
               <ImageListItemBar
                 sx={{
