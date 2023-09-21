@@ -1,4 +1,3 @@
-import { useDispatch } from 'react-redux';
 import { fetchCartItems } from '../features/Cart/cart-slice';
 import Endpoints from './endpoints';
 
@@ -6,8 +5,8 @@ const createBody = {
   currency: 'USD',
 };
 
-export const createCart = (accessToken: string | null): Promise<T> => {
-  return new Promise((resolve, reject) => {
+export const createCart = (accessToken: string | null): Promise<void> => {
+  return new Promise((resolve) => {
     fetch(`${Endpoints.GET_CARTS}`, {
       method: 'POST',
       headers: {
@@ -24,37 +23,29 @@ export const createCart = (accessToken: string | null): Promise<T> => {
       })
       .then((data) => {
         return resolve(data);
-      })
-      .catch((error) => {
-        // console.error('Error:', error);
       });
   });
 };
 
 export const getHasCart = async (accessToken: string | null): Promise<boolean> => {
-  try {
-    const response = await fetch(`${Endpoints.GET_CARTS}`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${accessToken}`,
-      },
-    });
+  const response = await fetch(`${Endpoints.GET_CARTS}`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${accessToken}`,
+    },
+  });
 
-    if (!response.ok) {
-      throw new Error(`HTTP error! Status: ${response.status}`);
-    }
-    const data = await response.json();
-
-    if (!data.results[0]) {
-      return false;
-    }
-
-    return true;
-  } catch (error) {
-    // console.error('Error:', error);
-    throw error;
+  if (!response.ok) {
+    throw new Error(`HTTP error! Status: ${response.status}`);
   }
+  const data = await response.json();
+
+  if (!data.results[0]) {
+    return false;
+  }
+
+  return true;
 };
 
 export const getMyCart = (accessToken: string | null): void => {
@@ -64,22 +55,12 @@ export const getMyCart = (accessToken: string | null): void => {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${accessToken}`,
     },
-  })
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
-      }
-      return response.json();
-    })
-    .then((data) => {
-      if (!data.results[0]) {
-        // console.error('Empty cart');
-      }
-      // console.error('Successful answer:', data.results[0]);
-    })
-    .catch((error) => {
-      // console.error('Error:', error);
-    });
+  }).then((response) => {
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+    return response.json();
+  });
 };
 
 export const deleteMyCart = (accessToken: string | null, id: string, version: number = 1): void => {
@@ -88,19 +69,12 @@ export const deleteMyCart = (accessToken: string | null, id: string, version: nu
     headers: {
       Authorization: `Bearer ${accessToken}`,
     },
-  })
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
-      }
-      return response.json();
-    })
-    .then((data) => {
-      // console.error('Successful deleted:', data);
-    })
-    .catch((error) => {
-      // console.error('Error:', error);
-    });
+  }).then((response) => {
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+    return response.json();
+  });
 };
 
 export const addItemToCart = (
@@ -135,12 +109,8 @@ export const addItemToCart = (
         }
         return response.json();
       })
-      .then((data) => {
-        dispatch(fetchCartItems(accessToken));
-        // console.error('Successful added:', data);
-      })
-      .catch((error) => {
-        // console.error('Error:', error);
+      .then(() => {
+        if (accessToken) dispatch(fetchCartItems(accessToken));
       });
   };
 };
@@ -152,7 +122,7 @@ export const removeItemFromCart = (
   amount: number = 1,
   version: number = 1,
 ) => {
-  return (dispatch): void => {
+  return (dispatch: Dispatch): void => {
     fetch(`${Endpoints.GET_CARTS}${cartId}`, {
       method: 'POST',
       headers: {
@@ -177,12 +147,8 @@ export const removeItemFromCart = (
         }
         return response.json();
       })
-      .then((data) => {
-        dispatch(fetchCartItems(accessToken));
-        // console.error('Successful removed:', data);
-      })
-      .catch((error) => {
-        // console.error('Error:', error);
+      .then(() => {
+        if (accessToken) dispatch(fetchCartItems(accessToken));
       });
   };
 };

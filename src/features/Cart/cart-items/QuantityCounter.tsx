@@ -53,15 +53,12 @@ const QuantityCounter: React.FC<QuantityCounterProps> = ({ initialValue, onAddIt
         <RemoveIcon />
       </IconButton>
       <TextField
+        size="small"
         type="number"
         value={quantity}
         inputProps={{
           readOnly: true,
           min: 1,
-        }}
-        onChange={(e): void => {
-          const newQuantity = parseInt(e.target.value, 10) || 1;
-          setQuantity(newQuantity);
         }}
       />
       <IconButton

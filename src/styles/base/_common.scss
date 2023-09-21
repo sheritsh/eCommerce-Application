@@ -39,6 +39,12 @@ body {
       padding: 1em;
     }
   }
+
+  @media (max-width: 600px) {
+    & {
+      padding: 1em 0.3em;
+    }
+  }
 }
 
 .active {
