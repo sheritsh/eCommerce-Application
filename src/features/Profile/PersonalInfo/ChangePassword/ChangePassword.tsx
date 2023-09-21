@@ -58,7 +58,6 @@ const ChangePassword: React.FC = () => {
     } else {
       setPopupMessage(`The current password does not match, enter the correct password`);
       setErrorPopupActive(true);
-      // console.error(response.statusText);
     }
   };
 
