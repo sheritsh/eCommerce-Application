@@ -7,6 +7,8 @@
 This tourist eCommerce Platform SPA application is created as part of the final project for the [RS School Front-end course](https://rs.school/js/).
 It offers a seamless and engaging shopping experience for users in a digital environment. With a focus on user-friendly design and advanced features, our platform replicates the real-world shopping journey, from product discovery to checkout, right at your fingertips.
 
+Presentation: https://sheritsh.github.io/js2023q1-final-project-presentation/index.html
+
 ## Technology Overview
 
 ![Tourist Tracks Store](https://github-readme-tech-stack.vercel.app/api/cards?title=Tourist+Tracks+Store&align=center&lineCount=1&theme=github&width=800&line1=react%2Creact%2C00ecff%3Bredux%2Credux%2Cf34e1e%3Bwebpack%2Cwebpack%2C595959%3Btypescript%2Ctypescript%2C008dff%3Bprettier%2Cprettier%2Cffd200%3Beslint%2Ceslint%2Cff7200%3B)
